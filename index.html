@@ -1,0 +1,983 @@
+
+<html lang="en" style="scroll-padding-top: 76px;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--meta name="description" content="Project documentation with Markdown.">
+        <meta name="author" content="MkDocs Team">
+        <link rel="canonical" href="https://www.mkdocs.org/">
+        <link rel="shortcut icon" href="https://www.mkdocs.org/img/favicon.ico"-->
+
+        <title>MAT143-Brief Calculus</title>
+        <link href="./stat/bootstrap.min.css" rel="stylesheet">
+        <link href="./stat/font-awesome.min.css" rel="stylesheet">
+        <link href="./stat/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./stat/github.min.css">
+        <link href="./stat/extra.css" rel="stylesheet">
+
+        <script async="" src="./stat/analytics.js.download"></script><script src="./stat/jquery-1.10.2.min.js.download" defer=""></script>
+        <script src="./stat/bootstrap.min.js.download" defer=""></script>
+        <script src="./stat/highlight.min.js.download"></script>
+        <script src="./stat/yaml.min.js.download"></script>
+        <script src="./stat/django.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+        <style>
+            div.a {
+              line-height: 90%;
+            }
+
+            .section {
+               background-color: white;
+               border: 0px solid black;
+               margin: 0px;
+               padding: 0px;
+               font-size: 28px;
+               font-weight: 450;
+               text-align: center;
+             }
+            .sub {
+               background-color: white;
+               border: 0px solid black;
+               margin: 0px;
+               padding: 5px;
+               font-size: 20px;
+               font-weight: 490;
+               text-align: left;
+             }
+
+           .graytoc {
+            background-color: LightCyan;
+            color:red;
+            font-weight: 300;
+           }
+
+        </style>
+    </head>
+
+    <body class="homepage" style="">
+
+<!--####################################################-->
+<!-- VVVVVVVVVVVVVVVVV    TOP Panel   VVVVVVVVVVVVVVVVVV-->
+<!--####################################################-->
+    <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+             <a class="navbar-brand" href=""><center><b>STA 321 Advanced Statistics</b><br> <sub> Dr. Cheng Peng</sub></center> </a>
+             <!-- Expander button -->
+             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse"><span class="navbar-toggler-icon"></span> </button>
+
+             <!-- Expanded navigation -->
+             <div id="navbar-collapse" class="navbar-collapse collapse">
+
+              <!-- Main navigation -->
+
+             <ul class="nav navbar-nav ml-auto">
+    
+<!--########################################################################-->
+<!--SSSSSSSSSSSSSSSSSSSSSS    Dropdown tag: Syllabus  SSSSSSSSSSSSSSSSSSSS-->
+<!--########################################################################-->
+                 <li class="navitem active"> <a href="https://wcumat143.s3.amazonaws.com/MAT143.html"  target="popup" onclick="window.open('https://wcumat143.s3.amazonaws.com/MAT143.html','name','width=900,height=500')" class="nav-link">Home </a></li>
+
+                 <li class="navitem active"> <a href="Math143_Spring2022.pdf"  target="popup" onclick="window.open('Math143_Spring2022.pdf','name','width=900,height=500')" class="nav-link">Syllabus </a></li>
+
+                 <li class="navitem active"> <a href="https://d2l.wcupa.edu/d2l/login"  target="popup" onclick="window.open('https://d2l.wcupa.edu/d2l/login','name','width=900,height=500')" class="nav-link"> D2L </a></li>
+
+                  <li class="navitem active"> <a href="MathsTutoringSp2022.pdf"  target="popup" onclick="window.open('MathsTutoringSp2022.pdf','name','width=900,height=500')" class="nav-link"> Free Tutoring </a></li>
+             
+                  <li class="navitem active"> <a href="ImportantFormulas.pdf"  target="popup" onclick="window.open('ImportantFormulas.pdf','name','width=900,height=500')" class="nav-link"> Formulas </a></li>
+                 
+                  <li class="navitem active"> <a href="https://wcupa.zoom.us/j/6840171840?pwd=ZC90eHk4OUJ5QUlnUzdCUEd2cW5VZz09"  target="popup" onclick="window.open('https://wcupa.zoom.us/j/6840171840?pwd=ZC90eHk4OUJ5QUlnUzdCUEd2cW5VZz09','name','width=900,height=500')" class="nav-link"> Zoom </a></li>      
+   
+
+<!--######################################################################-->
+<!--SSSSSSSSSSSSSS    Dropdown tag: GaphCalc   SSSSSSSSSSSSSSSSSSSS-->
+<!--######################################################################-->
+              <li class="dropdown"><a href="" class="nav-link dropdown-toggle" data-toggle="dropdown"> Graphing Calculators <b class="caret"></b></a>
+                   <ul class="dropdown-menu">
+                   
+                       <li class="navitem active"> <a href="https://www.graphcalc.com/online-graphing-calculator/"  target="popup" onclick="window.open('https://www.graphcalc.com/online-graphing-calculator/','name','width=900,height=500')" class="dropdown-item"> Online Graphing Calculator </a></li> 
+                       
+                       <li class="navitem active"> <a href="https://www.symbolab.com/"  target="popup" onclick="window.open('https://www.symbolab.com/','name','width=900,height=500')"  class="dropdown-item">Symbol Lab</a></li>   
+                       
+                       <li class="navitem active"> <a href="https://www.wolframalpha.com/"  target="popup" onclick="window.open('https://www.wolframalpha.com/','name','width=900,height=500')"  class="dropdown-item">Wolfram Alpha</a></li>
+                  </ul>
+              </li>                 
+                 
+                  
+<!--######################################################################-->
+<!--SSSSSSSSSSSSSSSSSSSSSS    Dropdown tag: Textbook   SSSSSSSSSSSSSSSSSSSS-->
+<!--######################################################################-->
+              <li class="dropdown"><a href="" class="nav-link dropdown-toggle" data-toggle="dropdown"><font color = "gold"> eBooks </font><b class="caret"></b></a>
+                   <ul class="dropdown-menu">
+                     <li class="navitem active"> <a href="appcalc.pdf"  target="popup" onclick="window.open('appcalc.pdf','name','width=900,height=500')"  class="dropdown-item">Free Ref. eBook [link]</a></li>      
+
+                     <li class="navitem active"> <a href="https://mlm.pearson.com/northamerica/"  target="popup" onclick="window.open('https://mlm.pearson.com/northamerica/','name','width=900,height=500')"  class="dropdown-item">MyLab(Pearson) [link]</a></li>  
+   
+                      <li class="navitem active"> <a href="https://d2l.wcupa.edu/d2l/le/content/3272113/viewContent/29712244/View"  target="popup" onclick="window.open('https://d2l.wcupa.edu/d2l/le/content/3272113/viewContent/29712244/View','name','width=900,height=500')"  class="dropdown-item">eText via D2L [link]</a></li>  
+                       
+                      <li class="navitem active"> <a href="eTextAccessInstruction.pdf"  target="popup" onclick="window.open('eTextAccessInstruction.pdf','name','width=900,height=500')"  class="dropdown-item"><font color = "red">eText Access Instruction [link]</font></a></li> 
+                       
+                       
+                  </ul>
+              </li>
+<!--SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS-->                
+                 
+                 
+<!--######################################################################-->
+<!--SSSSSSSSSSSSSSSSSSSSSS    Dropdown tag: Contact   SSSSSSSSSSSSSSSSSSSS-->
+<!--######################################################################-->
+              <li class="dropdown"><a href="" class="nav-link dropdown-toggle" data-toggle="dropdown"> Contact <b class="caret"></b></a>
+                   <ul class="dropdown-menu">
+                     <li class="navitem active"> <a href="mailto: cpeng@wcupa.edu"  target="popup" onclick="window.open('mailto: cpeng@wcupa.edu','name','width=900,height=500')"  class="dropdown-item">My Email (link)</a></li>      
+
+                     <li class="navitem active"> <a href="" class="dropdown-item"><b>Office</b></a> <font size=2, color="purple"><center>R111, 25 Univ. Ave</center></font></li>
+                  </ul>
+              </li>
+<!--SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS-->
+                 
+                 
+                 
+                 
+                 
+               </ul>
+         </div>
+      </div>
+ </div>
+
+<!--####################################################-->
+<!-- VVVVVVVVVVVVVVVVV    TOC Panel   VVVVVVVVVVVVVVVVVV-->
+<!--####################################################-->
+<div class="container">
+            <div class="row">
+                <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary" style="top: 76px;">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+         <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+  <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+          <ul class="nav flex-column">
+            <li class="nav-item" data-level="1"><a href="" class="nav-link active">List of Weekly Topics</a>
+               <ul class="nav flex-column">
+                   <div class="a">
+                   <li class="nav-item" data-level="2"><a href="#week01" class="nav-link">1. Concept of limit and continuity </a></li>
+                   <li class="nav-item" data-level="2"><a href="#week02" class="nav-link">2. Differentiation and Power Rule</a></li>  
+                   <li class="nav-item" data-level="2"><a href="#week03" class="nav-link">3. Rules of Derivatives</a></li>
+                   <li class="nav-item" data-level="2"><a href="#week04" class="nav-link">4. Exp and Log Functions</a></li>
+                   <li class="nav-item" data-level="2"><a href="#week05" class="nav-link">5. Derivatives and appl. of Exp and Log</a> </li>
+                   <li class="nav-item" data-level="2"><a href="#week06" class="nav-link">6. Applications (Cont'd) and General Exp and Log  </a> </li>   
+                   <li class="nav-item" data-level="2"><a href="#week07" class="nav-link">7. Critical Values and Extrema</a></li>
+                   <li class="nav-item" data-level="2"><a href="#week08" class="nav-link">8. Maximization and minimization </a></li>
+                   <li class="nav-item" data-level="2"><a href="#week09" class="nav-link">9. Absolute Maximum and Minimum</a></li>
+                   <li class="nav-item" data-level="2"><a href="#week10" class="nav-link">10.Marginals and Linear Approximatiom </a> </li>	
+                   <li class="nav-item" data-level="2"><a href="#week11" class="nav-link">11. Antiderivative</a> </li>
+				   <li class="nav-item" data-level="2"><a href="#week12" class="nav-link">12. Areass and Definite Integral</a> </li>
+                   <li class="nav-item" data-level="2"><a href="#week13" class="nav-link">13. Integral Tech & Integration by parts</a> </li>
+                   <li class="nav-item" data-level="2"><a href="#week14" class="nav-link">14. Functions of several variables and partial derivatives</a> </li>             <li class="nav-item" data-level="2"><a href="#week15" class="nav-link">15. Final Exam Info</a> </li>
+                   </div>
+                </ul>
+             </li>
+           </ul>
+    </div>
+</div></div>
+
+<!-- VVVVVVVVVVVVVVVVV    Main Body   VVVVVVVVVVVVVVVVVV-->
+
+<div class="col-md-9" role="main">
+
+    
+<!--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV   
+VVVVVVVVVVVVVVVVV              Week #01            VVVVVVVVVVVVVVVVV
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV-->
+<h3 id="week01" class="section"><center>Week 01: Concept of Limits and Rate of Change</center></h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+    <ul>
+       <li> limits on the number line
+       <li> one-side and two-side limits
+       <li> graphical analysis of limits
+       <li> existence of limits of a function
+       <li> limit involves infinity 
+       <li> <a href="w01-feb25.pdf" target="popup"  
+                    onclick="window.open('w01-feb25.pdf',
+                       'name','width=900,height=500')">
+                   Brief class note [1/25/2022]</a>
+       <br>
+       <li> properties and calculation of the limits
+       <li> continuity of a function.
+       <li> average rate of change (of a function overal an interval)
+       <li> difference quotient
+                  <li> <a href="w01-feb27.pdf" target="popup"  
+                    onclick="window.open('w01-feb27.pdf',
+                       'name','width=900,height=500')">
+                   Brief class note [1/27/2022]</a>
+       </ul>
+<b> SELF-ASSESSMENT</b>: Practice the following exercises before checking the answers. <br>
+            <ul>
+             <li> Practice Problem Set #1 <br>
+                 |<a href="w01-ex1-1.pdf" target="popup"  
+                    onclick="window.open('w01-ex1-1.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w01-ex1-1-key.pdf" target="popup"  
+                    onclick="window.open('w01-ex1-1-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+             <li> Practice Problem Set #2 <br>
+                 |<a href="w01-ex1-2.pdf" target="popup"  
+                    onclick="window.open('w01-ex1-2.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w01-ex1-2-key.pdf" target="popup"  
+                    onclick="window.open('w01-ex1-2-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+
+            </ul>
+    
+<b> ASSIGNMENTS</b>: Reading Assignment and Weekly Quiz
+<ul>
+         <li> Sections 1.1, 1.2, 1.3 of <font color = "red"> the required textbook.</font> 
+
+         <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup" onclick="window.open('https://d2l.wcupa.edu/d2l/login',
+             'name','width=900,height=500')">
+                    <b>D2L (login)</b></a></li>
+              <ul>
+                  <font color = "red"><b> No Quiz in this week! </b></font>
+              </ul>
+         </ul>
+
+
+</left><hr>
+
+<!--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV   
+VVVVVVVVVVVVVVVVV              Week #02            VVVVVVVVVVVVVVVVV
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV-->
+<h3 id="week02"  class="section">Week 02: Rate of Change and Derivatives of Power Rules</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+        <ul>
+          <li><a href="Student_Registration_Handout_peng34374.pdf" target="popup"  
+                    onclick="window.open('Student_Registration_Handout_peng34374.pdf',
+                       'name','width=900,height=500')">
+                   <font color = "red">MyLab Registration Instruction [Link]</font></a> </li>
+          <li> Concept of Differentiation  </li>
+             <ul>
+              <li> Rate of change - the slope of a secant line
+              <li> limit of the difference of quotient – instantaneous change of rate
+              <li><a href="smallderivativeanimation.gif" target="popup"  
+                    onclick="window.open('smallderivativeanimation.gif',
+                       'name','width=900,height=500')">
+                   <font color = "red">Tangent Line Animation [Link]</font></a> </li>   
+              <li> examples of differentiation using the limit of quotient difference
+              <li> notation of dy/dx.
+              <li><a href="w02-feb01.pdf" target="popup"  
+                    onclick="window.open('w02-feb01.pdf',
+                       'name','width=900,height=500')">
+                   <font color = "red">Brief Class Note [2/1/2022]</font></a> </li>              
+             </ul>
+          <li> Derivatives of polynomials and Additive Rule of Derivatives 
+              <ul>
+               <li> derivative of power functions
+               <li> derivative of linear functions
+               <li> derivatives of sum and difference of functions
+               <li><a href="w02-note-Feb3.pdf" target="popup"  
+                    onclick="window.open('w02-note-Feb3.pdf',
+                       'name','width=900,height=500')">
+                   <font color = "red">Brief Class Note [2/3/2022]</font></a> </li>              
+             </ul>
+        </ul>
+
+<b> SELF-ASSESSMENT</b>: Practice the following exercises before checking the answers. <br>
+            <ul>
+             <li> Practice Problem Set #1 <br>
+                 |<a href="w02-ex1-1.pdf" target="popup"  
+                    onclick="window.open('w02-ex1-1.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w02-ex1-1-key.pdf" target="popup"  
+                    onclick="window.open('w02-ex1-1-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+             <li> Practice Problem Set #2 <br>
+                 |<a href="w02-ex1-2.pdf" target="popup"  
+                    onclick="window.open('w02-ex1-2.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w02-ex1-2-key.pdf" target="popup"  
+                    onclick="window.open('w02-ex1-2-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+
+            </ul>
+    
+<b>ASSIGNMENTS:</b>  Reading Assignment and Weekly Quiz <br>
+    <ul>
+           <li> Reading assignment: 1.4 and 1.5 of <font color = "red"> the required textbook.</font> <br>
+               
+           <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup" onclick="window.open('https://d2l.wcupa.edu/d2l/login',
+               'name','width=900,height=500')"> <b>D2L (login)</b></a></li>
+                <font color = "darkblue"><b> Available on Thursday</b>: 12:00 PM </font>, <font color = "gray"><b> Due on Sunday </b>: 11:30 PM, 2/6/2022 </font><br>
+        
+            <li> <a href="w02-weeklyquiz-key.pdf" target="popup" 
+                    onclick="window.open('w02-weeklyquiz-key.pdf',
+                'name','width=900,height=500')"><font color = "red" size = 4> <b>Answer Key to Week #2 Quiz</b></font></a></li>
+    </ul> 
+</left><hr>
+
+<!--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV   
+VVVVVVVVVVVVVVVVV              Week #03            VVVVVVVVVVVVVVVVV
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV -->
+<h3 id="week03"  class="section">Week 03: Rules of Derivatives</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+   <ul>
+      <li> Rules of Derivatives
+          <ul>
+             <li> derivative of the product of two functions
+             <li> The derivative of the quotient of two functions
+             <li> |<a href="w03-note-Feb8.pdf" target="popup"  
+                    onclick="window.open('w03-note-Feb8.pdf',
+                       'name','width=900,height=500')">
+                   Brief Class Note [Link]</a>|
+             <li> derivative of composite functions - chain rule
+             <li> |<a href="w03-note-Feb10.pdf" target="popup"  
+                    onclick="window.open('w03-note-Feb10.pdf',
+                       'name','width=900,height=500')">
+                   Brief Class Note [Link]</a>| 
+          </ul>
+      <li> second-order derivatives and applications
+   </ul>
+<b> SELF-ASSESSMENT</b>: Practice the following exercises before checking the answers. <br>
+            <ul>
+             <li> Practice Problem Set #1 <br>
+                 |<a href="w03-ex1.pdf" target="popup"  
+                    onclick="window.open('w03-ex1.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w03-ex1-key.pdf" target="popup"  
+                    onclick="window.open('w03-ex1-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+             <li> Practice Problem Set #2 <br>
+                 |<a href="w03-ex2.pdf" target="popup"  
+                    onclick="window.open('w03-ex2.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w03-ex2-key.pdf" target="popup"  
+                    onclick="window.open('w03-ex2-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+
+            </ul>
+    
+<b>ASSIGNMENTS:</b>  Reading Assignment and Weekly Quiz <br>
+    <ul>
+     <li><b>Reading assignments</b>: Read sections 1.6, 1.7 and 1.8 of <font color = "red"> the required textbook.</font> 
+
+      <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup" 
+               onclick="window.open('https://d2l.wcupa.edu/d2l/login',
+               'name','width=900,height=500')"> <b>D2L (login)</b></a></li>
+                <font color = "darkblue"><b> Available on Thursday</b>: 12:00 PM </font> <br>
+                <font color = "red"><b> Due on Sunday </b>: 11:30 PM, 2/13/2022 </font>
+      <li> <a href="w03-weekly-quiz-key.pdf" target="popup" 
+                    onclick="window.open('w03-weekly-quiz-key.pdf',
+                'name','width=900,height=500')"><font color = "red" size = 4> <b>Answer Key to Week #3 Quiz</b></font></a></li>  
+    </ul> 
+</left><hr>
+
+<!--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV   
+VVVVVVVVVVVVVVVVV              Week #04            VVVVVVVVVVVVVVVVV
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV  -->
+<h3 id="week04"  class="section">Week 04: Definition and Properties of Exponential and Logarithmic Functions </h3>
+
+<hr><left>
+        
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+     <li><font color ="red"><b>Exam #1: Thursday, 2/17/2022 </b></font></li>
+     <li> A brief review for Midterm #1 (30 mimutes) </li>
+     <li> |<a href="w04-MidtermReview.pdf" target="popup"  
+                    onclick="window.open('w04-MidtermReview.pdf',
+                       'name','width=900,height=500')">
+                   Midterm Review Note [Link]</a>|
+     <li> exponential and logarithmic functions with a natural base 
+        <ul>
+           <li> exponential and logarithmic functions: definition and 
+           <li> applications of exp and log functions
+        </ul>
+     <li> |<a href="w04-note-Feb15.pdf" target="popup"  
+                    onclick="window.open('w04-note-Feb15.pdf',
+                       'name','width=900,height=500')">
+                   Brief Class Note [Link]</a>|
+  </ul>
+
+<b> SELF-ASSESSMENT</b>: Practice the following exercises before checking the answers. <br>
+            <ul>
+             <li> Practice Problem Set #1 <br>
+                 |<a href="w04-ex1.pdf" target="popup"  
+                    onclick="window.open('w04-ex1.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w04-ex1-key.pdf" target="popup"  
+                    onclick="window.open('w04-ex1-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+
+            </ul>
+
+<b>ASSIGNMENTS:</b> Reading Assignment and Midterm Exam #1 <br>
+    <ul>
+   <li><b>Reading assignments</b>
+          <ul>
+           <li> Read sections 2.1 of <font color = "red"> the required textbook.</font> .                  
+           <li> Midterm #1 is scheduled this week. <font color = "red"><b> No weekly quiz in this week</b></font> 
+           </ul>
+    <li><a href=""> |<a href="w04-MidtermExam01-key.pdf" target="popup" 
+                   onclick="window.open('w04-MidtermExam01-key.pdf','name','width=900,height=500')"> 
+        <font color = "red"><b>Answer Key to Exam #1 [Link]</b></font></a>|</li>
+</ul>
+ <br>   
+ </left><hr>       
+        
+<!--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV   
+VVVVVVVVVVVVVVVVV              Week #05            VVVVVVVVVVVVVVVVV
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV  -->
+<h3 id="week05"  class="section">Week 05: Derivatives of Exponential and Logarithmic Functions </h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+   <ul>
+         <li> Derivative of exponential and logarithmic functions</li>
+       	 <li> |<a href="w05-note-feb22.pdf" target="popup" 
+                   onclick="window.open('w05-note-feb22.pdf','name','width=900,height=500')"> 
+				   Brief Class Note [Link]</a>|</li>
+       
+		 <li> Business application (cont'd) - exponential growth models </li>
+		 <li> |<a href="w05-note-feb24.pdf" target="popup" 
+                   onclick="window.open('w05-note-feb24.pdf','name','width=900,height=500')"> 
+				   Brief Class Note [Link]</a>|</li>
+   </ul>
+
+<b> SELF-ASSESSMENT</b>: Practice the following exercises before checking the answers. <br>
+            <ul>
+             <li> Practice Problem Set #1 <br>
+                 |<a href="w05-ex1.pdf" target="popup"  
+                    onclick="window.open('w05-ex1.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w05-ex1-key.pdf" target="popup"  
+                    onclick="window.open('w05-ex1-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+                
+             <li> Practice Problem Set #2 <br>
+                 |<a href="w05-ex2.pdf" target="popup"  
+                    onclick="window.open('w05-ex2.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w05-ex2-key.pdf" target="popup"  
+                    onclick="window.open('w05-ex2-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>        
+            </ul>
+
+
+<b>ASSIGNMENTS:</b>  Reading Assignment and Weekly Quiz <br>
+     <li> Reading: Sections 2.2, 2.3, and 2.4. of <font color = "red"> the required textbook.</font> </li>   
+     <li> <a href="https://d2l.wcupa.edu/d2l/login" target="popup" onclick="window.open('https://d2l.wcupa.edu/d2l/login',
+               'name','width=900,height=500')"> <b>[D2L (login)]. </b></a>    
+     <font color = "red"><b>Due: Thursday, 2/27/2022 </b></font> <br><br>
+</left><hr>
+
+        
+        
+<!--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV   
+VVVVVVVVVVVVVVVVV              Week #06            VVVVVVVVVVVVVVVVV
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV  -->
+<h3 id="week06"  class="section">Week 06: Exponential Decay Model and Limited Exponential Growth Models </h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+    <li> Exponential Decay Model <br>
+      <ul> 
+	    <li> Business applications and general exponential and logarithmic functions
+        <li> |<a href="w06-note-mar01.pdf" target="popup" 
+                   onclick="window.open('w06-note-mar01.pdf','name','width=900,height=500')"> 
+				   Brief Class Note [Link]</a>|</li>    
+      </ul>        
+   <li> Applications of exponential and logarithmic functions: limited growth models
+      <ul> 
+	    <li> Applications of decay models	 
+        <li> |<a href="w06-note-mar03.pdf" target="popup" 
+                   onclick="window.open('w06-note-mar03.pdf','name','width=900,height=500')"> 
+				   Brief Class Note [Link]</a>|</li>
+      </ul>       
+  </ul>
+
+<b> SELFASSESSMENT</b>: Practice the following exercises before checking the answers. <br>
+            <ul>
+             <li> Practice Problem Set #1 <br>
+                 |<a href="w06-ex1.pdf" target="popup"  
+                    onclick="window.open('w06-ex1.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w06-ex1-key.pdf" target="popup"  
+                    onclick="window.open('w06-ex1-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+                
+             <li> Practice Problem Set #2 <br>
+                 |<a href="w06-ex2.pdf" target="popup"  
+                    onclick="window.open('w06-ex2.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w06-ex2-key.pdf" target="popup"  
+                    onclick="window.open('w06-ex2-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>        
+            </ul>
+
+<b>ASSIGNMENTS:</b> Reading Assignment and Weekly Quiz <br>
+       <ul>
+            <li> Read sections 2.5 and 2.6 of <font color = "red"> the required textbook.</font> 
+           <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup" onclick="window.open('https://d2l.wcupa.edu/d2l/login','name','width=900,height=500')"> <b>D2L (login)</b></a></li>
+                <font color = "darkblue"><b> Open on Thursday</b>: 12:00 PM </font> <br>
+                <font color = "red"><b> Due on Sunday </b>: 11:30 PM </font>
+       </ul>
+
+</left><hr>
+
+        
+<!--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV   
+VVVVVVVVVVVVVVVVV              Week #07            VVVVVVVVVVVVVVVVV
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV  -->
+
+<h3 id="week07"  class="section">Week 07: Finding Critical values and Extrema</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+    <li> Review of Midterm Exam #2: <font color = "red"><b>Thursday, 3/10/2022</b></font>.
+    <li> <a href="w07-MidtermReview.pdf" target="popup"  
+                    onclick="window.open('w07-MidtermReview.pdf',
+                       'name','width=900,height=500')">
+                   |Exam #2 Topic List (Link)|</a>
+    <li> Identify local extreme values of a function
+          <ul>
+            <li> Critical values and extrema</li>
+            <li> Identify relative minimum and maximum</li>
+            <li><a href="w07-MidtermReview.pdf" target="popup"  
+                    onclick="window.open('w07-MidtermReview.pdf',
+                       'name','width=900,height=500')">
+                   |Brief Class Note (link)|</a>
+          </ul>
+  </ul>
+
+<b> SELFASSESSMENT</b>: Practice the following exercises before checking the answers. <br>
+            <ul>
+             <li> Practice Problem Set #1 <br>
+                 |<a href="w07-ex1.pdf" target="popup"  
+                    onclick="window.open('w07-ex1.pdf',
+                       'name','width=900,height=500')">
+                   Problems</a>| 
+                 <a href="w07-ex1-key.pdf" target="popup"  
+                    onclick="window.open('w07-ex1-key.pdf',
+                       'name','width=900,height=500')">
+                   Answer Key</a>|</li>
+        
+            </ul>
+
+<b>ASSIGNMENTS:</b> 
+       <ul>
+           <li> Read section 3.1 of <font color = "red"> the required textbook</font>
+           <li> <font color = "red"><b>No Weekly Quiz for this week!</b></font>
+       </ul>
+
+</left><hr>
+
+<!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+<h3 id="week08"  class="section">Week 08: Applications of Derivatives - Maximization and Minimization </h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+     <li> Applications of the first order derivative
+         <ul>
+          <li> critical values
+          <li> relative (local) minima and maxima
+          <li> <a href="w08-mar22.pdf" target="popup" 
+                          onclick="window.open('w08-mar22.pdf','name','width=900,height=500')">
+						  Class Note
+                          </a>
+         </ul>
+	  <li> Applications of the 2nd order derivatives
+	       <ul>
+              <li> (global) maxima and minima
+              <li>  curve sketch 
+              <li>  <a href="w08-mar24.pdf" target="popup" 
+                          onclick="window.open('w08-mar24.pdf','name','width=900,height=500')">
+						  Class Note
+                          </a></li>
+		   </ul>                
+  </ul>
+
+<b> ANSWER KEYS</b>:<br>
+               <ul>
+                  <li> <a href="w07-MidtermExam02-key.pdf" target="popup" 
+                          onclick="window.open('w07-MidtermExam02-key.pdf','name','width=900,height=500')">
+                          Answers to Midterm Exam #2</a> <font color = "blue"></font>
+                  <li> <a href="w08-quiz-key.pdf" target="popup" 
+                          onclick="window.open('w08-quiz-key.pdf','name', 'width=900,height=500')">
+                          Key to Weekly Quiz (Week #8)</a> <font color = "blue"></font>
+               </ul>
+                    
+
+<b>ASSIGNMENTS:</b> 
+       <ul>
+           <li> Read sections 3.1 - 3.2 of <font color = "red">required textbook</font> 
+               
+           <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup" 
+                   onclick="window.open('https://d2l.wcupa.edu/d2l/login','name','width=900,height=500')"> <b>D2L (login)</b></a></li>
+                <font color = "darkblue"><b> Open on Thursday</b>: 12:00 PM </font> <br>
+                <font color = "red"><b> Close on Sunday </b>: 11:30 PM </font>
+       </ul>
+</left><hr>
+
+    
+    
+
+<!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+<h3 id="week09"  class="section">Week 09: Absolute Maximum and Minimum with Business Applications</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+   <li> Absolute maximum and minimum
+		<ul>
+			<li> Steps for finding the absolute maximum and minimum
+			<li> Rational functions and asymptotes
+            <li> Class Note: <a href="w09-Mar28.pdf" target="popup" 
+                          onclick="window.open('w09-Mar28.pdf','name', 'width=900,height=500')">
+						   Absolute minimization and maximization
+                          </a>
+ 		 </ul>
+	<li> Business applications of maximum and minimum
+		 <ul>
+			 <li> Optimizations of revenue and cost
+             <li> Class Note: <a href="w09-Mar31.pdf" target="popup" 
+                  onclick="window.open('w09-Mar31.pdf','name', 'width=900,height=500')">
+						   Applications of optimization method
+                          </a>
+		 </ul>
+
+     </ul>
+
+<b> ANSWER KEY</b>: There is no self-assessment in this week <br>
+                <ul>
+                    <li> <a href="w09-weekly-quiz-key.pdf" target="popup" 
+                          onclick="window.open('w09-weekly-quiz-key.pdf','name', 'width=900,height=500')">
+                          Key to Week #9 Quiz</a> <font color = "blue"></font></li>
+                </ul>
+    
+<b>ASSIGNMENTS</b>  
+     <ul>
+           <li> Read sections 3.3 - 3.5 of <font color = "red">required textbook</font> 
+               
+           <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup"  onclick="window.open('https://d2l.wcupa.edu/d2l/login','name', 'width=900,height=500')"> <b>D2L (login)</b></a></li>
+                <font color = "darkblue"><b> Open on Thursday</b>: 12:00 PM </font> <br>
+                <font color = "red"><b> Close on Sunday </b>: 11:30 PM </font>
+       </ul>
+</left><hr>
+
+
+
+<!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+<h3 id="week10"  class="section">Week 10: Marginal Analysis and Implicity Differentiation</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+      <li> Marginal analysis and linear approximation
+        <ul>
+          <li> Marginal cost, revenue and profit
+		  <li> Linearization
+          <li> Class Note: <a href="w10-Apr05.pdf" target="popup" 
+                          onclick="window.open('w10-Apr05.pdf','name','width=900,height=500')">
+						   Marginal Analysis
+                          </a> </li>
+        </ul>
+       <li> Implicit function and implicit differentiation
+        <ul>
+        <li> Implicit function
+        <li> Derivatives of implicit functions
+        <li> Class note:  <a href="w10-Apr07.pdf" target="popup" 
+                          onclick="window.open('w10-Apr07.pdf','name','width=900,height=500')">
+						   Implicit Differentiation
+                          </a> </li>
+        </ul>
+ </ul>
+
+<b> ANSWER KEY</b>: Weekly Quiz. <br>    
+    <ul>
+        <li> <a href="w10-quiz.pdf" target="popup" 
+                          onclick="window.open('w10-quiz.pdf','name','width=900,height=500')">
+                          Answer Key to Week #10 Quiz</a> <font color = "blue"></font></li>
+    </ul>           
+<BR>
+<b>ASSIGNMENTS:</b> 
+         <ul>
+           <li> Read sections 3.7 - 3.8 of <font color = "red">required textbook</font> 
+               
+           <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup"  onclick="window.open('https://d2l.wcupa.edu/d2l/login','name', 'width=900,height=500')"> <b>D2L (login)</b></a></li>
+                <font color = "darkblue"><b> Open on Thursday</b>: 12:00 PM </font> <br>
+                <font color = "red"><b> Close on Sunday </b>: 11:30 PM </font>
+       </ul>
+</left><hr>
+
+ 
+<!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+<h3 id="week11"  class="section">Week 11: Review of Midterm Exam #3 and Rules of Antiderivative</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+      <li> Review of Example #3
+        <ul>
+          <li> Critical values and relative extrema
+		  <li> concavity and absolute maxima/minima
+          <li> Applications of derivatives 
+          <li> implicit functions and diffrentiation
+          <li> <a href="w11-ExamReviewTopicList.pdf" target="popup" 
+                          onclick="window.open('w11-ExamReviewTopicList.pdf','name','width=900,height=500')">
+						  Midterm Exam #3 Topic List
+                          </a> </li>
+        </ul>
+       <li> Antiderivative
+        <ul>
+        <li> Definitions of antiderivative
+        <li> Rules of antiderivative
+
+        </ul>
+ </ul>
+
+<b> ANSWER KEY</b>: Key to Midterm Exam #3 (to be posted). <br>
+               <ul>
+                  <li> <a href="w11-MidtermExam03-key.pdf" target="popup" 
+                          onclick="window.open('w11-MidtermExam03-key.pdf','name','width=900,height=500')">
+                          Midterm Exam #3</a> <font color = "blue"></font>
+               </ul>
+
+<b>ASSIGNMENTS:</b> 
+         <ul>
+           <li> Read sections 4.1 of <font color = "red">required textbook</font> 
+           <li><font color = "blue"><b>Mideterm Exam: Thursday, 4/14/2022.</b></font>    
+           <li> <font color = "red"><b>No weekly quiz for this week.</b></font>
+       </ul>
+</left><hr>
+    
+ 
+<!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+<h3 id="week12"  class="section">Week 12: Area As Definite Integral and Fundamental Theorem of Integral Calculus</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+      <li> Antiderivative as area
+        <ul>
+          <li> Area under a curve over an interval
+          <li> Class note: Areas and definite integral |<a href="w12-Apr19.pdf" target="popup" 
+                          onclick="window.open('w12-Apr19.pdf','name','width=900,height=500')">
+						   [PDF]
+                          </a>|<a href="w12-Apr19.docx" target="popup" 
+                          onclick="window.open('w12-Apr19.docx','name','width=900,height=500')">
+						    [WORD]
+                          </a>|</li>
+        </ul>
+       <li> Fundamental Theorem of integral calculus
+        <ul>
+           <li> Rules of antiderivative
+           <li> Properties of integral</li>
+           <li> Class note: Rules and properties of integral |<a href="w12-Apr21.pdf" target="popup" 
+                          onclick="window.open('w12-Apr21.pdf','name','width=900,height=500')">
+						    [PDF]
+                          </a>|<a href="w12-Apr21.docx" target="popup" 
+                          onclick="window.open('w12-Apr21.docx','name','width=900,height=500')">
+						    [WORD]
+                          </a> |</li>
+        </ul>
+ </ul>
+
+<b> ANSWER KEY</b>: Key to weekly quiz: Week #12. <br>
+               <ul>
+                  <li> <a href="w12-weekly-quiz-key.pdf" target="popup" 
+                          onclick="window.open('w12-weekly-quiz-key.pdf','name','width=900,height=500')">
+                          Week #12</a> <font color = "blue"></font>
+               </ul>
+
+<b>ASSIGNMENTS:</b> 
+         <ul>
+           <li> Read sections 4.2 - 4.4 of <font color = "red">required textbook</font> 
+               
+           <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup"  onclick="window.open('https://d2l.wcupa.edu/d2l/login','name', 'width=900,height=500')"> <b>D2L (login)</b></a></li>
+                <font color = "darkblue"><b> Open on Thursday</b>: 12:00 PM </font> <br>
+                <font color = "red"><b> Close on Sunday </b>: 11:59 PM </font>
+       </ul>
+</left><hr>
+    
+
+<!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+<h3 id="week13"  class="section">Week 13: Integral by Substitution and Multivariable Functions</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+      <li> Integral by Substitution
+        <ul>
+          <li> Indefinite integral by substitution
+          <li> Evaluate definite integral by substitution
+          <li> Class Note:  |<a href="w13-Apr26.pdf" target="popup" 
+                          onclick="window.open('w13-Apr26.pdf','name','width=900,height=500')">
+						   [PDF]
+                          </a>|<a href="w13-Apr26.docx" target="popup" 
+                          onclick="window.open('w13-Apr26.docx','name','width=900,height=500')">
+						    [WORD]
+                          </a>|</li>
+        </ul>
+       <li> Concepts of multi-variable functions
+         <ul>
+          <li> Defintions and evaluating the functions
+          <li> Applications   
+         
+        <li> Class note: |<a href="w13-Apr28.pdf" target="popup" 
+                          onclick="window.open('w13-Apr28.pdf','name','width=900,height=500')">
+						   [PDF]
+                          </a>|<a href="w13-Apr28.docx" target="popup" 
+                          onclick="window.open('w13-Apr28.docx','name','width=900,height=500')">
+						    [WORD]
+                          </a>|</li>
+           </ul>
+        </ul>
+
+<b> ANSWER KEY</b>: Key to weekly quiz #13. <br>
+               <ul>
+                  <li> <a href="w13-quiz-key.pdf" target="popup" 
+                          onclick="window.open('w13-quiz-key.pdf','name','width=900,height=500')">
+                          Week #13</a> <font color = "blue"></font>
+               </ul>
+<br>
+<b>ASSIGNMENTS:</b> 
+         <ul>
+           <li> Read sections 4.5 - 6.1 of <font color = "red">required textbook</font> 
+               
+           <li> Weekly Quiz via <a href="https://d2l.wcupa.edu/d2l/login" target="popup"  onclick="window.open('https://d2l.wcupa.edu/d2l/login','name', 'width=900,height=500')"> <b>D2L (login)</b></a></li>
+                <font color = "darkblue"><b> Open on Thursday</b>: 12:00 PM </font> <br>
+                <font color = "red"><b> Close on Sunday </b>: 11:30 PM </font>
+       </ul>
+</left><hr>
+    
+
+    
+
+<!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+<h3 id="week14"  class="section">Week 14: Functions of Several Variables and Partial Derivative</h3>
+
+<hr><left>
+<b>TOPICS:</b> The following topics will be covered this week.<br>
+<ul>
+      <li> Functions of several variables
+        <ul>
+          <li> Definitions 
+          <li> Applications
+        </ul>
+       <li> Partial derivative
+         <ul>
+          <li> Finding partial derivative and evaluate partial derivative
+          <li> Estimation the change of the function with multiple variables   
+         </ul>
+        <li> Class note: <a href="w14-may03.pdf" target="popup" 
+                          onclick="window.open('w14-may03.pdf','name','width=900,height=500')">
+						   [PDF]
+                          </a> <a href="w14-may03.docx" target="popup" 
+                          onclick="window.open('w14-may03.docx','name','width=900,height=500')">
+						   [WORD]
+                          </a></li>
+        </ul>
+
+<b> Final Exam Review</b>: <font color = "red"><b>Review sheet for the final exam.</b></font> <br>
+               <ul>
+                  <li> <a href="w15-FinalExamReviewTopics.pdf" target="popup" 
+                          onclick="window.open('w15-FinalExamReviewTopics.pdf','name','width=900,height=500')">
+                          Final Exam Topic List</a> <font color = "blue"></font>
+               </ul>
+
+    <b>ASSIGNMENTS:</b> <font color = "blue"><b> There will be no weekly quiz for this week! </b></font>
+
+</left><hr>
+    
+     
+    
+ 
+<!-- MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+
+    <h3 id="week15"  class="section"><font color = "red">Week 15: Final Exam Information</font></h3>
+     <font color = "rblue">There Will No Make Up Final Exam. Your Course Grade Will Be Posted on myWCU on May 16-17.</font>
+<hr><left>
+    <font color = "red">
+<ul>
+    <li> <b>Schedule</b>
+        <ul>
+            <li>Morning Class [class meeting from 9:30 AM - 10:45 AM] </li>
+              <ul>
+                <li> Day: Thursday, 5/12/2022.
+                <li> Time: 8:00 AM - 10:00 AM.
+                <li> Room:  Anderson 211.
+               </ul>
+                <li>Evening Class [class meeting from 5:45 PM - 7:00 PM] </li>
+              <ul>
+                <li> Day: Thursday, 5/12/2022.
+                <li> Time: 6:00 PM - 8:00 PM.
+                <li> Room:  UNA 155.
+               </ul>
+        </ul>
+     <li> <b>Coverage and Format</b>
+         <ul>
+          <li> All topics covered in this semester. 
+          <li> Both multiple choice problems and show-your-work problems.    
+         </ul>
+      <li> <b>Logistics and policies</b>
+        <ul>
+          <li> One page (A4 size) formula sheet.
+          <li> A calculator (graphic and scientific) calculator.
+          <li> Computers and cell phones are not allowed.  
+        </ul>
+    </ul>
+</font>
+    
+</left><hr>
+    
+        
+
+<!--XXXXXXXXXXXXXXXXXXXXXXXXXXX  FOOTER  XXXXXXXXXXXXXXXXXXXXXXX-->
+</div>
+        <footer class="col-md-12">
+<hr>
+    <p class="text-center">Copyright &copy; 
+        <script>
+            var CurrentYear = new Date().getFullYear()
+            document.write(CurrentYear)
+        </script>
+       C. Peng. Last updated: 
+         <script> 
+            document.write(new Date().toLocaleDateString()); 
+         </script>
+
+ <a href='http://www.freevisitorcounters.com'>.</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=bdd86ca03bf3709e4523bf44ac939417956604f4'></script>
+<script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/832947/t/5"></script>   </p>
+</body>
+</html>
