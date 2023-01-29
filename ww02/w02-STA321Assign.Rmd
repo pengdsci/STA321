@@ -1,6 +1,6 @@
 ---
 title: 'STA321: Week #02 Assignment'
-author: 'Due: Sunday, 11:30 PM, 2/8'
+author: 'Due: Sunday, 11:30 PM, 2/5'
 date: ""
 output:
   html_document: 
