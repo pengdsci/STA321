@@ -245,7 +245,7 @@ VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV-->
                    onclick="window.open('ww01/w01-RMarkdownTemplate4StatsReports.Rmd','name','width=900,height=500')">
                    <font color = "navy">[PDF] </font></a>
         </li>
-      <li> Setting-ip GitHib <a href="ww01/w01-R-RStudio-Github.html" target="popup" 
+      <li> Setting-up GitHib <a href="ww01/w01-R-RStudio-Github.html" target="popup" 
                    onclick="window.open('ww01/w01-R-RStudio-Github.html','name','width=900,height=500')">
                    <font color = "navy">[HTML] </font></a>
                    <a href="ww01/w01-R-RStudio-Github.Rmd" target="popup" 
@@ -296,8 +296,8 @@ VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV-->
 
 <!--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV   
 VVVVVVVVVVVVVVVVV              Week #02            VVVVVVVVVVVVVVVVV
-VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV>
-<h3 id="week02"  class="section">Week 02: Nonparametric Bootstrap</h3>
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV-->
+<h3 id="week02"  class="section">Week 02: Nonparametric Bootstrap Method</h3>
 
 <hr><left>
     
@@ -305,29 +305,29 @@ VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV>
 <b>LEARNING OBJECTIVES:</b> <font color = "#C5031D"> After finishing this module, you will be able to </font><br>
     <ul>
      1. justify when to use sampling distribution and bootstrap sampling distribution.<br>
-     2. constrct boostrap confidence interval.<br>
-     3. write R basic R code to perform bootstrap analysis and make basic plots. 
+     2. constrct boostrap confidence interval of population parameters such as means, standard deviation, etc.<br>
+     3. write basic R code to perform bootstrap analysis and make basic plots. 
      </ul>    
     
 <b>TOPICS:</b> The following topics will be covered this week.<br>
     <ul>
        <li> Review of simple random sampling (SRS)
-       <li> Sampling from empirical distribution &ndash; Bootstrap sampling
-       <li> Bootstrap confidence intervals
+       <li> Sampling from empirical distribution: Bootstrap sampling
+       <li> Conctruction of Bootstrap confidence intervals for population mean
        <li> <b>R Applications</b> 
           <ul>
-          <li><font color="red"><b>Class note: </b></font> <a href="w02-bootstrap.html" target="popup" 
-                onclick="window.open('w02-bootstrap.html','name','width=900,height=500')">
+          <li><font color="red"><b>Class note: </b></font> <a href="ww02/w02-STA321bootstrap.html" target="popup" 
+                onclick="window.open('ww02/w02-STA321bootstrap.html','name','width=900,height=500')">
                 <font color = "navy">[HTML]</font></a> , 
-               <a href="w02-bootstrap.Rmd" target="popup" 
-                onclick="window.open('w02-bootstrap.Rmd','name','width=900,height=500')">
+               <a href="ww02/w02-STA321bootstrap.Rmd" target="popup" 
+                onclick="window.open('ww02/w02-STA321bootstrap.Rmd','name','width=900,height=500')">
                 <font color = "navy">[RMD]</font></a> 
 
-        <li> <b>Data Sets Used in Class Note </b>:<a href="https://stat321.s3.amazonaws.com/w02-wcuheights.txt" target="popup" 
-                onclick="window.open('https://stat321.s3.amazonaws.com/w02-wcuheights.txt','name','width=900,height=500')">
+        <li> <b>Data Sets Used in Class Note </b>:<a href="https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-wcuheights.txt" target="popup" 
+                onclick="window.open('https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-wcuheights.txt','name','width=900,height=500')">
                 <font color = "navy"> (1). WCU Heights [txt, Simulated Data]</font></a> 
-                <a href="https://stat321.s3.amazonaws.com/w02-iris.txt" target="popup" 
-                onclick="window.open('https://stat321.s3.amazonaws.com/w02-iris.txt','name','width=900,height=500')">
+                <a href="https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt" target="popup" 
+                onclick="window.open('https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt','name','width=900,height=500')">
                 <font color = "navy"> (2). Iris Data [txt]</font></a> </li>
         </ul>
        </ul>
@@ -337,15 +337,22 @@ VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV>
       <ul>
          <li> Reading Assignments</li>
             <ul>
-             <li> Read 
-                  <a href="https://ebookcentral.proquest.com/lib/wcupa/reader.action?docID=261114&ppg=7" target="popup"   
+             <li> <a href="https://ebookcentral.proquest.com/lib/wcupa/reader.action?docID=261114&ppg=7" target="popup"   
                    onclick="window.open('https://ebookcentral.proquest.com/lib/wcupa/reader.action?docID=261114&ppg=7','name','width=900,height=500')">
                     <font color = "navy">Chapter 4 of Roff's eBook </font></a> (pages 66-70 and 74-76.)</li>
-             <li> <a href="w02-bootstrap.html" target="popup"  
-                   onclick="window.open('w02-bootstrap.html','name','width=900,height=500')">
+             <li> <a href="ww02/w02-STA321bootstrap.html" target="popup"  
+                   onclick="window.open('ww02/w02-STA321bootstrap.html','name','width=900,height=500')">
                     <font color = "navy">Class Note: Understand the concept and practice examples</font></a></li>
             </ul>
-          <font color = "red"><b> No assignment due this week.</b> </font> <br>
+          <li> Written Assignments
+            <ul>
+             <li> <a href="ww02/w02-STA321Assign.html" target="popup"  
+                   onclick="window.open('w02-STA321Assign.html','name','width=900,height=500')">
+                    <font color = "navy">Week #2 Assignment: Application of Bootstrap Method.</font></a></li>
+             <li> <font color = "red"><b>Wee #2 Assignment Due: Sunday,  11:30 PM, 2/8.</b> </font> <br></li>
+              </ul>
+          </li>
+
          </ul>
 </left><hr>
 
