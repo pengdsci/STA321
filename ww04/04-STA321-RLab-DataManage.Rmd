@@ -89,6 +89,7 @@ p { background-color:white; }
 ```
 
 ```{r setup, include=FALSE}
+options(digits = 15)
 # Detect, install and load packages if needed.
 if (!require("knitr")) {
    install.packages("knitr")
@@ -98,10 +99,7 @@ if (!require("pander")) {
    install.packages("pander")
    library(pander)
 }
-if (!require("nleqslv")) {
-   install.packages("nleqslv")
-   library(nleqslv)
-}
+
 #
 # specifications of outputs of code in code chunks
 knitr::opts_chunk$set(echo = TRUE,      
@@ -192,6 +190,11 @@ A new R function **pander()** in the `pander{}` library was used in the above co
 
 If the ID variable was truncated before saving to CSV format, then the truncated digits will not be recovered.
 
+```{r}
+options(digits = 7)  # change the default number digits
+```
+
+\
 
 # The **ifelse()** Function
 
@@ -217,8 +220,10 @@ dat$groupAge02 = ifelse(dat$AGE > 50, "(50, 150)", ifelse(dat$AGE < 30, "[16, 30
 pander(head(dat[, c("AGE", "groupAge", "groupAge02")]))
 ```
 
+
 **Remark**: **ifelse()** is particularly useful when you want to combine categories of existing categorical variables.
 
+\
 
 # The **cut()** Function
 
@@ -262,7 +267,7 @@ m0 = lm(PriceUnitArea~ factor(TransactionYear) + HouseAge + NumConvenStores + Di
 summary(m0)
 ```
 
-**Test the hypothesis that Distance2MRT is NEGATIVELY associated with PriceUnitArea**
+**Test the claim that Distance2MRT is NEGATIVELY associated with PriceUnitArea**
 
 Assuming the correct model to be 
 
@@ -276,27 +281,29 @@ $$
 PriceUnitArea = 41.0090647 + 3.0136617TransactionYear - 0.2587855HouseAge +     1.2965524NumConvenStores - 0.0053972Distance2MRT
 $$
 
-The hypothesis is equivalent to
+The claim is equivalent to $\beta_4 < 0$. Therefore, statistical hypothesis is equivalent to
 
 $$
-H_0: \beta_4 \le 0  \  \  \text{ versus } \ \ H_a: \beta_4 > 0
+H_0: \beta_4 \ge 0  \  \  \text{ versus } \ \ H_a: \beta_4 < 0
 $$
 
-This is **right-tailed** test! The rejection region is on the right tail of the density curve.  How to calculate the p-value? 
+This is **left-tailed** test from the alternative hypothesis! The rejection region is on the **left tail** of the density curve.  How to calculate the p-value? 
 
 **Note that the p-values given in the table are for the two-tailed tests. other than this, all other statistics are correct regardless of one or two-tailed test!**
 
 The p-value is given by
 
 $$
-\text{p-value} = P(TS > t_{414 -5})  = 0.5021518
+\text{p-value} = P(TS < t_{414 -5})  \approx 0
 $$
 
+where $TS = -12.035$.
+
 ```{r}
-1-pt(-0.0053972, 409)
+pt(-12.035, 409)
 ```
 
-Since the p-value is $p \approx 0.5021518$, we fail to reject the null hypothesis that the distance between the transportation center and the house price are negatively associated.
+Since the p-value is $p \approx 0$, we **reject** the null hypothesis that the distance between the transportation center and the house price are non-negatively associated. Therefore, we **conclude the alternative hypothesis**, that is, we support the claim that the two variables are negatively correlated.
 
 
 

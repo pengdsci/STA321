@@ -2144,6 +2144,9 @@ markdown table. We add more features to the output table (check the help
 document for more information and examples).</p>
 <p>If the ID variable was truncated before saving to CSV format, then
 the truncated digits will not be recovered.</p>
+<pre class="r"><code>options(digits = 7)  # change the default number digits</code></pre>
+<p><br />
+</p>
 </div>
 </div>
 <div id="the-ifelse-function" class="section level1" number="4">
@@ -2254,6 +2257,8 @@ pander(head(dat[, c(&quot;AGE&quot;, &quot;groupAge&quot;, &quot;groupAge02&quot
 <p><strong>Remark</strong>: <strong>ifelse()</strong> is particularly
 useful when you want to combine categories of existing categorical
 variables.</p>
+<p><br />
+</p>
 </div>
 <div id="the-cut-function" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> The
@@ -2407,30 +2412,30 @@ summary(m0)</code></pre>
 ##     NumConvenStores + Distance2MRT, data = realestate0)
 ## 
 ## Residuals:
-##             Min              1Q          Median              3Q             Max 
-## -38.24951719093  -5.51921452915  -1.13512459810   4.38148862102  76.33883620458 
+##     Min      1Q  Median      3Q     Max 
+## -38.250  -5.519  -1.135   4.381  76.339 
 ## 
 ## Coefficients:
-##                                      Estimate        Std. Error   t value
-## (Intercept)                 41.00906469845253  1.51238746945112  27.11545
-## factor(TransactionYear)2013  3.01366165010783  0.97940376459642   3.07704
-## HouseAge                    -0.25878548020750  0.03974421391985  -6.51127
-## NumConvenStores              1.29655241287712  0.19231416888115   6.74185
-## Distance2MRT                -0.00539718071889  0.00044846330258 -12.03483
-##                                           Pr(&gt;|t|)    
-## (Intercept)                 &lt; 0.000000000000000222 ***
-## factor(TransactionYear)2013              0.0022313 ** 
-## HouseAge                         0.000000000218775 ***
-## NumConvenStores                  0.000000000053427 ***
-## Distance2MRT                &lt; 0.000000000000000222 ***
+##                               Estimate Std. Error t value             Pr(&gt;|t|)
+## (Intercept)                 41.0090647  1.5123875  27.115 &lt; 0.0000000000000002
+## factor(TransactionYear)2013  3.0136617  0.9794038   3.077              0.00223
+## HouseAge                    -0.2587855  0.0397442  -6.511      0.0000000002188
+## NumConvenStores              1.2965524  0.1923142   6.742      0.0000000000534
+## Distance2MRT                -0.0053972  0.0004485 -12.035 &lt; 0.0000000000000002
+##                                
+## (Intercept)                 ***
+## factor(TransactionYear)2013 ** 
+## HouseAge                    ***
+## NumConvenStores             ***
+## Distance2MRT                ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 9.15727478277 on 409 degrees of freedom
-## Multiple R-squared:  0.551447086158, Adjusted R-squared:  0.547060260595 
-## F-statistic: 125.705268698 on 4 and 409 DF,  p-value: &lt; 0.0000000000000002220446049</code></pre>
-<p><strong>Test the hypothesis that Distance2MRT is NEGATIVELY
-associated with PriceUnitArea</strong></p>
+## Residual standard error: 9.157 on 409 degrees of freedom
+## Multiple R-squared:  0.5514, Adjusted R-squared:  0.5471 
+## F-statistic: 125.7 on 4 and 409 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+<p><strong>Test the claim that Distance2MRT is NEGATIVELY associated
+with PriceUnitArea</strong></p>
 <p>Assuming the correct model to be</p>
 <p><span class="math display">\[
 PriceUnitArea = \beta_0 + \beta_1 TransactionYear + \beta_2 HouseAge
@@ -2441,25 +2446,30 @@ PriceUnitArea = \beta_0 + \beta_1 TransactionYear + \beta_2 HouseAge
 PriceUnitArea = 41.0090647 + 3.0136617TransactionYear -
 0.2587855HouseAge +     1.2965524NumConvenStores - 0.0053972Distance2MRT
 \]</span></p>
-<p>The hypothesis is equivalent to</p>
+<p>The claim is equivalent to <span class="math inline">\(\beta_4 &lt;
+0\)</span>. Therefore, statistical hypothesis is equivalent to</p>
 <p><span class="math display">\[
-H_0: \beta_4 \le 0  \  \  \text{ versus } \ \ H_a: \beta_4 &gt; 0
+H_0: \beta_4 \ge 0  \  \  \text{ versus } \ \ H_a: \beta_4 &lt; 0
 \]</span></p>
-<p>This is <strong>right-tailed</strong> test! The rejection region is
-on the right tail of the density curve. How to calculate the
-p-value?</p>
+<p>This is <strong>left-tailed</strong> test from the alternative
+hypothesis! The rejection region is on the <strong>left tail</strong> of
+the density curve. How to calculate the p-value?</p>
 <p><strong>Note that the p-values given in the table are for the
 two-tailed tests. other than this, all other statistics are correct
 regardless of one or two-tailed test!</strong></p>
 <p>The p-value is given by</p>
 <p><span class="math display">\[
-\text{p-value} = P(TS &gt; t_{414 -5})  = 0.5021518
+\text{p-value} = P(TS &lt; t_{414 -5})  \approx 0
 \]</span></p>
-<pre class="r"><code>1-pt(-0.0053972, 409)</code></pre>
-<pre><code>## [1] 0.502151845087214</code></pre>
-<p>Since the p-value is $ p $, we fail to reject the null hypothesis
-that the distance between the transportation center and the house price
-are negatively associated.</p>
+<p>where <span class="math inline">\(TS = -12.035\)</span>.</p>
+<pre class="r"><code>pt(-12.035, 409)</code></pre>
+<pre><code>## [1] 0.00000000000000000000000000004552206</code></pre>
+<p>Since the p-value is <span class="math inline">\(p \approx
+0\)</span>, we <strong>reject</strong> the null hypothesis that the
+distance between the transportation center and the house price are
+non-negatively associated. Therefore, we <strong>conclude the
+alternative hypothesis</strong>, that is, we support the claim that the
+two variables are negatively correlated.</p>
 </div>
 
 
