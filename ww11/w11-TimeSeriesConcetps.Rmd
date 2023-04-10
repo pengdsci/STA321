@@ -3,6 +3,18 @@ title: 'Week #11: Concepts of Time Series'
 author: "Cheng Peng"
 date: "Wes Chester University"
 output:
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 5
+    fig_height: 4
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
   html_document: 
     toc: yes
     toc_float: yes
@@ -12,18 +24,6 @@ output:
     fig_caption: yes
     number_sections: yes
     theme: readable
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 5
-    fig_height: 4
 ---
 <style type="text/css">
 h1.title {
@@ -251,7 +251,7 @@ include_graphics("w11-ConceptsDefinition.jpg")
 
 **Seasonal/Cycle Frequency** is used to define time series objects for forecasting models in R library **{forecast}**. In the R function **ts()**, the argument **frequency** needs to be specified.
 
-The "**frequency**" is the number of observations per "cycle" (normally a year, but sometimes a week, a day, an hour, etc). When using the ts() function in R, the following choices should be used.
+The "**frequency**" is the number of observations <font color = "red">**\color{red}per seasonal cycle**</font>. When using the ts() function in R, the following choices should be used.
 
 |  Data    |  frequency  |
 |:--------:|:-----------:|
@@ -262,7 +262,7 @@ The "**frequency**" is the number of observations per "cycle" (normally a year, 
 
 Actually, there are not 52 weeks in a year, but 365.25/7 = 52.18 on average. But most functions that use **ts** objects require integer frequency.
 
-Once the frequency of observations is smaller than a week, then there is usually more than one way of handling the frequency. For example, data observed every minute might have an **hourly seasonality** (frequency=60), a **daily seasonality** (frequency=24x60=1440), a **weekly seasonality** (frequency=24x60x7=10080), and an **annual seasonality** (frequency=24x60x365.25=525960). If we want to use a **ts** object, then we need to decide which of these is the most important.
+Once the frequency of observations is smaller than a week, then there is usually more than one way of handling the frequency. For example, data <font color = "red">*\color{red}observed every minute*</font> might have an **hourly seasonality** (frequency=60), a **daily seasonality** (frequency=24x60=1440), a **weekly seasonality** (frequency=24x60x7=10080), and an **annual seasonality** (frequency=24x60x365.25=525960). If we want to use a **ts** object, then we need to decide which of these is the most important.
 
 
 ## Baseline Methods

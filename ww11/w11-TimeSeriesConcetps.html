@@ -1735,10 +1735,9 @@ model at historical time points.</p></li>
 series objects for forecasting models in R library
 <strong>{forecast}</strong>. In the R function <strong>ts()</strong>,
 the argument <strong>frequency</strong> needs to be specified.</p>
-<p>The “<strong>frequency</strong>” is the number of observations per
-“cycle” (normally a year, but sometimes a week, a day, an hour, etc).
-When using the ts() function in R, the following choices should be
-used.</p>
+<p>The “<strong>frequency</strong>” is the number of observations
+<font color="red"><strong>per seasonal cycle</strong></font>. When
+using the ts() function in R, the following choices should be used.</p>
 <table>
 <thead>
 <tr class="header">
@@ -1770,13 +1769,13 @@ average. But most functions that use <strong>ts</strong> objects require
 integer frequency.</p>
 <p>Once the frequency of observations is smaller than a week, then there
 is usually more than one way of handling the frequency. For example,
-data observed every minute might have an <strong>hourly
-seasonality</strong> (frequency=60), a <strong>daily
-seasonality</strong> (frequency=24x60=1440), a <strong>weekly
-seasonality</strong> (frequency=24x60x7=10080), and an <strong>annual
-seasonality</strong> (frequency=24x60x365.25=525960). If we want to use
-a <strong>ts</strong> object, then we need to decide which of these is
-the most important.</p>
+data <font color="red"><em>observed every minute</em></font> might
+have an <strong>hourly seasonality</strong> (frequency=60), a
+<strong>daily seasonality</strong> (frequency=24x60=1440), a
+<strong>weekly seasonality</strong> (frequency=24x60x7=10080), and an
+<strong>annual seasonality</strong> (frequency=24x60x365.25=525960). If
+we want to use a <strong>ts</strong> object, then we need to decide
+which of these is the most important.</p>
 </div>
 <div id="baseline-methods" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Baseline Methods</h2>
