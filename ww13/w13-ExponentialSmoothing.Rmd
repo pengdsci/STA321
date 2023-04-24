@@ -3,18 +3,6 @@ title: 'Week #13- Exponential Smoothing Methods'
 author: "Cheng Peng"
 date: "West Chester University"
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 5
-    fig_height: 4
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_float: yes
@@ -24,6 +12,18 @@ output:
     fig_caption: yes
     number_sections: yes
     theme: readable
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 5
+    fig_height: 4
 ---
 <style type="text/css">
 h1.title {
@@ -179,7 +179,7 @@ include_graphics("w13-ETS-30-SmoothingModels.jpg")
 ```
 We can use the notation **ETS(error, trend, seasonality)** to represent different smoothing models. For example, (1) **ETS(A,N,N)** - simple exponential smoothing model with additive errors, (2) **ETS(A,A,N)** - additive trend with additive errors (so Holt's linear method with additive errors).  
 
-Since the ETS smoothing models are unstable, in this note, we only focus on a few commonly used smoothing models:
+Since some of the ETS smoothing models are unstable, in this note, we only focus on a few commonly used smoothing models:
 
 * **ETS(A,N,N)**: Simple exponential smoothing with additive errors.
 
