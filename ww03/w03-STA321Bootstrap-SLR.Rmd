@@ -107,6 +107,12 @@ if (!require("pander")) {
    install.packages("pander")
    library(pander)
 }
+
+if (!require("psych")) {   
+  install.packages("psych")
+   library(psych)
+}
+
 # specifications of outputs of code in code chunks
 knitr::opts_chunk$set(echo = TRUE,      # include code chunk in the output file
                       warnings = FALSE,  # sometimes, you code may produce warning messages,
@@ -183,13 +189,18 @@ We can see that there are clusters in the plot. We can use this information to d
 
 We now make a simple pairwise plot to show the association between variables and pick one as an example for the simple linear regression model.
 
-```{r fig.align='center'}
-pairs(realestate[, -c(1,5,6)], main ="Pair-wise Association: Scatter Plot")
+
+
+```{r fig.align='center', fig.width=7, fig.height=7, fig.cap="Pairwise scatter plot."}
+
+pairs.panels(realestate[, -c(1,5,6)], pch=21, main="Pair-wise Scatter Plot of r numerical variables") #to show color grouping
 ```
+
+
 
 The above pair-wise plot shows that some of the pair-wise associations are stronger than others. We will revisit this data set and use a multiple linear regression model to see which set of variables has a statistically significant impact on the sale prices.
 
-<font color = "darkred" size = 5><b> The pair-wise scatter plot is used only for numerical variables to display the relationship between them! Categorical variables (including numerically encoded ones)!</b></font>
+<font color = "darkred" size = 5><b> The pair-wise scatter plot is used only for numerical variables to display the relationship between them! Categorical variables (including numerically encoded ones) should not be included in pairwise scatter plot!</b></font>
 
 
 
