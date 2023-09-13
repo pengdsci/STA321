@@ -1,22 +1,22 @@
 ---
 title: "Report on the Mini-Project on MLR"
 author: ''
-date: " "
+date: "Due: 11:30 PM, Sunday, 10/1/23"
 output:
+  pdf_document: 
+    toc_depth: 4
+    fig_caption: yes
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
   html_document: 
     toc_depth: 4
     fig_width: 6
     fig_height: 4
     fig_caption: yes
     theme: readable
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
-  pdf_document: 
-    toc_depth: 4
-    fig_caption: yes
 ---
 
 <style type="text/css">
@@ -101,8 +101,8 @@ The format of the report should have the following components using last and thi
 * Model building
   + starting with a full model and performing residual analysis
   + identifying violations and finding remedies
-  + need model transformations like the Cox-Cox procedure?
-  + variable selection? -backward and forward selection, stepwise selection.
+  + need model transformations like the Box-Cox procedure?
+  + variable selection? -backward and forward selection, stepwise variable selection.
   + model selection using goodness-of-fit measures.
   + selection of the final model.
 * Bootstrapping the final model
