@@ -3,18 +3,6 @@ title: "2. Bootstrap Simple Linear Regression Model"
 author: 'Cheng Peng'
 date: "Lecture Note: STA321 Topics of Advanced Statistics"
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -24,6 +12,18 @@ output:
     number_sections: yes
     theme: readable
     fig_height: 4
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 always_allow_html: true
@@ -394,15 +394,6 @@ for(i in 1:B){
 ```
 
 The above code generated boostrap estimates of regression coefficients $\beta_0$ and $\beta_1$. We visualize the bootstrap sampling distributions of the regression coefficients.
-
-
-```{}
-fun <- dnorm(x2, mean = mean(x), sd = sd(x))
-
-hist(x, prob = TRUE, ylim = c(0, max(fun)),
-     main = "Histogram with density curve")
-lines(density(x), col = 4, lwd = 2)
-```
 
 
 ```{r echo = FALSE, fig.align='center', fig.width=7, fig.height=4, fig.cap="Bootstrap sampling distribution (with reference normal density curve)"}
