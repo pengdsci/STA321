@@ -189,7 +189,7 @@ pairs(realestate[, -c(1,5,6)], main ="Pair-wise Association: Scatter Plot")
 
 The above pair-wise plot shows that some of the pair-wise associations are stronger than others. We will revisit this data set and use a multiple linear regression model to see which set of variables has a statistically significant impact on the sale prices.
 
-<font color = "darkred", size = 5><b> The pair-wise scatter plot is used only for numerical variables to display the relationship between them! Categorical variables (including numerically encoded ones)!</b></font>
+<font color = "darkred" size = 5><b> The pair-wise scatter plot is used only for numerical variables to display the relationship between them! Categorical variables (including numerically encoded ones)!</b></font>
 
 
 
