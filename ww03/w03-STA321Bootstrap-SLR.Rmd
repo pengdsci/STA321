@@ -112,6 +112,11 @@ if (!require("psych")) {
   install.packages("psych")
    library(psych)
 }
+if (!require("MASS")) {   
+  install.packages("MASS")
+   library(MASS)
+}
+
 
 # specifications of outputs of code in code chunks
 knitr::opts_chunk$set(echo = TRUE,      # include code chunk in the output file
@@ -170,7 +175,7 @@ Next, we make a scatter plot of longitude and latitude to see the potential to c
 plot(lon, lat, main = "Sites of houses sold in 2012-2013")
 ```
 
-```{r echo = FALSE, fig.align='center', fig.width=7, fig.height=5, fig.cap="Property locations"}
+```{r echo = FALSE, fig.align='center', fig.width=8, fig.height=5, fig.cap="Property locations"}
 library(leaflet)
 m <- leaflet() %>%
   addTiles() %>%  # Add default OpenStreetMap map tiles
@@ -178,10 +183,6 @@ m <- leaflet() %>%
                    color = "navy", radius = ~sqrt((1/46)*realestate$PriceUnitArea))
 m  # Print the map
 ```
-
-
-
-
 
 
 We can see that there are clusters in the plot. We can use this information to define a cluster variable to capture the potential differences between the geographic clusters in terms of the sale prices.
@@ -192,7 +193,6 @@ We now make a simple pairwise plot to show the association between variables and
 
 
 ```{r fig.align='center', fig.width=7, fig.height=7, fig.cap="Pairwise scatter plot."}
-
 pairs.panels(realestate[, -c(1,5,6)], pch=21, main="Pair-wise Scatter Plot of r numerical variables") #to show color grouping
 ```
 
@@ -200,7 +200,7 @@ pairs.panels(realestate[, -c(1,5,6)], pch=21, main="Pair-wise Scatter Plot of r 
 
 The above pair-wise plot shows that some of the pair-wise associations are stronger than others. We will revisit this data set and use a multiple linear regression model to see which set of variables has a statistically significant impact on the sale prices.
 
-<font color = "darkred" size = 5><b> The pair-wise scatter plot is used only for numerical variables to display the relationship between them! Categorical variables (including numerically encoded ones) should not be included in pairwise scatter plot!</b></font>
+<font color = "darkred" size = 5><b> The pair-wise scatter plot is used only for numerical variables to display the relationship between them! Categorical variables (including numerically encoded ones) should not be included in any pairwise scatter plot!</b></font>
 
 
 
@@ -296,6 +296,36 @@ We can see from the residual plots that
 * The bottom-right plot indicates that there are no serious outliers,
 
 * In addition, the top-left residual plot also has a non-linear trend. We will not do the variable transformation to fix the problem,
+
+
+### Box-Cox Transformation
+
+The Box-Cox transformation was developed to transforms the target variable so that it is close to a normal distribution. The explicit expression of the transformation is given by
+
+```{r echo = FALSE, fig.align='center', out.width="30%"}
+include_graphics("img/boxcox.png")
+```
+
+Many statistical procedures such linear regression models are built on the normal distribution. This transformation allows us to transform some normally distributed variables so that normal distrbution based procedures can be for these non-normal variables. 
+
+Next, we perform the Box-cox transformation to the response variable.
+
+```{r fig.align='center', fig.width=5, fig.height=5}
+boxcox(lm(price ~ distance), lambda = seq(-1, 1, 1/10))
+```
+
+The above plot indicates that transformation of the response is worthwhile. The convenient value of $\lambda = 1/4$. 
+
+```{r fig.align='center', fig.width=7, fig.height=7, fig.cap="Box-cox transformed SLR."}
+lambda = 1/4
+price.25 = (price^lambda-1)/lambda
+boxcox.m = lm(price.25 ~ distance)
+##
+par(mfrow=c(2,2))
+plot(boxcox.m)
+```
+
+The residual plots show some improvements, but there are still patterns in the plots. We will use bootstrap procedure to fit linear regression model in the subsequent subsections.
 
 
 ### Inferential Statistics
@@ -448,9 +478,10 @@ After you find your data set, please go to the discussion board to post your dat
 
 The following sites have some data sets. please find a data set you are interested in for the first project and this week's assignment. You can also choose data from other sites.  
 
+* My course project data repository: <https://pengdsci.github.io/datasets/>
 
-* 10 open data sets for linear regression <https://lionbridge.ai/datasets/10-open-datasets-for-linear-regression/>
+* 10 open data sets for linear regression: <https://lionbridge.ai/datasets/10-open-datasets-for-linear-regression/>
 
-* UFL Larry Winner's Teaching Data Sets <http://users.stat.ufl.edu/~winner/datasets.html>
+* UFL Larry Winner's Teaching Data Sets: <http://users.stat.ufl.edu/~winner/datasets.html>
 
 
