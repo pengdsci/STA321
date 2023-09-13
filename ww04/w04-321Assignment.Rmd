@@ -1,6 +1,6 @@
 ---
 title: 'STA321 Week #4 Assignment - MLR'
-author: 'Due: 11:30 PM, Sunday, 02/19/2023'
+author: 'Due: 11:30 PM, Sunday, 09/24/2023'
 date: " "
 output:
   pdf_document: 
@@ -113,11 +113,9 @@ knitr::opts_chunk$set(echo = TRUE,      # include code chunk in the output file
                       )   
 ```
 
-\
 
 \
 
-# Introduction
 
 This assignment focuses on the multiple regression model using various techniques you learned from your previous courses. You will use the data set you selected last week. That data set will also be used for the next assignment that is based on this week's report.
 
