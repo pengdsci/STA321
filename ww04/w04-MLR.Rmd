@@ -3,6 +3,18 @@ title: "4: Multiple Linear Regression Model"
 author: 'Cheng Peng'
 date: "Class Note: STA321 Topics of Advanced Statistics"
 output:
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -12,18 +24,6 @@ output:
     number_sections: yes
     theme: readable
     fig_height: 4
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 ---
@@ -97,9 +97,9 @@ if (!require("MASS")) {
    install.packages("MASS")
    library(MASS)
 }
-if (!require("nleqslv")) {
-   install.packages("nleqslv")
-   library(nleqslv)
+if (!require("car")) {
+   install.packages("car")
+   library(car)
 }
 if (!require("scales")) {
 install.packages("scales")                                        
@@ -234,19 +234,40 @@ Significant tests and goodness-of-fit measures are used to identify the final mo
 Significant tests are used for selecting statistically significant variables to include in the model. However, in practical applications, some practically important variables should always be included in the model regardless of their statistical significance. The t-test is used for selecting (or dropping) individual statistically significant variables.
 
 
-### Variable (model) selection criteria
+### Variable (model) selection criteria - Goodness-of-fit Measures
 
-There are many different methods for model selection.
+There are many different methods based on different performance measures for model selection. Most of these goodness-of-fit measures are defined based on **sum of squares** that defined in the following (use SLR for illustration)
 
-* $R^2$ - coefficient of determination. It explains the variation explained by the underlying regression model. $R^2$ is used to compare two candidate models. Adjusted $R^2$ is used when there are many predictor variables in the model.
+```{r echo=FALSE, fig.align ="center", fig.cap="Definitions of sum od squares", out.width="60%"}
+knitr::include_graphics("img/w04-SSS.png")
+```
 
-* Likelihood ratio $\chi^2$ test - comparing two candidate models with a hierarchical relationship.
+* $R^2$ - coefficient of determination. It explains the variation explained by the underlying regression model. 
+
+$$
+R^2 = \frac{SSR}{SST} = 1 - \frac{SSE}{SST}
+$$
+
+$R^2$ is used to compare two candidate models. Adjusted $R^2$ is used when there are many predictor variables in the model. It is defined by
+
+$$
+R^2_{adj} = 1 - \frac{n-1}{n-p} \frac{SSE}{SST}
+$$
 
 * Information criteria - likelihood-based measures: AIC and SBC.
 
-* Mallow's Cp - a residual-based measure that is used for comparing two models that do not necessarily have a hierarchical structure.
+$$
+AIC_p = n \ln(SSE) - n\ln(n) + 2p
+$$
+$$
+BIC_p = n\ln(SSE) - n\ln(n) + p\ln(n)
+$$
 
-* F tests - testing the overall significance of a group of regression coefficients.
+* The **prediction sum of squares (PRESS)** is a model validation method used to assess a model's predictive ability that can also be used to compare regression models. It is defined based on an iterative algorithm - Leave-on-out (a special Jackknife resampling method to be discussed in the next module).
+
+* Likelihood ratio $\chi^2$ test - comparing two candidate models with a hierarchical relationship.
+
+* Mallow's Cp - a residual-based measure that is used for comparing two models that do not necessarily have a hierarchical structure.
 
 
 ### Variable selection methods
@@ -258,8 +279,22 @@ There are many different methods for model selection.
 This short note summarized the above two methods for [Variable Selection](http://www.biostat.jhsph.edu/~iruczins/teaching/jf/ch10.pdf)(click the link to view the text).
 
 
+## Multicollinearity Detection - VIF
 
-# Case Study -Factors That Impact the House Sale Prices
+As the name suggests, a variance inflation factor (VIF) quantifies how much the variance is inflated. A variance inflation factor exists for each of the predictors in a multiple regression model. For example, the variance inflation factor for the estimated regression coefficient $b_j$ —denoted $VIF_j$ —is just the factor by which the variance of $b_j$ is "inflated" by the existence of correlation among the predictor variables in the model. To be more specific, the VIF of j-th predictor is defined to be
+
+$$
+\text{VIF}_j = \frac{1}{1-R_j^2}
+$$
+
+Where $R^2_j$ is the coefficient of determination of of regression $E(x_j) = \alpha_0 + \alpha_1x_1 + \cdots+\alpha_{j-1}x_{j-1} + \alpha_{j+1}x_{j+1} + \cdots + \alpha_kx_k$.
+
+A VIF of 1 means that there is no correlation among the jth predictor and the remaining predictor variables, and hence the variance of bj is not inflated at all. The general rule of thumb is that VIFs exceeding 4 warrant further investigation, while VIFs exceeding 10 are signs of serious multicollinearity requiring correction.
+
+R function in the machine learning library `{car}`(classification and regression) can be used to calculate the variance inflation factor for individual predictor.
+
+
+# Case Study - Factors That Affect House-Sale Prices
 
 We present a case study to implement various model-building techniques.
 
@@ -303,7 +338,7 @@ We use longitude and latitude to define a group variable, **geo.group**, in the 
   
 From the map representation of the locations of these houses given below (generated by Tableau Public), we can see that **geo. group** is an indicator  
 
-```{r echo=FALSE, fig.align ="center", fig.cap="Locations of houses for sale", fig.height=4,fig.width=4, dev="jpeg"}
+```{r echo=FALSE, fig.align ="center", fig.cap="Locations of houses for sale", out.width="80%", dev="jpeg"}
 include_graphics("w04-map.jpg")
 ```
 
@@ -339,7 +374,6 @@ Next, we conduct residual diagnostic analysis to check the validity of the model
 ```{r fig.align='center', fig.width=5, fig.height=5, fig.cap="Residual plots of the full model"}
 par(mfrow=c(2,2))
 plot(full.model)
-
 ```
 
 We can see from the residual plots that there are some minor violations:
@@ -352,6 +386,18 @@ We can see from the residual plots that there are some minor violations:
 
 We first perform Box-Cox transformation to correct the non-constant variance and correct the non-normality of the QQ plot.
 
+```{r}
+vif(full.model)
+```
+The VIF indices show that there is no significant issues on multicollinearity. We can also make a bar plot for the VIFs.
+
+```{r fig.align='center', fig.width= 7, fig.height=5}
+#create horizontal bar chart to display each VIF value
+barplot(vif(full.model), main = "VIF Values", horiz = FALSE, col = "steelblue")
+
+```
+
+
 
 ### Models Based on Box-Cox transformation
 
@@ -363,7 +409,6 @@ We first perform Box-Cox transformation and then choose appropriate transformati
 Since non-constant variance, we perform the Box-Cox procedure to search for a transformation of the response variable.  We perform several tried Box-Cox transformations with different transformed 
 
 ```{r fig.align='center', fig.width=7, fig.height=6}
-library(MASS)
 par(pty = "s", mfrow = c(2, 2), oma=c(.1,.1,.1,.1), mar=c(4, 0, 2, 0))
 ##
 boxcox(PriceUnitArea ~ HouseAge + NumConvenStores + sale.year +  log(Dist2MRT.kilo)  
