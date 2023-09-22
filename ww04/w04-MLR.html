@@ -2334,6 +2334,14 @@ candidate models and summarize them in the following table.</p>
  names(tbl)=c(&quot;SSE&quot;, &quot;R.sq&quot;, &quot;R.adj&quot;, &quot;Cp&quot;, &quot;AIC&quot;, &quot;SBC&quot;, &quot;PRESS&quot;)
  tbl
  }</code></pre>
+<p><font color="red"><strong>CAUTION</strong>: <em>SSE, AIC, SBC, and
+PRESS are dependent on the magnitude of the response. <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R^2_{adj}\)</span>, and <span class="math inline">\(C_p\)</span> are scaled (index-like measure) and
+therefore independent on the magnitude of Response. Therefore, models
+with transformed response and those with the original magnitude can NOT
+be compared using SSE, AIC, SBC, and PRESS!</em></font></p>
+<p><font color="blue"><strong>In the following table, three models
+have different magnitude due to transformations, the valid goodness of
+fit measures are <span class="math inline">\(R^2\)</span> and <span class="math inline">\(C_p\)</span>!</strong></font></p>
 <pre class="r"><code>output.sum = rbind(select(full.model), select(sqrt.price.log.dist), select(log.price))
 row.names(output.sum) = c(&quot;full.model&quot;, &quot;sqrt.price.log.dist&quot;, &quot;log.price&quot;)
 kable(output.sum, caption = &quot;Goodness-of-fit Measures of Candidate Models&quot;)</code></pre>
@@ -2394,10 +2402,11 @@ kable(output.sum, caption = &quot;Goodness-of-fit Measures of Candidate Models&q
 </tr>
 </tbody>
 </table>
-<p>We can see from the above table that the goodness-of-fit measures of
-the third model are unanimously better than the other two models.
-Considering the interpretability, goodness-of-fit, and simplicity, we
-choose the last model as the final model.</p>
+<p>We can see from the above table that the goodness-of-fit measures
+(<strong><span class="math inline">\(R^2, R^2_{adj}\)</span>, and <span class="math inline">\(C_p\)</span></strong>) of the third model are
+better than the other two models. Considering the interpretability,
+goodness-of-fit, and simplicity, we choose the last model as the final
+model.</p>
 </div>
 </div>
 <div id="final-model" class="section level3" number="4.4.3">

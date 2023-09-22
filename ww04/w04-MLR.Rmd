@@ -513,6 +513,9 @@ select=function(m){ # m is an object: model
 
 ```
 
+<font color = "red">**\color{red}CAUTION**: *\color{red}SSE, AIC, SBC, and PRESS are dependent on the magnitude of the response. $R^2$, $R^2_{adj}$, and $C_p$ are scaled (index-like measure) and therefore independent on the magnitude of Response. Therefore, models with transformed response and those with the original magnitude can NOT be compared using SSE, AIC, SBC, and PRESS!*</font>  
+
+<font color = "blue">**\color{blue}In the following table, three models have different magnitude due to transformations, the valid goodness of fit measures are $R^2$ and $C_p$!**</font>
 
 ```{r}
 output.sum = rbind(select(full.model), select(sqrt.price.log.dist), select(log.price))
@@ -520,7 +523,7 @@ row.names(output.sum) = c("full.model", "sqrt.price.log.dist", "log.price")
 kable(output.sum, caption = "Goodness-of-fit Measures of Candidate Models")
 ```
 
-We can see from the above table that the goodness-of-fit measures of the third model are unanimously better than the other two models. Considering the interpretability, goodness-of-fit, and simplicity, we choose the last model as the final model.
+We can see from the above table that the goodness-of-fit measures (**$R^2, R^2_{adj}$, and $C_p$**) of the third model are better than the other two models. Considering the interpretability, goodness-of-fit, and simplicity, we choose the last model as the final model.
 
 
 
