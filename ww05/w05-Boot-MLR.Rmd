@@ -1,5 +1,5 @@
 ---
-title: "5: Bootstrapping Multiple Linear Regression Model"
+title: "5: Bootstrapping Revisited and Bootstrap MLR"
 author: 'Cheng Peng'
 date: "West Chester University"
 output:
@@ -115,11 +115,211 @@ knitr::opts_chunk$set(echo = TRUE,
 
 
 
+# Bootstrap Method Revisited
 
-# Introduction
+The **bootstrap** is one of the computationally intensive techniques that is now part of the broad umbrella of **nonparametric statistics** that are commonly called **resampling methods**. 
 
-In this note, we introduce two versions of bootstrap procedures to generate bootstrap samples to estimate the confidence intervals of the coefficients of the regression model identified last week. For reference, I include the code that creates the analytic data set for the final model and the summarized statistics of the model as well.
+We have used this method to construct the confidence interval for a unknown population mean and correlation coefficient of two numerical variables (populations). We also fit bootstrap simple linear regression in two different ways and will use it to build bootstrap MLR.
 
+Based on the limited experience using the bootstrap procedure we had, it is time to look into the resampling technique a little more closer to how and why it works. We will also discuss the implicit assumptions for bootstrap resampling procedures. For ease of illustration, we need to review some concepts learned earlier: probaility density function (`pdf`) and cumulative distribution function (`CDF`).
+
+## `pdf` vs `CDF`
+
+Let $f(x)$ denote the density function of the distribution of the population of interest. The corresponding cumulative distribution is given by
+
+$$
+F(x) = \int_{-\infty}^x f(y)dy
+$$
+
+That is, $F^{\prime}(x) = f(x)$. The following animated graph illustrates the relationship geometrically.
+
+```{r echo=FALSE, fig.align ="center",  out.width = '40%', fig.cap="Relationship between Density curve and CDF curve"}
+if (knitr:::is_latex_output()) {
+  knitr::asis_output('\\url{https://github.com/pengdsci/STA504/blob/main/topic03/w04-PDFvsCDF.gif?raw=true}')
+} else {
+  knitr::include_graphics("img/w05-PDFvsCDF.gif")
+}
+```
+
+
+## Comparing Two Distributions
+
+Next, we use two examples to show how to do visual comparison between distributions.
+
+```{r fig.align='center', fig.width=8, fig.height=4, fig.cap="Comparison between two normal distributions"}
+par(mfrow=c(1,2))
+x = seq(0, 20, length = 200)
+plot(x, dnorm(x,5,1), type="l", xlab = "", ylab = "",
+        main = "Comparing Two Normal Density Curves",
+        cex.main = 0.8, col.main = "navy", col = "red", lty=1, lwd = 2)
+lines(x, dnorm(x, 7, 2), col = "blue", lty =2, lwd = 2)
+legend("right", c("N(5,1)", "N(7,2)"), col = c("red", "blue"), lty=1:2, 
+                   lwd = rep(2,2), cex = 0.8, bty="n")
+###
+dist = abs(pnorm(x, 7, 2) - pnorm(x,5,1))
+max.id = which(dist == max(dist))
+plot(x, pnorm(x,5,1), type="l", xlab = "", ylab = "", 
+        main = "Comparing Two Normal CDF Curves",
+        cex.main = 0.8, col.main = "navy", col = "red", lty=1, lwd = 2)
+lines(x, pnorm(x, 7, 2), col = "blue", lty=2, lwd = 2)
+segments(x[63],pnorm(x, 7, 2)[63], x[63], pnorm(x,5,1)[63], col = "purple", lwd = 2)
+points(rep(x[63],2), c(pnorm(x, 7, 2)[63], pnorm(x,5,1)[63]), pch=19, cex = 1.5, col = "purple")
+###
+legend("right", c("N(5,1)", "N(7,2)"), col = c("red", "blue"), lty=1:2, 
+                   lwd = rep(2,2), cex = 0.8, bty="n")
+```
+
+We can see from the above figure that the **maximum distance between the two CDF curves** (the length of the purple line segment) measures that discrepancy the two distributions. 
+
+
+## Empirical Distribution and CDF
+
+An empirical distribution is a non-parametric estimation of a theoretical distribution based on a random sample taken from the population. Assume that $\{x_1, x_2, x_3, \cdots, x_n \}$ is a random sample taken from a population with CDF $F(x|\theta)$ ($\theta$ is the population parameter). **The empirical distribution of $F(x|\theta)$ based on the given random sample is defined to be
+
+$$
+F_n(x) = \frac{\text{number of values in random sample } \le x}{n}
+$$
+
+For example, let's look at the emprical distribution based on the toy data set $\{ 1, 1.4, 2.1, 2.5, 5\}$.
+
+```{r echo = FALSE, fig.align='center', fig.width=4, fig.height=4}
+plot(ecdf(c(1,1.4, 2.1, 2.5, 5 )), verticals = TRUE, do.points = TRUE,
+     main = "Empirical Distribution of the Data", xlab="", col = "navy")
+```
+
+
+## Relationship between $F(x)$ and $F_n(X)$
+
+As stated earlier, An empirical distribution, $F_n(x)$, is used to estimate the theoretical CDF, $F(x)$. Next, we use several examples to visually check the goodness of the estimation.
+
+```{r echo = FALSE, fig.align='center', fig.width=8, fig.height=8}
+par(mfrow=c(2,2), oma=c(1,1,1,1), mar = c(2,2,2,2))
+x = seq(1, 10, by = 0.1) 
+
+## desnity curves
+plot(x, dexp(x, rate = 0.4), main = "Exponentail density curve", type = "l", 
+        col = "navy", xlab = "", ylab = "", lwd = 2)
+plot(x, dnorm(x, 6, 1), main = "Normal density curve", type = "l", 
+        col = "navy", xlab = "", ylab = "", lwd = 2)
+# Apply dexp() function               
+y.dexp = pexp(x, rate = 0.4)    
+y.norm = pnorm(x, 6, 1)
+
+## 
+exp.10 =  rexp(10, rate = 0.4)
+exp.50 =  rexp(50, rate = 0.4)
+norm.10 = rnorm(10, 6, 1)
+norm.50 = rnorm(50, 6, 1)
+# Plot dexp values 
+plot(x, y.dexp, xlab = "", ylab = "", type = "l", col = "navy", lty = 1, lwd = 2,
+         main = "Exponential distributions", cex.main = 1, col.main = "navy")
+lines(ecdf(exp.10), verticals = TRUE, do.points = FALSE,  lty = 1, col = "blue", lwd = 1)
+lines(ecdf(exp.50), verticals = TRUE, do.points = FALSE,  lty = 1, col = "brown", lwd = 1)
+legend("bottomright", c("Theoretical CDF", "Empirical CDF: n = 10", "Empirical CDF: n = 50"),
+       lty = rep(1,3), col = c("navy", "blue", "red"), lwd = rep(1,3), cex = 0.8, bty = "n")
+
+###
+plot(x, y.norm, xlab = "", ylab = "", type = "l", col = "navy", lwd = 2,
+         main = "Normal distributions", cex.main = 1, col.main = "navy")
+lines(ecdf(norm.10), verticals = TRUE, do.points = FALSE,  lty = 1, col = "blue",lwd = 1)
+lines(ecdf(norm.50), verticals = TRUE, do.points = FALSE,  lty = 1, col = "brown", lwd = 1)
+legend("topleft", c("Theoretical CDF", "Empirical CDF: n = 10", "Empirical CDF: n = 50"),
+       lty = rep(1,3), col = c("navy", "blue", "red"), lwd = rep(1,3), cex = 0.8, bty = "n")
+```
+
+We can see two general but important facts:
+
+1. The goodness of the estimation is dependent on the sample size. The bigger the sample size, the more accurate the estimation.
+
+2. With the same size, the goodness of estimation is dependent on the population distribution. 
+
+
+## Why Bootstrap Procedure Works?
+
+For a given population, if the sample size is large enough so that the empirical distribution is close to the theoretical distribution, we can take bootstrap samples for non-parametric inference. The following chart explains how bootstrap method works.
+
+```{r echo=FALSE, fig.align ="center",  out.width = '60%', fig.cap="How bootstrap procedure works."}
+  knitr::include_graphics("img/w05-HowBootstrapWorks.png")
+```
+
+The above 
+
+
+## A Bigger Picture
+
+
+
+```{r echo=FALSE, fig.align ="center",  out.width = '100%', fig.cap="Monte Carlo, Bootstrap, parametric, and asymptoic confidence intervals"}
+  knitr::include_graphics("img/w05-Bootstrap-Monte-Carlo.png")
+```
+
+
+
+
+ 
+ \
+  
+# Other Resampling Methods 
+
+
+In the last module, we listed several goodness-of-fit measures. The **predicted residual error sum of squares (PRESS)** is one of them. It definition is not clearly given. Before we discuss this measure in little bit more details, we first introduce a popular resampling method - Jackknife.
+
+## Jackknif Resampling
+
+The jackknife estimator of a parameter is found by systematically **leaving out each observation from a dataset** and **calculating the parameter estimate over the remaining observations** and **then aggregating these calculations**. It was developed by Maurice Quenouille in 1949 and refined in 1956. John Tukey expanded on the technique in 1958 and name the method "jackknife" because it is handy like a physical jack-knife. Jackknife resampling can improvise a solution for many specific problems more efficiently than some purpose-designed tools. 
+
+The basic leave-one-out Jackknife resampling method is illustrated in the following chart.
+
+```{r echo=FALSE, fig.align ="center", fig.cap="Illustration of leave-one-out Jackknife resampling method", out.width="50%"}
+include_graphics("img/w05-JackknifeResampling.png")
+```
+
+
+## Jackknife for Predictive Sum of Squares (PRESS)
+
+A fitted model having been produced, each observation in turn is removed and the model is refitted using the remaining observations. The out-of-sample predicted value is calculated for the omitted observation in each case, and the PRESS statistic is calculated as the sum of the squares of all the resulting prediction errors.
+
+
+$$
+\text{PRESS}=\sum _{{i=1}}^{n}(y_{i}-{\hat  {y}}_{{i,-i}})^{2}
+$$
+
+
+The PRESS statistic can be calculated for a number of candidate models for the same dataset, with the lowest values of PRESS indicating the best model. 
+
+
+```{r}
+realestate <- read.csv("https://raw.githubusercontent.com/pengdsci/sta321/main/ww03/w03-Realestate.csv", header = TRUE)
+unitPrice <- realestate$PriceUnitArea
+HouseAge <- realestate$HouseAge
+nn <- length(HouseAge)
+JK.pred <- NULL
+for(i in 1:nn){
+  unitPrice0 <- unitPrice[-i]
+  HouseAge0 <- HouseAge[-i]
+  mm <- lm(unitPrice0 ~ HouseAge0)
+  JK.pred[i] = as.vector(predict(mm, newdata = data.frame(HouseAge0 = HouseAge[i])))
+}
+PRESS = sum((unitPrice-JK.pred)^2)
+PRESS
+```
+## Some Comments on Jackknife
+
+* Jackknife samples can also be used for estimating population parameters just like what we did in bootstrap methods, but the procedure is not as straightforward as that of bootstrap. We will not go to details in this direction.
+
+* The logic of Jackknife sampling is used to define various data-driven methods that used in modern statistics, data science and machine learning. One of such methods is **cross-validation**. We will introduce this method in the second part this course - generalized linear regression.
+
+
+
+
+# Case Study - Factors That Affect House Prices
+
+In this note, we introduce two versions of bootstrap procedures to generate bootstrap samples to estimate the confidence intervals of the coefficients of the regression model identified last week. For reference, The code that creates the analytic data set for the final model and the summarized statistics of the model was included in the note.
+
+
+## Models with Transformed Response
+
+As mentioned earlier, the price is usually skewed to the right. We will simply tale logarithmic transformation of the price. We could also try Box-cox transformation to explore other potential transformations. 
 
 ```{r }
 realestate0 <- read.csv("https://raw.githubusercontent.com/pengdsci/sta321/main/ww03/w03-Realestate.csv", header = TRUE)
@@ -148,17 +348,17 @@ kable(cmtrx, caption = "Inferential Statistics of Final Model")
 The explicit expression of the final model is given by
 
 $$
-\log(price) =3.5723 - 0.0076\times HouseAge +0.0275\times NumConvenStores + 
+\log(\text{price}) =3.5723 - 0.0076\times \text{HouseAge} +0.0275\times \text{NumConvenStores} + 
 $$ 
 $$   
-0.0805\times Sale.year2013 - 0.1445\times Dist2MRT.kilo + 0.1826\times geo.groupTRUE
+0.0805\times \text{Sale.year2013} - 0.1445\times \text{Dist2MRT.kilo} + 0.1826\times \text{geo.groupTRUE}
 $$
 
-As another example of the interpretation of the regression coefficient, we choose the coefficient associated with **geo.group**. In the output, you see the name of the dummy variable with the suffix `TRUE`, **geo.groupTRUE**. The suffix **TRUE** indicates that the dummy variable represents the category 'TRUE' of the category variable **geo.group**. The associated coefficient reflects the **mean** difference between the category `TRUE` and the baseline category `FALSE`. In R, the default baseline category is the lowest value of the categorical variable (in alphabetical order).
+To interpret the regression coefficient, we choose the coefficient associated with **geo.group**. In the output, you see the name of the dummy variable with the suffix `TRUE`, **geo.groupTRUE**. The suffix **TRUE** indicates that the dummy variable represents the category 'TRUE' of the category variable **geo.group**. The associated coefficient reflects the **mean** difference between the category `TRUE` and the baseline category `FALSE`. In R, the default baseline category is the lowest value of the categorical variable (in alphabetical order).
 
 Let's consider **the set of all houses** that are in the same conditions except the regions (region `TRUE` and region `FALSE` ) and the sale prices. 
 
-```{r echo=FALSE, fig.align ="center", fig.cap="Location of Houses for Sale", fig.height=4,fig.width=5, dev="jpeg"}
+```{r echo=FALSE, fig.align ="center", fig.cap="Location of Houses for Sale", out.width="80%", dev="jpeg"}
 include_graphics("w05-map.jpg")
 ```
 
@@ -176,7 +376,7 @@ $$
 That is, the average house sales price in the `TRUE` region (top right corner on the map) is about 20%   higher than that in the `FALSE` region. We can similarly interpret other regression coefficients.
 
 
-# Bootstrap Cases (BOOT.C)
+## Bootstrap Cases (BOOT.C)
 
 In this section, we use bootstrapping cases to find the confidence intervals for the coefficients in the final regression model. The method was used in bootstrap simple linear regression (SLR) in week #3. The following code finds the confidence interval. 
 
@@ -239,7 +439,7 @@ Two normal-density curves were placed on each of the histograms.
 
 * The red **density curve** uses the estimated regression coefficients and their corresponding standard error in the output of the regression procedure. The p-values reported in the output are based on the red curve.
 
-*The **blue curve** is a non-parametric data-driven estimate of the density of bootstrap sampling distribution. The bootstrap confidence intervals of the regressions are based on these non-parametric bootstrap sampling distributions.
+* The **blue curve** is a non-parametric data-driven estimate of the density of bootstrap sampling distribution. The bootstrap confidence intervals of the regressions are based on these non-parametric bootstrap sampling distributions.
 
 We can see from the above histograms that the two density curves in all histograms are close to each other. we would expect that significance test results and the corresponding bootstrap confidence intervals are consistent. Next, we find 95% bootstrap confidence intervals of each regression coefficient and combined them with the output of the final model.
 
@@ -261,11 +461,11 @@ kable(as.data.frame(cbind(formatC(cmtrx,4,format="f"), btc.ci.95=btc.ci)),
 We can see from the above table of summarized statistics, the significance tests of regression coefficients based on the p-values and the corresponding 95% confidence intervals are consistent.
 
 
-# Bootstrap Residuals (BOOT.R)
+## Bootstrap Residuals (BOOT.R)
 
 In this section, we introduce bootstrap residual methods to estimate bootstrap confidence intervals. The idea is straightforward and is summarized in the following.
 
-## Fitted Model
+### Fitted Model
 
 Assume that the fitted regression model is given by
 
@@ -293,7 +493,7 @@ hist(sort(log.price$residuals),n=40,
 
 The above histogram reveals the same information as we saw in the residual plot in the last note: (1) one out-lier; (2). The distribution is skewed to the right.
 
-## Residual Bootstrap Samples
+### Residual Bootstrap Samples
 
 The residual bootstrap sample of $y$ is defined in the following:
 
@@ -348,7 +548,7 @@ $$
 
 The residual bootstrap confidence intervals of regression coefficients can be estimated from the above bootstrap coefficients.
 
-## Implementation of Residual Bootstrap Regression
+### Implementation of Residual Bootstrap Regression
 
 The following code generates bootstrap confidence intervals of regression coefficients.
 
@@ -429,7 +629,7 @@ kable(as.data.frame(cbind(formatC(cmtrx,4,format="f"), btr.ci.95=btr.ci)),
 As expected, the residual bootstrap confidence intervals yield the same results as p-values do. This is because the sample size is large enough so that the sampling distributions of estimated coefficients have sufficiently good approximations of normal distributions. 
 
 
-## Combining All Inferential Statistics
+### Combining All Inferential Statistics
 
 Finally, we put all inferential statistics in a single table so we can compare these results.
 
@@ -448,4 +648,7 @@ kable(cbind(btc.wd, btr.wd), caption="width of the two bootstrap confidence inte
 ```
 
 * The widths of residual bootstrap and case-bootstrap confidence intervals are similar to each other. See the above table for the widths of each confidence interval.
-  
+ 
+
+
+
