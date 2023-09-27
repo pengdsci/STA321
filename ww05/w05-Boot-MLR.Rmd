@@ -254,8 +254,6 @@ The above
 ```
 
 
-
-
  
  \
   
@@ -303,6 +301,7 @@ for(i in 1:nn){
 PRESS = sum((unitPrice-JK.pred)^2)
 PRESS
 ```
+
 ## Some Comments on Jackknife
 
 * Jackknife samples can also be used for estimating population parameters just like what we did in bootstrap methods, but the procedure is not as straightforward as that of bootstrap. We will not go to details in this direction.
@@ -361,19 +360,6 @@ Let's consider **the set of all houses** that are in the same conditions except 
 ```{r echo=FALSE, fig.align ="center", fig.cap="Location of Houses for Sale", out.width="80%", dev="jpeg"}
 include_graphics("w05-map.jpg")
 ```
-
-Next, we explain the estimated regression coefficient of 0.1826. Let $p_{TRUE}$ be the mean price of a house in the region `TRUE` and $p_{FALSE}$ be the mean price of houses in the region `FALSE`. Then 
-
-$$
-\log (p_{TRUE}) - \log(p_{FALSE}) = 0.1826  \to \log(p_{TRUE}/p_{FALSE}) = 0.1826 \to p_{TRUE} = 1.20p_{FALSE}
-$$
-We re-express the above equation can be re-written as
-
-$$
-p_{TRUE} - p_{FALSE} = 0.206p_{FALSE} \to \frac{p_{TRUE}-p_{FALSE}}{p_{FALSE}} = 0.20 = 20\%.
-$$
-
-That is, the average house sales price in the `TRUE` region (top right corner on the map) is about 20%   higher than that in the `FALSE` region. We can similarly interpret other regression coefficients.
 
 
 ## Bootstrap Cases (BOOT.C)
@@ -463,7 +449,12 @@ We can see from the above table of summarized statistics, the significance tests
 
 ## Bootstrap Residuals (BOOT.R)
 
-In this section, we introduce bootstrap residual methods to estimate bootstrap confidence intervals. The idea is straightforward and is summarized in the following.
+In this section, we introduce bootstrap residual methods to construct bootstrap confidence intervals. The idea is straightforward and is summarized in the following.
+
+```{r echo=FALSE, fig.align ="center", out.width="100%"}
+include_graphics("img/w05-BootsResiduals.png")
+```
+
 
 ### Fitted Model
 
@@ -479,7 +470,7 @@ y_n & = &  \hat{\beta}_0 + \hat{\beta}_1 x_{n1} + \hat{\beta}_2 x_{n2} + \cdots 
 \end{array}
 $$
 
-where $\{e_1, e_2, \cdots, e_n \}$ is the set of residuals obtained from the final model. $\{x_{i1}, x_{i2}, \cdots, x_{ik} \}$ is the i-th record from the data, and $\{ \hat{\beta}_0, \hat{\beta}_1,  \cdots, \hat{\beta}_k \}$
+where $\{e_1, e_2, \cdots, e_n \}$ is the set of residuals obtained from the final model. $\{x_{i1}, x_{i2}, \cdots, x_{ik} \}$ is the i-th record from the data, and $\{ \hat{\beta}_0, \hat{\beta}_1,  \cdots, \hat{\beta}_k \}$ are the estimated regression coefficients based on the original random sample.
 
 The distribution of the residuals is depicted in the following histogram.
 
@@ -491,7 +482,7 @@ hist(sort(log.price$residuals),n=40,
      main = "Histogram of Residuals")
 ```
 
-The above histogram reveals the same information as we saw in the residual plot in the last note: (1) one out-lier; (2). The distribution is skewed to the right.
+The above histogram reveals the same information as we saw in the residual plot in the last note: (1) one outlier; (2). The distribution is slightly skewed to the right.
 
 ### Residual Bootstrap Samples
 
@@ -644,11 +635,123 @@ The above table shows that
 
 
 ```{r}
-kable(cbind(btc.wd, btr.wd), caption="width of the two bootstrap confidence intervals")
+kable(round(cbind(btc.wd, btr.wd),4), caption="width of the two bootstrap confidence intervals")
 ```
 
-* The widths of residual bootstrap and case-bootstrap confidence intervals are similar to each other. See the above table for the widths of each confidence interval.
- 
+We see from the above table that the widths of residual-bootstrap and case-bootstrap confidence intervals are similar to each other. 
+
+
+
+## Discussions on Model Reporting 
+
+We have used different methods to perform regression analysis. The inferential results of all three major methods yield similar results. We chose the parametric model to report.
+
+```{r}
+kable(cmtrx, caption = "Inferential Statistics of Final Model")
+```
+
+Regression coefficients explain the correlation between log price and the corresponding explanatory variables. As an example, We explain the estimated regression coefficient of 0.1826. Let $p_{TRUE}$ be the mean price of a house in the region `TRUE` and $p_{FALSE}$ be the mean price of houses in the region `FALSE`. Then 
+
+$$
+\log (p_{TRUE}) - \log(p_{FALSE}) = 0.1826  \to \log(p_{TRUE}/p_{FALSE}) = 0.1826 \to p_{TRUE} = 1.20p_{FALSE}
+$$
+We re-express the above equation can be re-written as
+
+$$
+p_{TRUE} - p_{FALSE} = 0.206p_{FALSE} \to \frac{p_{TRUE}-p_{FALSE}}{p_{FALSE}} = 0.20 = 20\%.
+$$
+
+That is, the average house sales price in the `TRUE` region (top right corner on the map) is about 20% higher than that in the `FALSE` region. We can similarly interpret other regression coefficients.
+
+
+
+# Some Concluding Remarks
+
+```{r echo=FALSE, fig.align ="center", out.width="80%"}
+include_graphics("img/w05-LetDataSpeak.png")
+```
+
+
+
+
+## Key Elements in Storytelling
+
+Data storytelling is an effective way of communicating insights. It involves constructing a clear and relevant narrative in context, analyzing and visualizing data, and presenting findings effectively and persuasively. Data storytelling is an essential skill for statisticians.
+
+Effective data storytelling involves three core elements: data, narrative, and visuals.
+
+**Data** is the foundation of every data story. 
+
+**Narrative** is the structure of the data story. It’s not just about the words or context that are used to explain the information extracted from data, it is about how to organize the information into a meaningful and engaging story.
+
+**Visuals** are the scenes of the data story. When the data is complex, visualizing it in data charts helps the audience to **see** the **information** they might not otherwise see. 
+
+
+## Title and Heading in Statistics Report
+
+Although headings and titles are similar, they are distinct: A title leads the entire document and captures its content in one or two phrases; a heading leads only a chapter or section and captures only the content of that chapter or section. 
+
+* A good **title** should be 
+  + descriptive, 
+  + Direct 
+  + Accurate 
+  + appropriate 
+  + concise 
+  + precise 
+  + unique and 
+  + should **not** be misleading. 
+
+
+* A good **heading** should be
+  + Headings should be as long as it takes to communicate the content of the sections they head.
+  + Higher-level headings often make do with a single word (e.g. **Introduction** or **Methods**), while lower-level headings are often longer.
+  + Headings should be as descriptive as possible.
+  + Headings should be unique.
+
+
+## Regression Modeling and Reporting
+
+There are different approaches to regression modeling and reporting. We summarized the modeling process and techniques learned and suggested guidelines for reporting.
+
+### Modeling Workflow
+
+Linear regression workflow is summarized in the following chart
+
+```{r echo=FALSE, fig.align ="center", out.width="100%"}
+include_graphics("img/w05-LinearRegWorkflow.png")
+```
+
+The specific model diagnostic methods and remedies to be included in the analysis are
+
+* residual analysis - normality, constant variance, linearity of the regression equation, etc.
+
+* multicollinearity - variance inflation factor
+
+* potential transformation of the response variable - conventional and Box-cox methods
+
+* variable selection - expert-assisted variable selection (focusing on practical importance) and automatic variable selection (focusing on statistical significance).
+
+* non-parametric robust estimation of regression coefficients - two types of bootstrap methods.
+
+### Reporting Guidelines
+
+We have discussed the basic components of a statistics report. The following book chapter summarizes methods of writing and organizing statistical reports.
+
+<https://instruction.bus.wisc.edu/jfrees/jfreesbooks/Regression%20Modeling/BookWebDec2010/Writing/Chap20FreesRegBook03May2009.pdf>
+
+We have adopted the major components for our project reporting. Please review this document and pay attention to the sections related to how to report tables and figures.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
