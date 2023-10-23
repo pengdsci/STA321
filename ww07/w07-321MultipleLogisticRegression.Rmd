@@ -3,18 +3,6 @@ title: '7 - Multiple Logistic Regression Model'
 author: 'Cheng Peng'
 date: "West Chester University "
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -24,6 +12,18 @@ output:
     number_sections: yes
     theme: readable
     fig_height: 4
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 ---
@@ -125,16 +125,22 @@ $$
 where $y$ is the response variable that is assumed to be a random variable and $\epsilon \to N(0, \sigma^2)$. This also implies that
 
 $$
-E[y] = \beta_0 + \beta_1x_1 + \beta_2 x_2 + \cdots + \beta_kx_k
+E[Y] = \beta_0 + \beta_1x_1 + \beta_2 x_2 + \cdots + \beta_kx_k
 $$
 
-For a population with binary data, the underlying random variable can only take exactly two values, say $Y=1$ or $Y=0$, and $P(Y=1) = p$, then $E[Y] = 1\times p + 0\times (1-p) = p.$ 
+For a binary population, the underlying random variable can only take exactly two values, say $Y=1$ or $Y=0$, and $P(Y=1) = p$, then $E[Y] = 1\times p + 0\times (1-p) = p.$ 
 
 That is, the success probability is the expected value of the binary random variable. If we mimic the formulation of the linear regression model by setting
 
-The simple linear regression model (also called the log-odds regression model) is also formulated with the mean response $E[Y]$
 $$
-\frac{E[Y]}{1-E[Y]} = \beta_0 + \beta_1x.
+ E[Y] = p =  \beta_0 + \beta_1x.
+$$
+
+The issue is that the probability (left-hand side) must be between zero and one but right-hand side could be any values.
+
+The simple logistic regression model (also called the log-odds regression model) is also formulated with the mean response $E[Y]$
+$$
+\log\frac{E[Y]}{1-E[Y]} = \beta_0 + \beta_1x.
 $$
 
 Let $g(t) = t/(1-t)$ (also called logit function), the simple logistic regression is re-expressed as $g(E[Y]) = \beta_0 + \beta_1x$. 
@@ -145,8 +151,9 @@ Let $g(t) = t/(1-t)$ (also called logit function), the simple logistic regressio
 Let $Y$ be the binary response variable and $\{x_1, x_2, \cdots, x_n \}$ be the set of predictor variables. If $Y$ takes on either 1 or 0, the multiple logistic regression model is then defined as
 
 $$
-\frac{E[Y]}{1-E[Y]} = \beta_0 + \beta_1x_1 + \beta_2 x_2 + \cdots + \beta_kx_k
+\log\frac{E[Y]}{1-E[Y]} = \beta_0 + \beta_1x_1 + \beta_2 x_2 + \cdots + \beta_kx_k
 $$
+
 
 The success probability function 
 
@@ -159,6 +166,7 @@ If $Y$ takes on character values, R uses chooses the alphabetically higher value
 $$
 p(x_1, x_2, \cdots, x_k)=P(Y="no.disease"|x_1, x_2, \cdots, x_k) =\frac{\exp(\beta_0 + \beta_1x_1 + \beta_2 x_2 + \cdots + \beta_kx_k)}{1+\exp(\beta_0 + \beta_1x_1 + \beta_2 x_2 + \cdots + \beta_kx_k)}
 $$
+
 Of cause, you can also redefine the factor level of the response variable to model the probability of the desired category.
 
 
@@ -178,6 +186,7 @@ dat = as.data.frame(cbind(Y=Y, X1 = X1, X2 = X2, X = X, Xk = Xk))
 names(dat) = c("Y", "X1", "X2", " ", "Xk")
 kable(dat, caption = "Data set layout for multiple logistic regression model") 
 ```
+
 
 
 ## Issues of Predictor Variables and Variable Inspection-Transformation 
