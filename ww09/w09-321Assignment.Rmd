@@ -102,7 +102,7 @@ The daily total of bike counts was conducted monthly on the Brooklyn Bridge, Man
 
 To save you time in finding a data set for Poisson regression, I created several subsets that contain the relevant information you need for this week's assignment. The data was saved in Excel format with multiple tabs. Please find the tab with your last name and then copy-and-paste your data file to a new Excel sheet and save it as a CSV format file or simply copy-and-paste to Notepad to create a TXT format file so you can read the file to R. You can also read the Excel file directly to R using appropriate R functions in relevant R libraries. 
 
-Here is the link to the Excel data set:[NYC cyclist data set (AssignDataSet.xlsx)](w09-AssignDataSet.xlsx).
+Here is the link to the Excel data set:[NYC cyclist data set (AssignDataSet.xlsx)](w09-AssignDataSet.xlsx). Choose one of the data sets for your project.
 
 
 * **Assignment Instructions**
