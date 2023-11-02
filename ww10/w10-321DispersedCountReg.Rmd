@@ -440,7 +440,7 @@ The above two Poison models assume that there is no dispersion issue in the mode
 ```{r}
 quasimodel.rates <- glm(cases ~ city + age, offset = log(pop), 
                    family = quasipoisson, data = eba1977)
-pander(summary(model.rates)$coef, caption = "Quasi-Poisson regression on the rate of the cancer rate in the four Danish cities adjusted by age.")
+pander(summary(quasimodel.rates)$coef, caption = "Quasi-Poisson regression on the rate of the cancer rate in the four Danish cities adjusted by age.")
 
 ```
 
@@ -459,7 +459,7 @@ pander(cbind(Dispersion = phi))
 
 The dispersion index is 1.56. It is slightly dispersed. We stay with the regular Poisson regression model.
 
-The intercept represents the **baseline log-cancer rate** ( of baseline *age group 44-55* in the baseline city *Fredericia*). The actual rate is $\exp(-5.6321) \approx 0.36\%$ which is close to the recently reported rate of the country by WHO. The intercept $-0.3301$ is the difference of the log-rates between baseline city Fredericia and the city of Horsens at any given age group, to be more specific, $\log(R_{\text{Horsen}}) - \log(R_{\text{Fredericia}}) = -0.3301$ which is equivalent to 
+The intercept represents the **baseline log-cancer rate** ( of baseline *age group 44-55* in the baseline city *Fredericia*). The actual rate is $\exp(-5.6321) \approx 0.36\%$ which is close to the recently reported rate of the country by WHO. The slope $-0.3301$ is the difference of the log-rates between baseline city Fredericia and the city of Horsens at any given age group, to be more specific, $\log(R_{\text{Horsen}}) - \log(R_{\text{Fredericia}}) = -0.3301$ which is equivalent to 
 
 $$
 \log \left( \frac{R_{\text{Horsen}}}{R_{\text{Fredericia}}} \right) = -0.3301 ~~~\Rightarrow~~~\frac{R_{\text{Horsen}}}{R_{\text{Fredericia}}} = e^{-0.3301} \approx 0.7188518.
@@ -494,6 +494,7 @@ To make the visual representation of the output, we tabulate cancer rates of the
 For example, $\exp(-5.632)$ gives the cancer rate of the baseline city, Fredericia, and the baseline age group [45-54]. $\exp(-5.632+1.101)$ gives the cancer rate of baseline city, Fredericia, and age group [55-59]. Following the same pattern, we can find the cancer rate for each combination of the city and age group.
 
 The following table calculates the **estimated** cancer rates of cities Fredericia and Horsens across age groups. The rates for other cities can be similarly calculated.
+
 
 |  Age            |  Fredericia's Rate        |     Horsens' Rates         |  
 |:----------------|:-------------------------|:----------------------------| 
