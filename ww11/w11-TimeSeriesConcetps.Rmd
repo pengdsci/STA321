@@ -103,7 +103,18 @@ knitr::opts_chunk$set(echo = TRUE,
 
 # Concepts of Prediction/Forecasting
 
-A univariate time series is a sequence of data values with certain random behaviors that occur in successive order over some period of time. A time series can be constructed by any data that is measured over time at evenly-spaced intervals. Some examples are historical stock prices, earnings, GDP, rainfalls, university enrollments, daily counts of ER patients, annual death counts due to traffic accidents in a country, inflation rates, or other sequences of financial or economic data that can be analyzed as a time series.
+
+Recall that the structure of data sets we used so far are based on random sampling: *a snapshot of information taken from a group of subjects at a particular time point - cross-sectional data.*
+
+
+
+```{r echo = FALSE, fig.align='center', out.width="60%", fig.cap="Data types"}
+include_graphics("w11-Figure00.jpg")
+```
+
+
+
+A univariate *time series* is a sequence of data values with certain random behaviors that occur in successive order over some period of time. A time series can be constructed by any data that is measured over time at evenly-spaced intervals. Some examples are historical stock prices, earnings, GDP, rainfalls, university enrollments, daily counts of ER patients, annual death counts due to traffic accidents in a country, inflation rates, or other sequences of financial or economic data that can be analyzed as a time series.
 
 
 A forecast is a prediction of some future events. Forecasting problems can be found in many applied areas such as business and industry, economics, finance, environmental sciences, social sciences, political sciences, etc., and can be categorized into
@@ -132,6 +143,20 @@ The data may be instantaneous, such as the viscosity of a chemical product at th
 
   + Qualitative forecasting methods are used when little data are available (new product introduction). In this case, expert opinion is often used.
 
+
+Next we introduce a few technical terms in time series.
+
+* **Some terminology**: 
+
+  + *Point forecast* or point estimate - a single predicted value.
+   
+  + *Prediction interval* - interval prediction, information on accuracy is available.
+
+  + *Forecast horizon* or lead time - based on the fitted model, the number of periods specified to be predicted.
+
+
+
+
 There are two modes for analyzing time series: frequency domain and time domain approaches. We restrict our discussion within the time domain to avoid more advanced mathematical tools in this class.
 
 * **Statistical forecasting models**:
@@ -145,15 +170,6 @@ There are two modes for analyzing time series: frequency domain and time domain 
   + Dynamic regression methods.
 
 
-*	**Some terminology** 
-
-  + Point forecast or point estimate - a single predicted value (no information on the variation of the predicted value)
-
-  + Prediction interval - interval prediction, information on accuracy is available.
-
-  + Forecast horizon or lead time - based on the fitted model, the number of periods specified to be predicted.
-
-The forecast horizon is the length of time into the future for which forecasts are to be prepared.
 
 
 # Types of Time Series Data
@@ -172,7 +188,7 @@ include_graphics("w11-Figure02.jpg")
 A special uncorrelated process:  **white noise process**, $x_t \to_{i.i.d} N(0, \sigma^2)$. That is, a sequence $\{x_t\}$, ($i = 1, 2, \cdots,$)  is a white noise process if each value in the sequence has  a)	zero-mean; b)	constant conditional variance; and c)	is uncorrelated with all other realizations. 
 
 
-## 2.	Autocorrelated data
+## Autocorrelated data
 
 
 ```{r echo = FALSE, fig.align='center', fig.width=5, fig.height=5}
@@ -182,6 +198,21 @@ include_graphics("w11-Figure03.jpg")
 The correlation measures the degree of dependence or association between two variables. 
 
 The term auto-correlation means that the value of a series in one time period is related to the value itself in previous periods. 
+
+```{r echo = FALSE, fig.align='center', out.width="30%"}
+include_graphics("w11-Figure0.jpg")
+```
+
+```{r}
+X=1:9
+Y=c(0.397,0.157,-0.083,-0.243,-0.323,-0.243,-0.083,0.077,0.347)
+Y.lag1 = Y[-1]
+Y.truc = Y[-9]
+cor(Y.truc, Y.lag1)
+plot(X, Y, type="b")
+```
+
+
 
 ## Trend Data
 
