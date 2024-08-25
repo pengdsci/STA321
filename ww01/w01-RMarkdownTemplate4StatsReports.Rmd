@@ -20,7 +20,11 @@ output:
     fig_width: 6
     fig_caption: yes
     number_sections: yes
-    theme: readable
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
 editor_options: 
   chunk_output_type: console
 ---
