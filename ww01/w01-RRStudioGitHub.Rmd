@@ -3,16 +3,6 @@ title: "A Brief Intro to R with R Markdown"
 author: "Cheng Peng "
 date: "West Chester University"
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -20,7 +10,21 @@ output:
     fig_width: 6
     fig_caption: yes
     number_sections: yes
-    theme: readable
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
 editor_options: 
   chunk_output_type: console
 ---
@@ -36,30 +40,35 @@ h1.title {  /* Title - font specifications of the report title */
   color: DarkRed;
   text-align: center;
   font-family: "Gill Sans", sans-serif;
+  font-weight: bold;
 }
 h4.author { /* Header 4 - font specifications for authors  */
   font-size: 20px;
   font-family: system-ui;
   color: DarkRed;
   text-align: center;
+  font-weight: bold;
 }
 h4.date { /* Header 4 - font specifications for the date  */
   font-size: 18px;
   font-family: system-ui;
   color: DarkBlue;
   text-align: center;
+  font-weight: bold;
 }
 h1 { /* Header 1 - font specifications for level 1 section title  */
     font-size: 22px;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: center;
+  font-weight: bold;
 }
 h2 { /* Header 2 - font specifications for level 2 section title */
     font-size: 20px;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
+  font-weight: bold;
 }
 
 h3 { /* Header 3 - font specifications of level 3 section title  */
@@ -67,10 +76,11 @@ h3 { /* Header 3 - font specifications of level 3 section title  */
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
+  font-weight: bold;
 }
 
 h4 { /* Header 4 - font specifications of level 4 section title  */
-    font-size: 18px;
+    font-size: 16px;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
@@ -166,14 +176,14 @@ An R Markdown document is a text-based file format that allows you to include bo
 In R Markdown, we can embed R code in the code chunk defined by the symbol ` ```{} ` and closed by ` ``` `. The symbol ` ` `, also called **backquote** or **backtick**, can be found on the top left corner of the standard keyboard as shown in the following. 
 
 ```{r echo=FALSE, fig.align ="center", fig.cap="The location of backquote on the standard keyboard",  out.width = '60%',  dev="jpeg"}
-include_graphics("ww01/Key4CodeChunk.jpg")
+include_graphics("Key4CodeChunk.jpg")
 ```
 
 
 There are two code chunks: executable and non-executable chunks.  The following code chunk is non-executable since is no argument specified in the ` {} `. 
 
 ```{r echo=FALSE, fig.align ="center", fig.cap="Non-executable code chunk.", fig.height=1,fig.width=3, dev="jpeg"}
-include_graphics("ww01/Non-executable-code-chunk.jpg")
+include_graphics("Non-executable-code-chunk.jpg")
 ```
 
 
@@ -185,7 +195,7 @@ This is a code chunk
 To write a code chunk that will be executed, we can simply put the letter ` r ` inside the curly bracket. If the code chunk is executable, you will the green arrow on the top-right corner of the chunk.
 
 ```{r echo=FALSE, fig.align ="center", fig.cap="Executable code chunk.", fig.height=1,fig.width=3, dev="jpeg"}
-include_graphics("ww01/Executable-code-chunk.jpg")
+include_graphics("Executable-code-chunk.jpg")
 ```
 
 We can define R objects with and without any outputs. In the above R code chunk, we define an R object under the name `x` and assign value 5 to `x` (the first line of the code). We also request an output that prints the value of `x`. The above executable code chunk gives output ` [1] 5 ` in the Markdown document. The same output in the knit output files is in a box with a transparent background in the form `## [1] 5 `. 
