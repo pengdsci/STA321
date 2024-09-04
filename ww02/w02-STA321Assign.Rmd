@@ -3,11 +3,6 @@ title: 'STA321: Week #02 Assignment'
 author: 'Due: Sunday, 11:30 PM'
 date: ""
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
   html_document:
     toc: yes
     toc_float: yes
@@ -21,6 +16,11 @@ output:
     code_download: yes
     smooth_scroll: yes
     theme: lumen
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
   word_document:
     toc: yes
     toc_depth: '4'
@@ -109,12 +109,12 @@ This is a project-driven advanced topic course, all submitted work must be yours
 This data set includes the **percentage of protein intake** from different types of food in countries around the world. The last couple of columns also includes counts of obesity and COVID-19 cases as percentages of the total population for comparison purposes.
 
 
-Data can be found at [kaggle.com](https://www.kaggle.com/mariaren/covid19-healthy-diet-dataset?select=Protein_Supply_Quantity_Data.csv). I also upload this data set on the course web page [STA321 Course Web Page](https://stat321.s3.amazonaws.com/w03-Protein_Supply_Quantity_Data.csv).
+Data can be found at [kaggle.com](https://www.kaggle.com/mariaren/covid19-healthy-diet-dataset?select=Protein_Supply_Quantity_Data.csv). I also upload this data set on the course web page [w02-Protein_Supply_Quantity_Data.csv](https://pengdsci.github.io/STA321/ww02/w02-Protein_Supply_Quantity_Data.csv).
 
 
 ```{r}
-protein = read.csv("w02-Protein_Supply_Quantity_Data.csv", 
-                   header = TRUE)
+url="https://pengdsci.github.io/STA321/ww02/w02-Protein_Supply_Quantity_Data.csv"
+protein = read.csv(url, header = TRUE)
 var.name = names(protein)
 kable(data.frame(var.name))
 ```
