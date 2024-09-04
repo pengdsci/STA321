@@ -3,18 +3,6 @@ title: "Additional Data Sets from Kaggle"
 author: 'STA321: Week #3 Note'
 date: " "
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -27,6 +15,18 @@ output:
     code_download: yes
     smooth_scroll: yes
     theme: lumen
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 ---
@@ -117,11 +117,7 @@ knitr::opts_chunk$set(echo = TRUE,           # include code chunk in the output 
 
  [Indian Liver Patient Records](https://www.kaggle.com/uciml/indian-liver-patient-records)
  
- [Synthetic Financial Data for Fraud Detection](https://www.kaggle.com/ntnu-testimon/paysim1)
- 
  [Business and Industry Reports](https://www.kaggle.com/census/business-and-industry-reports)
- 
- [Can You Predict Product Backorders?](https://www.kaggle.com/tiredgeek/predict-bo-trial)
  
  [Exoplanet Hunting in Deep Space](https://www.kaggle.com/keplersmachines/kepler-labelled-time-series-data)
  
@@ -141,7 +137,9 @@ knitr::opts_chunk$set(echo = TRUE,           # include code chunk in the output 
 # Regression
 
  [Video Game Sales with Ratings](https://www.kaggle.com/rush4ratio/video-game-sales-with-ratings)
+ 
  [NYC Property Sales](https://www.kaggle.com/new-york-city/nyc-property-sales)
+ 
  [Gas Sensor Array Under Dynamic Gas Mixtures](https://www.kaggle.com/uciml/gas-sensor-array-under-dynamic-gas-mixtures)
 
 
