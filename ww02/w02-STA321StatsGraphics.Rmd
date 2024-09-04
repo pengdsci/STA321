@@ -1,22 +1,8 @@
 ---
-title: "Basics of R Graphics"
+title: "Base R Graphics"
 author: "Cheng Peng"
 date: "Lab Note: STA321 Topics of Advanced Statistics"
 output:
-  html_document: 
-    toc: yes
-    toc_depth: 4
-    toc_float: yes
-    fig_width: 4
-    fig_caption: yes
-    number_sections: yes
-    theme: readable
-    fig_height: 4
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   pdf_document: 
     toc: yes
     toc_depth: 4
@@ -24,6 +10,23 @@ output:
     number_sections: yes
     fig_width: 3
     fig_height: 3
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  html_document: 
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+    fig_width: 4
+    fig_caption: yes
+    number_sections: yes
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
 editor_options: 
   chunk_output_type: inline
 ---
@@ -36,30 +39,35 @@ editor_options:
 
 h1.title {  /* Title - font specifications of the report title */
   font-size: 24px;
+  font-weight: bold;
   color: DarkRed;
   text-align: center;
   font-family: "Gill Sans", sans-serif;
 }
 h4.author { /* Header 4 - font specifications for authors  */
   font-size: 20px;
+  font-weight: bold;
   font-family: system-ui;
   color: DarkRed;
   text-align: center;
 }
 h4.date { /* Header 4 - font specifications for the date  */
   font-size: 18px;
+  font-weight: bold;
   font-family: system-ui;
   color: DarkBlue;
   text-align: center;
 }
 h1 { /* Header 1 - font specifications for level 1 section title  */
     font-size: 22px;
+    font-weight: bold;
     font-family: system-ui;
     color: navy;
     text-align: left;
 }
 h2 { /* Header 2 - font specifications for level 2 section title */
     font-size: 20px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
@@ -67,6 +75,7 @@ h2 { /* Header 2 - font specifications for level 2 section title */
 
 h3 { /* Header 3 - font specifications of level 3 section title  */
     font-size: 18px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
@@ -74,6 +83,7 @@ h3 { /* Header 3 - font specifications of level 3 section title  */
 
 h4 { /* Header 4 - font specifications of level 4 section title  */
     font-size: 18px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
@@ -128,10 +138,10 @@ This note introduces the graphical capabilities of base R graphical functions. B
 
 R is able to output graphics to the screen or save them directly to a file (e.g. postscript, pdf, svg, png, jpeg, etc.). The different functions for producing graphical output are known as **Graphic Devices**. For example, `pdf()` would invoke the `pdf device`, while `png()` would invoke the `png device`. Type ?Devices into the R console to see a list of graphical devices that are available to R on your system.
 
-By default, graphical output is sent to the screen. As R is cross-platform, the graphics device for producing **screen*"** graphics differs by the system. The available fonts may also differ by the system and graphical device.
+By default, graphical output is sent to the screen. As R is cross-platform, the graphics device for producing **screen** graphics differs by the system. The available fonts may also differ by the system and graphical device.
 
 
-# Plotting with Base Graphics: `plot()`
+# Plotting with function `plot()`
 
 `plot()` is the most important high-level graphic function.  When using `plot()`, the output is sent to the **graphics device**. This creates a "plot region" on the graphics device. The visible area of the graphics device is also known as the "device region". The plot region on the other hand is the area of the plot (usually bounded by a box) and does not include the plot axes, labels, or margins.
 
@@ -150,17 +160,18 @@ include_graphics("img/w02-RGraphicMargins.png")
 **Example 1**:
 
 ```{r fig.align='center', fig.height=6, fig.width=6}
-iris = read.table("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt", header = TRUE)
+url = "https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt"
+iris = read.table(url, header = TRUE)
 par(mfrow = c(1,1), oma=c(1, 1, 1, 1), mar=c(2, 2, 2, 2))
 plot(iris$SepalLength, iris$PetalLength, pch = 16, cex = 1.5)
-title(main="Sepal Length vs Petal Length (Outer)", 
-      outer=TRUE, 
-      col.main = "red", 
-      cex.main=1)
-title(main="Sepal Length vs Petal Length (Inner)", 
-      outer=FALSE,
-      col.main = "blue",
-      cex.main=0.8)
+title(   main = "Sepal Length vs Petal Length (Outer)", 
+        outer = TRUE, 
+     col.main = "red", 
+     cex.main = 1)
+title(   main = "Sepal Length vs Petal Length (Inner)", 
+        outer = FALSE,
+     col.main = "blue",
+     cex.main = 0.8)
 ## Coloring points with the transparency level
 ## species ID
 setosa = which(iris$Classification == "Iris-setosa")
@@ -168,20 +179,22 @@ versicolor = which(iris$Classification == "Iris-versicolor")
 virginica = which(iris$Classification == "Iris-virginica")
 ## adding points
 points(iris$SepalLength[setosa], iris$PetalLength[setosa], 
-       pch=16, 
+       pch = 16, 
        col = alpha("purple", 0.5),    # add a transparency level
        cex = 1.5)
 points(iris$SepalLength[versicolor], iris$PetalLength[versicolor], 
-       pch=16, 
+       pch = 16, 
        col = alpha("blue", 0.5),
        cex = 1.5)
 points(iris$SepalLength[virginica], iris$PetalLength[virginica], 
-       pch=16, 
+       pch = 16, 
        col = alpha("red", 0.5),
        cex = 1.5)
 legend("bottomright", c("setosa", "versicolor", "virginica"),
-       col=c("purple", "blue", "red"), 
-       pch=rep(16,3), cex=rep(1.5,3), bty="n")
+       col = c("purple", "blue", "red"), 
+       pch = rep(16,3), 
+       cex = rep(1.0,3), 
+       bty = "n")
 ```
 
 
@@ -192,7 +205,8 @@ legend("bottomright", c("setosa", "versicolor", "virginica"),
 **Example 2** 
 
 ```{r fig.align='center', fig.height=5, fig.width=8}
-iris = read.table("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt", header = TRUE)
+url = "https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt"
+iris = read.table(url, header = TRUE)
 ## species ID
 setosa = which(iris$Classification == "Iris-setosa")
 versicolor = which(iris$Classification == "Iris-versicolor")
@@ -203,20 +217,20 @@ plot(iris$SepalLength, iris$PetalLength, pch = 16, cex = 1.5,
             xlab = "Sepal Width",
             ylab = "Petal Width")
 title(main="Sepal Length vs Petal Length", 
-      outer=FALSE,
+         outer = FALSE,
       col.main = "blue",
-      cex.main=0.8)
+      cex.main = 0.8)
 ## adding points
 points(iris$SepalLength[setosa], iris$PetalLength[setosa], 
-       pch=16, 
+       pch = 16, 
        col = alpha("purple", 0.5),
        cex = 1.5)
 points(iris$SepalLength[versicolor], iris$PetalLength[versicolor], 
-       pch=16, 
+       pch = 16, 
        col = alpha("blue", 0.5),
        cex = 1.5)
 points(iris$SepalLength[virginica], iris$PetalLength[virginica], 
-       pch=16, 
+       pch = 16, 
        col = alpha("red", 0.5),
        cex = 1.5)
 legend("bottomright", c("setosa", "versicolor", "virginica"),
@@ -229,28 +243,28 @@ plot(iris$SepalWidth, iris$PetalWidth, pch = 16, cex = 1.5,
 title(main="Sepal Length vs Petal Length", 
       outer=FALSE,
       col.main = "blue",
-      cex.main=0.8)
+      cex.main = 0.8)
 ## adding points
 points(iris$SepalWidth[setosa], iris$PetalWidth[setosa], 
-       pch=16, 
+       pch = 16, 
        col = alpha("purple", 0.5),
        cex = 1.5)
 points(iris$SepalWidth[versicolor], iris$PetalWidth[versicolor], 
-       pch=16, 
+       pch = 16, 
        col = alpha("blue", 0.5),
        cex = 1.5)
 points(iris$SepalWidth[virginica], iris$PetalWidth[virginica], 
-       pch=16, 
+       pch = 16, 
        col = alpha("red", 0.5),
        cex = 1.5)
 legend("right", c("setosa", "versicolor", "virginica"),
-       col=c("purple", "blue", "red"), 
-       pch=rep(16,3), cex=0.8, bty="n")
+       col = c("purple", "blue", "red"), 
+       pch = rep(16,3), cex=0.8, bty="n")
 ## Overall Title
-title(main="Comaring Sepal and Petal Sizes", 
-      outer=TRUE,
+title( main = "Comaring Sepal and Petal Sizes", 
+      outer = TRUE,
       col.main = "darkred",
-      cex.main=1.2)
+      cex.main = 1.2)
 ```
 
 
@@ -282,7 +296,10 @@ col2rgb("purple")
 ratio = 0.4
 avggoldpurple = round(ratio*col2rgb("gold") + (1-ratio)*col2rgb("purple"))
 ##
-mycol.1 = rgb(avggoldpurple[1,1], avggoldpurple[2,1], avggoldpurple[3,1], max = 255, alpha = 125, names = "goldpuple50")
+mycol.1 = rgb(avggoldpurple[1,1], avggoldpurple[2,1], avggoldpurple[3,1], 
+              max = 255, 
+              alpha = 125, 
+              names = "goldpuple50")
 ###
 hist(rnorm(100),  col = mycol.1)
 ```
@@ -296,3 +313,7 @@ mycol.2 = rgb(avggoldpurple[1,1], avggoldpurple[2,1], avggoldpurple[3,1], max = 
 ###
 hist(rnorm(100,1,1),  col = mycol.2)
 ```
+
+
+
+

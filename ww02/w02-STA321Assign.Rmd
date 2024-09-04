@@ -1,129 +1,99 @@
 ---
 title: 'STA321: Week #02 Assignment'
-author: 'Due: Sunday, 11:30 PM, 2/5'
+author: 'Due: Sunday, 11:30 PM'
 date: ""
 output:
-  html_document: 
-    toc: yes
-    toc_depth: 4
-    toc_float: yes
-    fig_width: 4
-    fig_caption: yes
-    number_sections: yes
-    theme: readable
-    fig_height: 4
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   pdf_document: 
     toc: yes
     toc_depth: 4
     fig_caption: yes
     number_sections: yes
-    fig_width: 3
-    fig_height: 3
-editor_options: 
-  chunk_output_type: inline
+  html_document:
+    toc: yes
+    toc_float: yes
+    toc_depth: 4
+    fig_width: 6
+    fig_height: 4
+    fig_caption: yes
+    number_sections: yes
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
+  word_document:
+    toc: yes
+    toc_depth: '4'
 ---
 
-```{=html}
-
 <style type="text/css">
-
-/* Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML. it is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents. */
-
-h1.title {  /* Title - font specifications of the report title */
-  font-size: 24px;
-  color: DarkRed;
-  text-align: center;
-  font-family: "Gill Sans", sans-serif;
-}
-h4.author { /* Header 4 - font specifications for authors  */
+h1.title {
   font-size: 20px;
-  font-family: system-ui;
   color: DarkRed;
   text-align: center;
 }
-h4.date { /* Header 4 - font specifications for the date  */
+h4.author { /* Header 4 - and the author and data headers use this too  */
+    font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: DarkRed;
+  text-align: center;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
   font-size: 18px;
-  font-family: system-ui;
+  font-family: "Times New Roman", Times, serif;
   color: DarkBlue;
   text-align: center;
 }
-h1 { /* Header 1 - font specifications for level 1 section title  */
+h1 { /* Header 3 - and the author and data headers use this too  */
     font-size: 22px;
-    font-family: system-ui;
-    color: navy;
-    text-align: left;
-}
-h2 { /* Header 2 - font specifications for level 2 section title */
-    font-size: 20px;
     font-family: "Times New Roman", Times, serif;
-    color: navy;
-    text-align: left;
+    color: darkred;
+    text-align: center;
 }
-
-h3 { /* Header 3 - font specifications of level 3 section title  */
+h2 { /* Header 3 - and the author and data headers use this too  */
     font-size: 18px;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
 }
 
-h4 { /* Header 4 - font specifications of level 4 section title  */
+h3 { /* Header 3 - and the author and data headers use this too  */
+    font-size: 15px;
+    font-family: "Times New Roman", Times, serif;
+    color: navy;
+    text-align: left;
+}
+
+h4 { /* Header 4 - and the author and data headers use this too  */
     font-size: 18px;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
 }
-
-body { background-color:white; }
-
-.highlightme { background-color:yellow; }
-
-p { background-color:white; }
-
 </style>
-```
+
+
 ```{r setup, include=FALSE}
-# Detect, install and load packages if needed.
-if (!require("knitr")) {
-   install.packages("knitr")
-   library(knitr)
-}
-if (!require("MASS")) {
-   install.packages("MASS")
-   library(MASS)
-}
-if (!require("nleqslv")) {
-   install.packages("nleqslv")
-   library(nleqslv)
-}
-#
-# specifications of outputs of code in code chunks
-knitr::opts_chunk$set(echo = TRUE,      # include code chunk in the output file
-                      warnings = FALSE,  # sometimes, you code may produce warning messages,
-                                         # you can choose to include the warning messages in
-                                         # the output file. 
-                      messages = FALSE,  #
-                      results = TRUE     # you can also decide whether to include the output
-                                         # in the output file.
+# code chunk specifies whether the R code, warnings, and output 
+# will be included in the output files.
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE,           # include code chunk in the output file
+                      warnings = FALSE,       # sometimes, you code may produce warning messages,
+                                              # you can choose to include the warning messages in
+                                              # the output file. 
+                      results = TRUE          # you can also decide whether to include the output
+                                              # in the output file.
                       )   
 ```
-
-\
-
 
 
 # HONOR CODE
 
 Integrity is a core value at WCU. All students must familiarize themselves with the Student Academic Integrity Policy and pledge to observe its provisions in all written and oral work. Please review [WCU’s Undergraduate Student Academic Integrity Policy](https://catalog.wcupa.edu/undergraduate/academic-policies-procedures/academic-integrity/) and understand what Honor Code violations might look like in this class.
 
-This is a project-driven advanced topic course, and all submitted work must be yours. You are encouraged to collaborate with your classmates on the course materials, but not the assignments! Here are some suggestions on how to avoid academic dishonesty:
+This is a project-driven advanced topic course, all submitted work must be yours. You are encouraged to collaborate with your classmates on the course materials, but not the assignments! Here are some suggestions on how to avoid academic dishonesty:
 
-* Read the instruction for each assignment carefully to understand the specific requirements. This semester, you will work on the same topic on each weekly assignment but with different data sets. All assignments must be completed independently. There will be NO group project for this course. 
+* Read the instruction of each assignment carefully to understand the specific requirements. In this semester, you will work on the same topic on each weekly assignment but with different data sets. All assignments must be completed independently. There will be NO group project for this course. 
 
 * Never share your assignments with others. If classmates have a question, try to help them. Sharing your assignment with others will not teach them anything and you might be accused of academic dishonesty since I will check similarities between your submitted work.
 
@@ -139,11 +109,11 @@ This is a project-driven advanced topic course, and all submitted work must be y
 This data set includes the **percentage of protein intake** from different types of food in countries around the world. The last couple of columns also includes counts of obesity and COVID-19 cases as percentages of the total population for comparison purposes.
 
 
-Data can be found at [kaggle.com](https://www.kaggle.com/mariaren/covid19-healthy-diet-dataset?select=Protein_Supply_Quantity_Data.csv). I also upload this data set on the course web page [STA321 Course Web Page](https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-Protein_Supply_Quantity_Data.csv).
+Data can be found at [kaggle.com](https://www.kaggle.com/mariaren/covid19-healthy-diet-dataset?select=Protein_Supply_Quantity_Data.csv). I also upload this data set on the course web page [STA321 Course Web Page](https://stat321.s3.amazonaws.com/w03-Protein_Supply_Quantity_Data.csv).
 
 
 ```{r}
-protein = read.csv("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-Protein_Supply_Quantity_Data.csv", 
+protein = read.csv("w02-Protein_Supply_Quantity_Data.csv", 
                    header = TRUE)
 var.name = names(protein)
 kable(data.frame(var.name))
@@ -156,34 +126,30 @@ kable(data.frame(var.name))
 
 * Use the above code to read data in R. and explore the variables in the data set. Choose a variable from the data set to construct confidence intervals of the mean of that variable.
 
-* Please go to the D2L discussion Board to tell your class which variable you will use for your assignment. If that variable has been chosen by your classmates, then go back to the data set to choose other variables. I want to make sure everybody will work on the different data sets. To go to the discussion board: **communications =>Discussions**
+* Please go to the D2L discussion Board to tell your class which variable you will use for your assignment. If that variable has been chosen by your classmates, then go back to the data set to choose other variables. I want to make sure everybody will work on the different data set. To go to discussion board: **communications =>Discussions**
 
 * When you finish your analysis and write-up, go to D2L to submit your work: **Assessment => Assignments**.
 
 * The format should be similar to that of the class note. You can use the template of this RMD. That is, you can copy-and-paste the portion of this document above **# HONOR CODE**. 
 
-* You MUST submit your assignment via D2L but **Not email!**
+* You MUST submit your RMarkdown and one of HTML, PDF, or WORD via D2L but **Not email!**
 
-* Specific requirements of submission of **all assignments throughout the semester**
 
-  - Publish your report on RPubs and provide the link to the D2L drop box
-  
-  - Upload you RMarkdown source code to the D2L drop box (make sure all data sets or files make stored on GitHub).
-  
-  
 # Assignment Problems
 
 1. Open an R Markdown document, please feel free to use the template in my RMD for the class note.
 
 2. Write a few sentences to describe the variable you are going to use in your analysis.
 
-3. Construct a confidence interval of the mean of the variable using methods you learned in your previous courses. For example, MAT 125, STA 200, STA 319, and/or STA320.
+3. Construct a confidence interval of the mean of the variable use methods you learned in your previous courses. For example, MAT 125, STA 200, STA 319, and/or STA320.
 
 4. Use the Bootstrap method introduced this week (see the class note on the course web page) to construct the bootstrap confidence interval for the mean of the selected variable.
 
 5. Plot the bootstrap sampling distribution of the sample mean.
 
 6. Compare the two confidence intervals and interpret your findings and interpret the intervals.
+
+
 
 
 

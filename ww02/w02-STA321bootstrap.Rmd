@@ -3,18 +3,6 @@ title: "Non-Parametric Bootstrap Confidence Intervals"
 author: "Cheng Peng"
 date: "Lecture Note: STA321 Topics of Advanced Statistics"
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -22,8 +10,23 @@ output:
     fig_width: 4
     fig_caption: yes
     number_sections: yes
-    theme: readable
-    fig_height: 4
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 ---
@@ -36,33 +39,39 @@ editor_options:
 
 h1.title {  /* Title - font specifications of the report title */
   font-size: 24px;
+  font-weight: bold;
   color: DarkRed;
   text-align: center;
   font-family: "Gill Sans", sans-serif;
 }
 h4.author { /* Header 4 - font specifications for authors  */
   font-size: 20px;
+  font-weight: bold;
   font-family: system-ui;
   color: DarkRed;
   text-align: center;
 }
 h4.date { /* Header 4 - font specifications for the date  */
   font-size: 18px;
+  font-weight: bold;
   font-family: system-ui;
   color: DarkBlue;
   text-align: center;
+  font-weight: bold;
 }
 h1 { /* Header 1 - font specifications for level 1 section title  */
     font-size: 22px;
     font-family: system-ui;
     color: navy;
     text-align: left;
+    font-weight: bold;
 }
 h2 { /* Header 2 - font specifications for level 2 section title */
     font-size: 20px;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
+    font-weight: bold;
 }
 
 h3 { /* Header 3 - font specifications of level 3 section title  */
@@ -70,6 +79,7 @@ h3 { /* Header 3 - font specifications of level 3 section title  */
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
+    font-weight: bold;
 }
 
 h4 { /* Header 4 - font specifications of level 4 section title  */
@@ -77,6 +87,7 @@ h4 { /* Header 4 - font specifications of level 4 section title  */
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
+    font-weight: bold;
 }
 
 body { background-color:white; }
@@ -183,25 +194,27 @@ Next, we use R and the simulated data set <https://raw.githubusercontent.com/pen
 
 ```{r}
 # read the delimited data from URL
-wcu.height = read.table("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-wcuheights.txt", header = TRUE)
+url= "https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-wcuheights.txt"
+wcu.height = read.table(url, header = TRUE)
 sample.mean.vec = NULL      # define an empty vector to hold sample means of repeated samples.
 for(i in 1:1000){           # starting for-loop to take repeated random samples with n = 81
-  ith.sample = sample( wcu.height$Height,       # population of all WCU students heights
-                       81,                      # sample size = 81 values in the sample
-                       replace = FALSE          # sample without replacement
-                 )                              # this is the i-th random sample
-   sample.mean.vec[i] = mean(ith.sample)        # calculate the mean of i-th sample and save it in
-                                                # the empty vector: sample.mean.vec 
+  ith.sample = sample( wcu.height$Height, # population of all WCU students heights
+                       81,                # sample size = 81 values in the sample
+                       replace = FALSE    # sample without replacement
+                     )                    # this is the i-th random sample
+   sample.mean.vec[i] = mean(ith.sample)  # calculate the mean of i-th sample and save it in
+                                          # the empty vector: sample.mean.vec 
   }
 ```
 
 Next, we make a histogram of the sample means saved in **sample.mean.vec**.
 
 ```{r fig.align='center', fig.cap = "Approximated sampling distribution of sample mean used the repeated samples."}
-hist(sample.mean.vec,                                               # data used for histogram
-     breaks = 14,                                                   # specify number of vertical bars
-     xlab = "sample means of repeated samples",                     # change the label of x-axis
-     main="Approximated Sampling Distribution  \n  of Sample Means")   # add a title to the histogram
+hist(sample.mean.vec,                           # data used for histogram
+     breaks = 14,                               # specify number of vertical bars
+     xlab = "sample means of repeated samples", # change the label of x-axis
+     # add a title to the histogram
+     main="Approximated Sampling Distribution  \n  of Sample Means")   
 ```
 
  
@@ -227,7 +240,8 @@ include_graphics("w02-BootSamplingDist.jpg")
 
 ```{r}
 ### read the delimited data from URL
-wcu.height = read.table("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-wcuheights.txt", header = TRUE)
+url = "https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-wcuheights.txt"
+wcu.height = read.table(url, header = TRUE)
 # taking the original random sample from the population
 original.sample = sample( wcu.height$Height,    # population of all WCU students heights
                        81,                      # sample size = 81 values in the sample
@@ -236,10 +250,10 @@ original.sample = sample( wcu.height$Height,    # population of all WCU students
 ### Bootstrap sampling begins 
 bt.sample.mean.vec = NULL      # define an empty vector to hold sample means of repeated samples.
 for(i in 1:1000){              # starting for-loop to take bootstrap samples with n = 81
-  ith.bt.sample = sample( original.sample,    # Original sample with 81 WCU students' heights
-                       81,                    # sample size = 81 MUST be equal to the sample size!!
-                       replace = TRUE         # MUST use WITH REPLACEMENT!!
-                 )                            # this is the i-th Bootstrap sample
+  ith.bt.sample = sample(x = original.sample, # Original sample with 81 WCU students' heights
+                       size = 81,             # sample size = 81 MUST be equal to the sample size!!
+                    replace = TRUE            # MUST use WITH REPLACEMENT!!
+                       )                      # this is the i-th Bootstrap sample
   bt.sample.mean.vec[i] = mean(ith.bt.sample) # calculate the mean of i-th bootstrap sample and 
                                               # save it in the empty vector: sample.bt.mean.vec 
   }
@@ -248,10 +262,11 @@ for(i in 1:1000){              # starting for-loop to take bootstrap samples wit
 The following histogram shows the bootstrap sampling distribution of sample means with size $n=81$.
 
 ```{r fig.align='center', fig.cap = "Bootstrap sampling distribution of sample means"}
-hist(bt.sample.mean.vec,                                         # data used for histogram
-     breaks = 14,                                                # specify number of vertical bars
-     xlab = "Bootstrap sample means",                            # change the label of x-axis
-     main="Bootstrap Sampling Distribution \n of Sample Means")   # add a title to the histogram
+hist(bt.sample.mean.vec,                     # data used for histogram
+     breaks = 14,                            # specify number of vertical bars
+       xlab = "Bootstrap sample means",      # change the label of x-axis
+      # add a title to the histogram
+        main="Bootstrap Sampling Distribution \n of Sample Means")  
 ```
 
 ## Relationship between Two Estimated Sampling Distributions
@@ -299,10 +314,11 @@ Here is an example of taking the bootstrap sample from the original sample with 
 
 ```{r}
 # read data into R from the URL
-iris = read.table("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt", header = TRUE)
-n = dim(iris)[1]        # returns the dimension of the data frame, 1st component is the number of rows            
+url = "https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt"
+ iris = read.table(url, header = TRUE)
+    n = dim(iris)[1]   # returns the dimension of the data frame, 1st component is the number of rows            
 bt.ID = sample(1:n, replace = TRUE)   # bootstrap IDs, MUST use replacement method!
-sort(bt.ID)                 # check the content of bt.ID. I sort the bt.ID to see replicate easily
+sort(bt.ID)     # check the content of bt.ID. I sort the bt.ID to see replicate easily
 ```
 
 Next, we use the above bt.ID to take the bootstrap sample from the original data set **iris**.
@@ -317,14 +333,17 @@ bt.iris                  # display the bootstrap sample
 In this section, we construct a 95% bootstrap percentile confidence interval for the coefficient correlation between the SepalLength and SepalWidth given in **iris**. Note that R built-in function **cor(x,y)** can be used to calculate the bootstrap correlation coefficient directly. The R code for constructing a bootstrap confidence interval for the coefficient correlation is given below.
 
 ```{r}
-iris = read.table("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt", header = TRUE)
-n = dim(iris)[1]        # returns the dimension of the data frame, 1st component is the number of rows            
+url = "https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt"
+iris = read.table(url, header = TRUE)
+   n = dim(iris)[1]        # returns the dimension of the data frame, 
+                        # 1st component is the number of rows            
 ##
 bt.cor.vec = NULL    # empty vector bootstrap correlation coefficients
 for (i in 1:5000){   # this time I take 5000 bootstrap samples for this example.
   bt.ID.i = sample(1:n, replace = TRUE)  # bootstrap IDs, MUST use replacement method!
   bt.iris.i = iris[bt.ID.i, ]            # i-th bootstrap ID
-  bt.cor.vec[i] = cor(bt.iris.i$SepalLength, bt.iris.i$SepalWidth)   # i-th bootstrap correlation coefficient
+  # i-th bootstrap correlation coefficient
+  bt.cor.vec[i] = cor(bt.iris.i$SepalLength, bt.iris.i$SepalWidth)   
 }
 bt.CI = quantile(bt.cor.vec, c(0.025, 0.975) )
 bt.CI
@@ -334,12 +353,13 @@ bt.CI
 
 Next, we make two plots to visualize the relationship between the two variables.
 
-```{r fig.align='center', fig.height=3, fig.width=6, fig.cap="Left panel: histogram of the bootstrap coefficient of correlation. Right panel: the scatter plot of the sepal length and width."}
+```{r fig.align='center', fig.height=3, fig.width=7, fig.cap="Left panel: histogram of the bootstrap coefficient of correlation. Right panel: the scatter plot of the sepal length and width."}
 par(mfrow=c(1,2))   # layout a plot sheet: 1 row and 2 columns
 ## histogram
-hist(bt.cor.vec, breaks = 14, 
-       main="Bootstrap Sampling \n  Distribution of Correlation",
-      xlab = "Bootstrap Correlation Coefficient")
+hist(bt.cor.vec, 
+     breaks = 14, 
+       main = "Bootstrap Sampling \n  Distribution of Correlation",
+       xlab = "Bootstrap Correlation Coefficient")
 ## scatter plot
 plot(iris$SepalLength, iris$SepalWidth,
      main = "Sepal Length vs Width",
