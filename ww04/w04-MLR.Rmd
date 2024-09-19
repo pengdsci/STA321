@@ -22,8 +22,11 @@ output:
     fig_width: 4
     fig_caption: yes
     number_sections: yes
-    theme: readable
-    fig_height: 4
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
 editor_options: 
   chunk_output_type: inline
 ---
@@ -108,12 +111,13 @@ library("scales")
 #
 # specifications of outputs of code in code chunks
 knitr::opts_chunk$set(echo = TRUE,      # include code chunk in the output file
-                      warnings = FALSE,  # sometimes, you code may produce warning messages,
-                                         # you can choose to include the warning messages in
-                                         # the output file. 
-                      messages = FALSE,  #
-                      results = TRUE     # you can also decide whether to include the output
-                                         # in the output file.
+                      warnings = FALSE, # sometimes, you code may produce warning messages,
+                                        # you can choose to include the warning messages in
+                                        # the output file. 
+                      messages = FALSE, #
+                      results = TRUE,   # you can also decide whether to include the output
+                                        # in the output file.
+                      comment = NA      # remove leading ## in the model output
                       )   
 ```
 

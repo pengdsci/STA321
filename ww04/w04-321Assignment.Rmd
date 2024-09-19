@@ -1,6 +1,6 @@
 ---
 title: 'STA321 Week #4 Assignment - MLR'
-author: 'Due: 11:30 PM, Sunday, 09/24/2023'
+author: 'Due: 11:30 PM, Sunday, 09/22/2024'
 date: " "
 output:
   pdf_document: 
@@ -21,9 +21,12 @@ output:
     toc_float: no
     fig_width: 4
     fig_caption: yes
-    number_sections: no
-    theme: readable
-    fig_height: 4
+    number_sections: yes
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
 editor_options: 
   chunk_output_type: inline
 ---
