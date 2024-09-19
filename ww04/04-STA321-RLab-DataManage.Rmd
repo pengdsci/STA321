@@ -22,8 +22,11 @@ output:
     fig_width: 4
     fig_caption: yes
     number_sections: yes
-    theme: readable
-    fig_height: 4
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
 editor_options: 
   chunk_output_type: inline
 ---
@@ -103,9 +106,10 @@ if (!require("pander")) {
 #
 # specifications of outputs of code in code chunks
 knitr::opts_chunk$set(echo = TRUE,      
-                      warnings = FALSE,   
-                      messages = FALSE,  
-                      results = TRUE     
+                      warning = FALSE,   
+                      message = FALSE,  
+                      results = TRUE,
+                      comment = NA
                       )   
 ```
 
@@ -167,7 +171,7 @@ The next few columns are concerned with the different geographies we have for th
 
 This note introduces several most commonly used R functions in data management.
 
-```{r}
+```{r }
 dat = read.csv("https://raw.githubusercontent.com/pengdsci/sta321/main/ww04/cps_00003.csv")
 pander(head(dat))
 ```
