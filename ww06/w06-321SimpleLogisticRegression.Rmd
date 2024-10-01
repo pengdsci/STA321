@@ -8,8 +8,8 @@ output:
     toc_depth: 4
     fig_caption: yes
     number_sections: yes
-    fig_width: 3
-    fig_height: 3
+    fig_width: 5
+    fig_height: 4
   word_document: 
     toc: yes
     toc_depth: 4
@@ -17,76 +17,83 @@ output:
     keep_md: yes
   html_document: 
     toc: yes
-    toc_depth: 4
     toc_float: yes
-    fig_width: 4
+    toc_depth: 4
+    fig_width: 6
+    fig_height: 4
     fig_caption: yes
     number_sections: yes
-    theme: readable
-    fig_height: 4
-editor_options: 
-  chunk_output_type: inline
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
 ---
 
 ```{=html}
-
 <style type="text/css">
 
-/* Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML. it is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents. */
+div#TOC li {
+    list-style:none;
+    background-image:none;
+    background-repeat:none;
+    background-position:0;
+}
 
-h1.title {  /* Title - font specifications of the report title */
-  font-size: 24px;
-  color: DarkRed;
-  text-align: center;
-  font-family: "Gill Sans", sans-serif;
-}
-h4.author { /* Header 4 - font specifications for authors  */
+h1.title {
   font-size: 20px;
-  font-family: system-ui;
+  font-weight: bold;
   color: DarkRed;
   text-align: center;
 }
-h4.date { /* Header 4 - font specifications for the date  */
+h4.author { /* Header 4 - and the author and data headers use this too  */
+    font-size: 18px;
+    font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  color: DarkRed;
+  text-align: center;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
   font-size: 18px;
-  font-family: system-ui;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
   color: DarkBlue;
   text-align: center;
 }
-h1 { /* Header 1 - font specifications for level 1 section title  */
+h1 { /* Header 3 - and the author and data headers use this too  */
     font-size: 22px;
-    font-family: system-ui;
-    color: navy;
-    text-align: left;
+    font-weight: bold;
+    font-family: "Times New Roman", Times, serif;
+    color: darkred;
+    text-align: center;
 }
-h2 { /* Header 2 - font specifications for level 2 section title */
-    font-size: 20px;
+h2 { /* Header 3 - and the author and data headers use this too  */
+    font-size: 18px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
 }
 
-h3 { /* Header 3 - font specifications of level 3 section title  */
-    font-size: 18px;
+h3 { /* Header 3 - and the author and data headers use this too  */
+    font-size: 16px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
 }
 
-h4 { /* Header 4 - font specifications of level 4 section title  */
-    font-size: 18px;
+h4 { /* Header 4 - and the author and data headers use this too  */
+    font-size: 14px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
 }
-
-body { background-color:white; }
-
-.highlightme { background-color:yellow; }
-
-p { background-color:white; }
-
 </style>
 ```
+
+
 ```{r setup, include=FALSE}
 # Detect, install and load packages if needed.
 if (!require("knitr")) {
@@ -106,7 +113,8 @@ if (!require("mlbench")) {
 knitr::opts_chunk$set(echo = TRUE,      
                       warnings = FALSE,   
                       messages = FALSE,  
-                      results = TRUE     
+                      results = TRUE,
+                      comment = NA
                       )   
 ```
 
@@ -264,6 +272,12 @@ $$
 P(Y=1|x) = \frac{e^{\beta_0 + \beta_1x}}{1+e^{\beta_0 + \beta_1x}}.
 $$
 
+The above explicit model expression shows a **curve linear** relation between $x$ and the probability of observing the value the response $Y$. The following figure show the nonlinear relationship between $x$ and $y$ and its comparison between linear regression model.
+
+```{r echo=FALSE, fig.align ="center",  out.width = '80%'}
+include_graphics("img/w06-differenceLinearLogisticReg.png")
+```
+
 Using the above expression, we can do one of the following analyses.
 
 * **Association Analysis** - if $\beta_1 \ne 0$, then the success probability is impacted by the predictor variable $x$. Note that, this is a non-linear association.   
@@ -272,10 +286,18 @@ Using the above expression, we can do one of the following analyses.
 * **Predictive Analysis** - predicting the success probability for a given new value of the predictor variable. That is,
 
 $$
-\widehat{P(Y=1|x_\text{new})} = \frac{e^{\hat{\beta}_0 + \hat{\beta}_1x_\text{new}}}{1+e^{\hat{\beta}_0 + \hat{\beta}_1x_\text{new}}}
+\widehat{P(Y=1|x_\text{new})} = \frac{e^{\hat{\beta}_0 + \hat{\beta}_1x_\text{new}}}{1+e^{\hat{\beta}_0 + \hat{\beta}_1x_\text{new}}},
 $$ 
 
-where $\hat{\beta}_0$ and $\hat{\beta}_1$ are estimated from the data.
+  where $\hat{\beta}_0$ and $\hat{\beta}_1$ are estimated from the data.
+
+
+
+```{r echo=FALSE, fig.align ="center",  out.width = '90%'}
+include_graphics("img/w06-ANN.png")
+```
+
+
 
 
 * **Classification Analysis** - predicting the status of success. That is, for a given new value of the predictor variable, we predict the value of $Y$ through $P(Y=1|x_{new})$. 
@@ -354,6 +376,7 @@ There are 9 variables in the data set.
 
 I load the data from R **library{mlbench}** in the following code.
 
+
 ```{r}
 library(mlbench)
 data(PimaIndiansDiabetes2)           # load the data to R work-space
@@ -363,8 +386,9 @@ y0=diabetes$diabetes
 diabete.01 = rep(0, length(y0))      # define a 0-1 to test which probability is used in glm()
 diabete.01[which(y0=="pos")] = 1
 diabetes$diabetes.01 = diabete.01
-# head(diabetes)
+head(diabetes)
 ```
+
 
 For convenience, I delete all records with missing values and keep only the records with complete records in this case study. The final analytic data set has 392 records.
 
@@ -380,33 +404,35 @@ The general interpretation of BMI for adults is given below:
 * **Overweight**: [25.0, 29.9]
 * **Obese**: > 30.0
 
+In this study, we focus only on simple logistic regression modeling, we stay with the original (continuous) numerical variable BMI. The above discretization will be used in the case study in the next note.
+
 
 ## Building the Simple Logistic Regression
 
 Since we only study the simple logistic regression model, only one predictor variable is included in the model. We first perform exploratory data analysis on the predictor variable to make sure the variable is not extremely skewed.
 
-```{r fig.align='center', fig.width=5, fig.height=4}
+```{r fig.align='center', fig.width=5, fig.height=4, fig.cap=""}
 ylimit = max(density(diabetes$mass)$y)
-hist(diabetes$mass, probability = TRUE, main = "BMI Distribution", xlab="", 
+hist(diabetes$mass, probability = TRUE, main = "BMI Distribution", xlab="BMI", 
        col = "azure1", border="lightseagreen")
   lines(density(diabetes$mass, adjust=2), col="blue") 
-  
 ```
 
 Since the simple logistic regression contains only one continuous variable of a binary categorical variable as the predictor variable, no there is no issue of potential imbalance. We will not transform BMI and fit a logistic regression directly to the data.
 
-```{r}
+```{r comment = NA}
 s.logit = glm(diabetes ~ mass, 
           family = binomial(link = "logit"),  # family is the binomial, logit(p) = log(p/(1-p))!
           data = diabetes)                    # the data frame is a subset of the original iris data
-# summary(s.logit)
+result = summary(s.logit)
+result
 ```
 
 Note that the response variable is a binary factor variable, R uses alphabetical order to define the level of the factor variable. In our case, "neg" = 0 and "pos" = 1. The "success" probability is defined to be P(diabetes = "pos"). The simple logistic regression is fitted in the following.
 
 The summary of major statistics is given below.
 
-```{r}
+```{r comment = NA, message = FALSE}
 model.coef.stats = summary(s.logit)$coef       # output stats of coefficients
 conf.ci = confint(s.logit)                     # confidence intervals of betas
 sum.stats = cbind(model.coef.stats, conf.ci.95=conf.ci)   # rounding off decimals
