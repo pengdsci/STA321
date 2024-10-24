@@ -8,8 +8,8 @@ output:
     toc_depth: 4
     fig_caption: yes
     number_sections: yes
-    fig_width: 3
-    fig_height: 3
+    fig_width: 5
+    fig_height: 4
   word_document: 
     toc: yes
     toc_depth: 4
@@ -17,15 +17,17 @@ output:
     keep_md: yes
   html_document: 
     toc: yes
-    toc_depth: 4
     toc_float: yes
-    fig_width: 4
+    toc_depth: 4
+    fig_width: 6
+    fig_height: 4
     fig_caption: yes
     number_sections: yes
-    theme: readable
-    fig_height: 4
-editor_options: 
-  chunk_output_type: inline
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
 ---
 
 ```{=html}
