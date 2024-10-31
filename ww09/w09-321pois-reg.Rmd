@@ -221,8 +221,8 @@ We will not go into detail about how to estimate the regression coefficients and
 
 The data set required for the Poisson regression model in R should have the following layout.
 
-| ID(optional) | $x_1$    | $x_2$    | ... | $x_k$    | $y$ (counts) | total (counts, optional) |
-|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| ID(optional) | $\mathbf{x_1}$    | $\mathbf{x_2}$    | ... | $\mathbf{x_k}$    | $\mathbf{y}$ \n (counts) | total (counts, optional) |
+|:-----------:|:-----------:|:-----------:|:-----------:|-----------:|:-----------:|:-----------:|
 | 1            | $x_{11}$ | $x_{21}$ | ... | $x_{k1}$ | $y_1$        | $t_1$                    |
 | 2            | $x_{12}$ | $x_{22}$ | ... | $x_{k2}$ | $y_2$        | $t_2$                    |
 | ...          | ...      | ...      | ... | ...      | ...          | ...                      |
@@ -232,7 +232,7 @@ As usual, if there are categorical variables (with numerical coding), we need to
 
 \
 
-# Case Study: Modeling Lung Cancer Rates in Four Cities of Denmark - Part I
+# A Case Study 
 
 The World Health Organisation (WHO) statistics suggests that Denmark has the highest cancer rates in the world, with about 326 people out of every 100,000 developing cancer each year. The country is known to have a good record of diagnosing cancer, but also has high rates of smoking among women and high levels of alcohol consumption.
 
@@ -350,25 +350,31 @@ minmax = range(c(Fredericia,Horsens,Kolding,Vejle))
 ```
 
 ```{r}
-plot(1:6,Fredericia, type="l", lty =1, col="red", xlab="", 
-               ylab="Cancer Rate", xlim=c(0,6), ylim=c(0, 0.03), axes=FALSE )
+colors = c("#4682B4", "#AF46B4", "#B47846", "#4BB446")
+plot(1:6,Fredericia, type="l", lty =1, col=colors[1], lwd = 2, 
+               xlab="", 
+               ylab="Cancer Rate", 
+               xlim=c(0,6), 
+               ylim=c(0, 0.03), 
+               main="Cancer Rate v.s. Age Group Across Cities",
+               axes=FALSE )
 axis(2)
-axis(1, labels=c("[45-54]","[55,59]","[60,64]","[65,69]","[70,74]","75+"), 
+axis(1, labels=c("[45-54]","[55-59]","[60-64]","[65-69]","[70-74]","75+"), 
             at = 1:6)
-points(1:6,Fredericia, pch=19, col="red")
+points(1:6,Fredericia, pch=19,lwd = 2, col=colors[1])
 ##
-lines(1:6, Horsens, lty =2, col="blue")
-points(1:6, Horsens, pch=20, col="blue")
+lines(1:6, Horsens, lty =2,lwd = 2, col=colors[2])
+points(1:6, Horsens, pch=20, col=colors[2])
 ##
-lines(1:6, Kolding, lty =3, col="purple")
-points(1:6, Kolding, pch=21, col="purple")
+lines(1:6, Kolding, lty =3,lwd = 2, col=colors[3])
+points(1:6, Kolding, pch=21, col=colors[3])
 ###
-lines(1:6, Vejle, lty =4, col="mediumvioletred")
-points(1:6, Vejle, pch=22, col="mediumvioletred")
+lines(1:6, Vejle, lty =4,lwd = 2, col=colors[4])
+points(1:6, Vejle, pch=22, col=colors[4])
 ##
 legend("topleft", c("Fredericia","Horsens", "Kolding", "Vejle" ),
-                  pch=19:22, lty=1:4,  bty="n", 
-        col=c("red", "blue", "purple", "mediumvioletred"))
+                  pch=19:22, lty=1:4, lwd=rep(2,4), bty="n", 
+        col=colors)
 ```
 
 ## Discussions and Conclusions
@@ -387,7 +393,7 @@ kable(pois.count.coef.pop, caption = "The Poisson regression model for
          population size, and age group.")
 ```
 
-We can see from the above output the adding population size to the model 
+We can see from the above output the adding population size to the model changes the p-values associated with all predictor variables. This is not surprised since, comparing to the other factors, the population size is highly correlated to the cancer counts.
 
 The cancer rate in Fredericia is significantly higher than in the other three cities. It seems that there is no significant difference between Horsens, Kolding, and Vejle. The reason why Fredericia has a higher cancer rate needs further investigation with additional information.
 
