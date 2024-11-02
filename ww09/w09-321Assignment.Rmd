@@ -3,6 +3,25 @@ title: 'Week #9 Assignment'
 author: "Poisson Regression"
 date: "Due: Sunday, 11:59 PM"
 output:
+  html_document: 
+    toc: no
+    toc_float: yes
+    toc_depth: 4
+    fig_width: 6
+    fig_height: 4
+    fig_caption: yes
+    number_sections: yes
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
+    df_print: kable
+  word_document: 
+    toc: no
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
   pdf_document: 
     toc: no
     toc_depth: 4
@@ -10,19 +29,6 @@ output:
     number_sections: yes
     fig_width: 5
     fig_height: 4
-  word_document: 
-    toc: no
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
-  html_document: 
-    toc: no
-    toc_depth: 4
-    fig_width: 6
-    fig_height: 4
-    fig_caption: yes
-    number_sections: yes
-    theme: readable
 ---
 <style type="text/css">
 div#TOC li {
@@ -77,10 +83,17 @@ h4 { /* Header 4 - and the author and data headers use this too  */
 </style>
 
 ```{r setup, include=FALSE}
-library(knitr)
-library(tidyverse)
+if (!require("knitr")) {
+   install.packages("knitr")
+   library(knitr)
+}
+if (!require("openxlsx")) {
+   install.packages("openxlsx")
+   library(openxlsx)
+}
+#
 knitr::opts_chunk$set(echo = TRUE,       
-                      warnings = FALSE,   
+                      warning = FALSE,   
                       results = TRUE,   
                       message = FALSE
                       )  
@@ -100,10 +113,20 @@ The daily total of bike counts was conducted monthly on the Brooklyn Bridge, Man
 
 * **Data Formats and Loading**
 
-To save you time in finding a data set for Poisson regression, I created several subsets that contain the relevant information you need for this week's assignment. The data was saved in Excel format with multiple tabs. Please find the tab with your last name and then copy-and-paste your data file to a new Excel sheet and save it as a CSV format file or simply copy-and-paste to Notepad to create a TXT format file so you can read the file to R. You can also read the Excel file directly to R using appropriate R functions in relevant R libraries. 
+To save you time in finding a data set for Poisson regression, I created several subsets that contain the relevant information you need for this and next week's assignments. Here is the link to the Excel data set:[NYC cyclist data set (AssignDataSet.xlsx)](w09-AssignDataSet.xlsx). 
 
-Here is the link to the Excel data set:[NYC cyclist data set (AssignDataSet.xlsx)](w09-AssignDataSet.xlsx). Choose one of the data sets for your project.
+Please follow the indicated steps to find your data set:
 
+```{r}
+id=sample(1:10, 1)
+dat <- read.xlsx("https://pengdsci.github.io/STA321/ww09/w09-AssignDataSet.xlsx", sheet = paste("data",id, sep = ""))
+# I save the data in my download folder: C:\\Users\\75CPENG\\Downloads\\
+# You should replace my local folder path 'C:\\Users\\75CPENG\\Downloads\\'
+# with yours
+write.csv(dat, paste("C:\\Users\\75CPENG\\Downloads\\",names(dat[6]), ".csv", sep=""))
+# Go to your folder to load your data set (.csv) to your GitHub repository and 
+# Read the data to your R directly to R so I can run your RMD source on my machine!
+```
 
 * **Assignment Instructions**
 
