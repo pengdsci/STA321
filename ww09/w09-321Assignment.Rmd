@@ -118,6 +118,7 @@ To save you time in finding a data set for Poisson regression, I created several
 Please follow the indicated steps to find your data set:
 
 ```{r}
+# You need to use library {openxlsx} to read the excel file
 id=sample(1:10, 1)
 dat <- read.xlsx("https://pengdsci.github.io/STA321/ww09/w09-AssignDataSet.xlsx", sheet = paste("data",id, sep = ""))
 # I save the data in my download folder: C:\\Users\\75CPENG\\Downloads\\
