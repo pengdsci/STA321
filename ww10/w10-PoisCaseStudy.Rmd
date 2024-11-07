@@ -136,7 +136,7 @@ We want to assess how factors affect the number of articles published in the las
 
 # EDA and Feature Engineering 
 
-Variable **kids** is a discrete variable. We create a frequency table of **kids** and found that 16 of 915 Ph.D. students had 3 kids. After additional exploratory analysis. We decide to dichotomize **kids** and redefine a new variable under the name **newkids**.
+Variable **kids** is a discrete variable. We created a frequency table of **kids** and found that 16 of 915 Ph.D. students had 3 kids. After additional exploratory analysis. We decide to dichotomize **kids** and redefine a new variable under the name **newkids**.
 
 ```{r}
 phd=read.table("w10-ph-data.txt",skip=10, header=TRUE )[,-1] # drop the ID variable
@@ -148,7 +148,7 @@ phd$newkids = newkids
 
 # Poison Regression Modeling
 
-We build both the regular Poisson and Quasi-Poisson regression models and extract the dispersion parameter to decide which model should be used as working model.
+We build both the regular Poisson and Quasi-Poisson regression models and extract the dispersion parameter to decide which model should be used as a working model.
 
 ## Extracting Dispersion Index
 
@@ -158,13 +158,20 @@ $$
 \phi  = \frac{\text{variance}}{\text{mean}}.
 $$
 
-Under the assumption of Poisson regression, i.e.,  $\text{var(Y)} = \text{E}(Y)$, the variance of $Y$ can be estimated by either Pearson residuals or deviance residuals which are detailed in the lecture note. This means that $\phi = 1$. On the other hand, using asymptotic tools in *mathematical statistics*, we can show that the sum of squared Pearson (or deviance) residuals is approximately distributed as $\chi_{\text{df}}^2$ with $\text{df} = n - p$, $n$ is the sample size and $p$ is the number of parameters in the model. Furthermore, we know that the $\text{E}(\chi^2_{\text{df}}) = \text{df}$, therefore, the dispersion index can be estimated by
+Under the assumption of Poisson regression, i.e.,  $\text{var(Y)} = \text{E}(Y)$, the variance of $Y$ can be estimated by either Pearson residuals or deviance residuals which are detailed in the lecture note. This means that $\phi = 1$. On the other hand, using asymptotic tools in *mathematical statistics*, we can show that the sum of squared Pearson (or deviance) residuals is approximately distributed as $\chi_{\text{df}}^2$ with $\text{df} = n - p$, $n$ is the sample size and $p$ is the number of parameters in the model. Furthermore, we know that the $\text{E}(\chi^2_{\text{df}}) = \text{df}$, therefore, the dispersion index is estimated by Pearson residuals in the following.
 
 $$
-\hat{\phi} = \frac{\text{sum of squared residuals of the underlying model}}{\text{the degrees of freedom of the residuals}}.
+\hat{\phi} = \sum_{i=1}^n\left[ \frac{y_i - \hat{y}_i}{\sqrt{\hat{y}_i}} \right]^2/(n-p). 
 $$
 
-Next, we extract the approximated dispersion index using both Pearson and deviance residuals. **Note that the dispersion index in R base library uses deviance to approximate the distribution index**.
+We can also estimate the dispersion index with deviance residual in the following.
+
+
+$$
+\hat{\phi}_{\text{deviance}}=\frac{2\left[y_i\log(y_i/\hat{y}_i) -(y_i-\hat{y}_i)\right]}{n-p}.
+$$
+
+Next, we extract the approximated dispersion index using both Pearson and deviance residuals. **Note that the dispersion index in the R base library uses Pearson residuals to approximate the distribution index**.
 
 
 ```{r}
@@ -174,7 +181,7 @@ pois.model = glm(article ~ gender + married + factor(newkids) + prestige + mento
                  family = poisson(link="log"), data =phd)  
 ## predicted y: yhat
 yhat = pois.model$fitted.values
-pearson.resid = (phd$article - yhat)/mean(yhat)
+pearson.resid = (phd$article - yhat)/sqrt(yhat)
 Pearson.disp = sum(pearson.resid^2)/pois.model$df.residual
 ##
 Deviance.disp = (pois.model$deviance)/pois.model$df.residual
@@ -183,9 +190,9 @@ disp = cbind(Pearson.disp = Pearson.disp, Deviance.disp = Deviance.disp)
 kable(disp, caption="Dispersion parameter", align = 'c')
 ```
 
-The dispersion index under deviance is about 1.829 and 1.2 based on Pearson residual indicate that the Poison assumption is not seriously violated. Therefore, Poisson model is appropriate. For illustrative purpose, we still adjust the standard error by fitting the quasi-Poisson model in the following (using the estimated dispersion index based on the default deviance).
+The dispersion index under deviance is about 1.80 and 1.84 based on Pearson residual indicating that the Poison assumption is not seriously violated. Therefore, the Poisson model is appropriate. For illustrative purposes, we still adjust the standard error by fitting the quasi-Poisson model in the following (using the estimated dispersion index based on the default deviance).
 
-Next, we summarize the inferential statistics about the regression coefficients in the following table
+Next, we summarize the inferential statistics about the regression coefficients in the following table.
 
 ```{r}
 quasi.model = glm(article ~ gender + married + factor(newkids) + prestige + mentor, 
@@ -195,10 +202,7 @@ SE.quasi.pois = summary(quasi.model)$coef
 kable(SE.quasi.pois, caption = "Summary statistics of quasi-poisson regression model")
 ```
 
-The estimated dispersion index is 
-
-
-
+The estimated dispersion index is 1.84 based on the Pearson residuals.
 
 In the above quasi-Poisson regression, variable prestige is insignificant (p-value = 0.77). The p-value for testing the significance of the variable married is 0.079. We refit the quasi-Poisson model by dropping **prestige** and **married**.
 
@@ -209,7 +213,7 @@ kable(summary(quasi.model.02)$coef, caption = "Inferential statistics of
 the Poisson regression coefficients  in the final working model.")
 ```
 
-The above model will be used as the final model. The interpretation of the regression coefficient of the Poisson model is not as straightforward as that in the linear regression models since the response variable in the model is at a log-scale.
+The above model will be used as the final model. The interpretation of the regression coefficient of the Poisson model is not as straightforward as that in the linear regression models since the response variable in the model is at a log scale.
 
 For example, the coefficient associated with gender is -0.233. This is the estimated Poisson regression coefficient comparing females to males, given the other variables are held constant in the model. The difference in the logs of expected publications is expected to be 0.2332786 units lower for females compared to males while holding the other variables constant in the model. This is still not easy to understand for the general audience.
 
@@ -218,7 +222,7 @@ For example, the coefficient associated with gender is -0.233. This is the estim
 
 Next, we make a visualization to show how the explanatory variables in the final working model affect the **actual** number of publications of doctoral students.
 
-To this end, we classify all Ph.D. students in the following four groups defined by **gender** and **status** of having at least one child:
+To this end, we classify all Ph.D. students into the following four groups defined by **gender** and **status** of having at least one child:
 
 **phd.m0** = male and had no child
 
@@ -228,7 +232,8 @@ To this end, we classify all Ph.D. students in the following four groups defined
 
 **phd.f1** = female and had at least one child
 
-Next, We exponentiate the log-count of publications of Ph.D. students to the actual number of publications and then make graphs to show the relationship between doctoral students and their mentors in terms of the number of publications in each of the groups defined above.
+Next, We exponentiate the log count of publications of Ph.D. students to the actual number of publications and then make graphs to show the relationship between doctoral students and their mentors in terms of the number of publications in each of the groups defined above.
+
 
 ```{r fig.align='center', fig.width=6, fig.height=4}
 mentors =  range(phd$mentor)[1]:range(phd$mentor)[2]
@@ -256,7 +261,7 @@ We can see the relationship between the number of publications of doctoral stude
 
 1.  the number of publications of doctoral students is positively associated with their mentor publication.
 
-2.  Male doctoral students with no kid published more articles than those who had at least one kid. Female doctoral students also have the same pattern.
+2.  Male doctoral students with no kids published more articles than those who had at least one kid. Female doctoral students also have the same pattern.
 
 3.  Overall, male doctoral students published more than female students.
 
@@ -267,6 +272,7 @@ The Poisson regression model is used for modeling counts/rates-based data sets. 
 If Poisson regression is not appropriate, we can consider other models depending on the situation. The complex alternatives to the Poisson regression model that can be considered are negative binomial regression, zero-inflated regression models, random-forest-based regression models, and neural-network-based regression models. The last two models are "black-box" models because of the lack of interpretability.
 
 \
+
 
 \
 
