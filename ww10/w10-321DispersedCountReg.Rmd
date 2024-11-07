@@ -12,13 +12,17 @@ output:
     fig_height: 4
   html_document: 
     toc: yes
-    toc_depth: 4
     toc_float: yes
+    toc_depth: 4
     fig_width: 6
     fig_height: 4
     fig_caption: yes
     number_sections: yes
-    theme: readable
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
   word_document: 
     toc: yes
     toc_depth: 4
@@ -29,44 +33,51 @@ output:
 ```{=html}
 <style type="text/css">
 h1.title {
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: bold;
   color: DarkRed;
   text-align: center;
 }
 h4.author { /* Header 4 - and the author and data headers use this too  */
     font-size: 18px;
+    font-weight: bold;
   font-family: "Times New Roman", Times, serif;
   color: DarkRed;
   text-align: center;
 }
 h4.date { /* Header 4 - and the author and data headers use this too  */
   font-size: 18px;
+  font-weight: bold;
   font-family: "Times New Roman", Times, serif;
   color: DarkBlue;
   text-align: center;
 }
 h1 { /* Header 3 - and the author and data headers use this too  */
     font-size: 22px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: center;
 }
 h2 { /* Header 3 - and the author and data headers use this too  */
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
 }
 
 h3 { /* Header 3 - and the author and data headers use this too  */
-    font-size: 15px;
+    font-size: 18px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
 }
 
 h4 { /* Header 4 - and the author and data headers use this too  */
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
