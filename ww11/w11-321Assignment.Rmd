@@ -1,20 +1,8 @@
 ---
 title: 'Week #11 Assignment'
-author: "Concepts Time Series"
-date: "Due: 4/16/2023"
+author: "Concepts of Time Series"
+date: ""
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 5
-    fig_height: 4
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -23,6 +11,18 @@ output:
     fig_caption: yes
     number_sections: yes
     theme: readable
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 5
+    fig_height: 4
 ---
 <style type="text/css">
 h1.title {
@@ -92,11 +92,9 @@ if (!require("forecast")) {
 
 
 knitr::opts_chunk$set(echo = TRUE,       
-                      warnings = FALSE,   
+                      warning = FALSE,   
                       results = TRUE,   
-                      message = FALSE,
-                      fig.align='center', 
-                      fig.pos = 'ht')
+                      message = FALSE)
 ```
 
 
