@@ -3,6 +3,25 @@ title: 'Week #12: Time Series Decomposition'
 author: "Cheng Peng"
 date: "West Chester University"
 output:
+  html_document: 
+    toc: yes
+    toc_float: yes
+    toc_depth: 4
+    fig_width: 6
+    fig_height: 4
+    fig_caption: yes
+    number_sections: yes
+    toc_collapsed: yes
+    code_folding: hide
+    code_download: yes
+    smooth_scroll: yes
+    theme: lumen
+    df_print: kable
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
   pdf_document: 
     toc: yes
     toc_depth: 4
@@ -10,47 +29,48 @@ output:
     number_sections: yes
     fig_width: 5
     fig_height: 4
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
-  html_document: 
-    toc: yes
-    toc_depth: 4
-    toc_float: yes
-    fig_width: 6
-    fig_height: 4
-    fig_caption: yes
-    number_sections: yes
-    theme: readable
 ---
+
+```{=html}
 <style type="text/css">
+
+div#TOC li {
+    list-style:none;
+    background-image:none;
+    background-repeat:none;
+    background-position:0;
+}
+
 h1.title {
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: bold;
   color: DarkRed;
   text-align: center;
 }
 h4.author { /* Header 4 - and the author and data headers use this too  */
     font-size: 18px;
+    font-weight: bold;
   font-family: "Times New Roman", Times, serif;
   color: DarkRed;
   text-align: center;
 }
 h4.date { /* Header 4 - and the author and data headers use this too  */
   font-size: 18px;
+  font-weight: bold;
   font-family: "Times New Roman", Times, serif;
   color: DarkBlue;
   text-align: center;
 }
 h1 { /* Header 3 - and the author and data headers use this too  */
     font-size: 22px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: center;
 }
 h2 { /* Header 3 - and the author and data headers use this too  */
     font-size: 18px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
@@ -58,6 +78,7 @@ h2 { /* Header 3 - and the author and data headers use this too  */
 
 h3 { /* Header 3 - and the author and data headers use this too  */
     font-size: 15px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
@@ -65,11 +86,13 @@ h3 { /* Header 3 - and the author and data headers use this too  */
 
 h4 { /* Header 4 - and the author and data headers use this too  */
     font-size: 18px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
 }
 </style>
+```
 
 ```{r setup, include=FALSE}
 # code chunk specifies whether the R code, warnings, and output 
@@ -107,7 +130,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 Time series decomposition is a process of splitting a time series into basic components: trend, seasonality random error. The method originated a century ago and new developments in the past few decades.
 
-**Seasonal**: Patterns that repeat for a fixed period. For example, a website might receive more visits during weekends; this would produce data with seasonality of 7 days.
+**Seasonal Patterns** that repeat for a fixed period. For example, a website might receive more visits during weekends; this would produce data with seasonality of 7 days.
 
 **Trend**: The underlying trend of the metrics. A website increasing in popularity should show a general trend that goes up.
 
@@ -201,7 +224,7 @@ To detect the underlying trend, we use a smoothing technique called **moving ave
 **Example 1**: Australian beer production data has an annual seasonality. Since the data set is quarterly data, the moving average window should be 4.
 
 ```{r fig.align='center', fig.width=6, fig.height=2.6, fig.cap="Serires plot with trend curve"}
-trend.beer = ma(ausbeer.ts, order = 4, centre = T)  # centre = T => centered moving average
+trend.beer = ma(ausbeer.ts, order = 12, centre = T)     # centre = T => centered moving average
 par(mar=c(2,2,2,2))
 plot(as.ts(ausbeer.ts), xlab="", ylab="", col="darkred", lwd =2)
 title(main = "Extract trend from Australia Beer Production")
@@ -215,7 +238,8 @@ legend("topleft", c("original series", "trend curve"), lwd=rep(2,2),
 
 
 ```{r fig.align='center', fig.width=6, fig.height=2.6, fig.cap="series plot with curve trend"}
-trend.air = ma(AirPassengers.ts, order = 12, centre = T)  # centre = T => centered moving average
+trend.air = ma(AirPassengers.ts, order = 12, centre = T)  
+  # centre = T => centered moving average
 par(mar=c(2,2,2,2))
 plot(as.ts(AirPassengers.ts), xlab="", ylab="", col="darkred", lwd =2)
 title(main = "Extract trend from Airline Passengers Monthly Data")
@@ -234,8 +258,8 @@ The way of detrending a time series is dependent on the types of the time series
 **Example 3**:  We calculate the detrended series using the Australian Beer data and the Airline Passengers data as an example.
 
 ```{r fig.align='center', fig.width=5, fig.height=3, fig.cap="Detrended series"}
-detrend.beer = ausbeer.ts - trend.beer
-detrend.air = AirPassengers.ts/trend.air
+detrend.beer = ausbeer.ts - trend.beer     ## additive model
+detrend.air = AirPassengers.ts/trend.air   ## multiplicative model
 par(mar=c(2,2,2,2))
 par(mfrow=c(1,2))
 # plot(ausbeer.ts, xlab="", main = "Australia Beer", col="darkred")
@@ -260,12 +284,12 @@ The idea is to redefine a **seasonal series** based on the detrended series by r
 ```{r fig.align='center', fig.width=5, fig.height=5, fig.cap="Seasonal series"}
 par(mfrow=c(2,1), mar=c(3,2,3,2))
 ## Australia Beer
-mtrx.beer = t(matrix(data = detrend.beer, nrow = 4))
+mtrx.beer = t(matrix(data = detrend.beer, nrow = 4))  ## quarterly beer data 
 seasonal.beer = colMeans(mtrx.beer, na.rm = T)
 seasonal.beer.ts = as.ts(rep(seasonal.beer,16))
 plot(seasonal.beer.ts, xlab = "", col="darkred", main="Seasonal series of Australia beer")
 ##
-mtrx.air = t(matrix(data = detrend.air, nrow = 12))
+mtrx.air = t(matrix(data = detrend.air, nrow = 12))  ## annual data
 seasonal.air = colMeans(mtrx.air, na.rm = T)
 seasonal.air.ts = as.ts(rep(seasonal.air,16))
 plot(seasonal.air.ts, xlab = "", col = "blue", main="Seasonal series of air passengers")
@@ -563,16 +587,26 @@ kable(accuracy, caption="Error comparison between forecast results with differen
 
 \newpage
 
-```{r fig.align='center', fig.cap= "Comparing forecast errors", fig.width=5, fig.height=3.5}
+```{r fig.align='center', fig.cap= "Comparing forecast errors", fig.width=7, fig.height=4}
+par(mfrow=c(1,2))
 plot(1:4, MSE, type="b", col="darkred", ylab="Error", xlab="",
-     ylim=c(0.4,.85),xlim = c(0.5,4.5), main="Error Curves", axes=FALSE)
+     #ylim=c(0.4,.85),xlim = c(0.5,4.5), 
+     main="MSE", axes=FALSE)
 labs=c("n=144", "n=109", "n=73", "n=48")
-axis(1, at=1:4, label=labs, pos=0.4)
+axis(1, at=1:4, label=labs)
 axis(2)
-lines(1:4, MAPE, type="b", col="blue")
+#lines(1:4, MAPE, type="b", col="blue")
 text(1:4, MAPE+0.03, as.character(round(MAPE,4)), col="blue", cex=0.7)
 text(1:4, MSE-0.03, as.character(round(MSE,4)), col="darkred", cex=0.7)
 legend(1.5, 0.63, c("MSE", "MAPE"), col=c("darkred","blue"), lty=1, bty="n", cex=0.7)
+###
+#```{r fig.align='center', fig.cap= "Comparing forecast errors", fig.width=5, fig.height=3.5}
+plot(1:4, MAPE, type="b", col="darkred", ylab="Error", xlab="",
+     #ylim=c(0.4,.85),xlim = c(0.5,4.5), 
+     main="MAPE", axes=FALSE)
+labs=c("n=144", "n=109", "n=73", "n=48")
+axis(1, at=1:4, label=labs)
+axis(2)
 ```
 
 We trained the same algorithm with different sample sizes and compared the resulting accuracy measures. Among four training sizes 144, 109, 73, and 48. training data size 73 yields the best performance.
