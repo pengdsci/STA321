@@ -3,18 +3,6 @@ title: "Base R Graphics"
 author: "Cheng Peng"
 date: "Lab Note: STA321 Topics of Advanced Statistics"
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -27,14 +15,23 @@ output:
     code_download: yes
     smooth_scroll: yes
     theme: lumen
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 ---
 
-```{=html}
-
-<style type="text/css">
-
+```{css echo = FALSE}
 /* Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML. it is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents. */
 
 h1.title {  /* Title - font specifications of the report title */
@@ -58,15 +55,16 @@ h4.date { /* Header 4 - font specifications for the date  */
   color: DarkBlue;
   text-align: center;
 }
+
 h1 { /* Header 1 - font specifications for level 1 section title  */
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     font-family: system-ui;
     color: navy;
     text-align: left;
 }
 h2 { /* Header 2 - font specifications for level 2 section title */
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
@@ -74,7 +72,7 @@ h2 { /* Header 2 - font specifications for level 2 section title */
 }
 
 h3 { /* Header 3 - font specifications of level 3 section title  */
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
@@ -82,7 +80,7 @@ h3 { /* Header 3 - font specifications of level 3 section title  */
 }
 
 h4 { /* Header 4 - font specifications of level 4 section title  */
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
@@ -95,8 +93,14 @@ body { background-color:white; }
 
 p { background-color:white; }
 
-</style>
+
+/* Add dots after numbered headers */
+.header-section-number::after {
+  content: ".";
+}
 ```
+
+
 ```{r setup, include=FALSE}
 # Detect, install and load packages if needed.
 if (!require("knitr")) {
@@ -157,33 +161,36 @@ The plot region, plus the axes, labels, and margins are known as the "figure reg
 include_graphics("img/w02-RGraphicMargins.png")
 ```
 
-**Example 1**:
+**Example 1**: A typical graphic with the required graphical components: title, subtitle (if needed), axis labels, legends, etc.
 
 ```{r fig.align='center', fig.height=6, fig.width=6}
 url = "https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt"
 iris = read.table(url, header = TRUE)
-par(mfrow = c(1,1), oma=c(1, 1, 1, 1), mar=c(2, 2, 2, 2))
+par(mfrow = c(1,1),     # graphical layout: one row and one column
+    oma=c(1, 1, 1, 1),  # outer margin area: oma=c(bottom, left, top, right)
+    mar=c(2, 2, 2, 2))  # inner margin: mar=c(bottom, left, top, right)
+# single plot
 plot(iris$SepalLength, iris$PetalLength, pch = 16, cex = 1.5)
 title(   main = "Sepal Length vs Petal Length (Outer)", 
-        outer = TRUE, 
-     col.main = "red", 
-     cex.main = 1)
+        outer = TRUE,      # place the title in outer margin
+     col.main = "red",     # the color of the title
+     cex.main = 1)         # font size. default = 1
 title(   main = "Sepal Length vs Petal Length (Inner)", 
-        outer = FALSE,
-     col.main = "blue",
-     cex.main = 0.8)
+        outer = FALSE,     # place a subtitle in the inner margin of the graphic
+     col.main = "blue",    # the color of the subtitle
+     cex.main = 0.8)       # font size of the subtitle
 ## Coloring points with the transparency level
 ## species ID
-setosa = which(iris$Classification == "Iris-setosa")
+setosa = which(iris$Classification == "Iris-setosa")  # identify individual species
 versicolor = which(iris$Classification == "Iris-versicolor")
 virginica = which(iris$Classification == "Iris-virginica")
 ## adding points
 points(iris$SepalLength[setosa], iris$PetalLength[setosa], 
-       pch = 16, 
-       col = alpha("purple", 0.5),    # add a transparency level
-       cex = 1.5)
+       pch = 16,              # point type, ranged 1 - 21
+       col = alpha("purple", 0.5),  # add a transparency level to the point
+       cex = 1.5)             # point size
 points(iris$SepalLength[versicolor], iris$PetalLength[versicolor], 
-       pch = 16, 
+       pch = 16,              
        col = alpha("blue", 0.5),
        cex = 1.5)
 points(iris$SepalLength[virginica], iris$PetalLength[virginica], 
@@ -191,18 +198,54 @@ points(iris$SepalLength[virginica], iris$PetalLength[virginica],
        col = alpha("red", 0.5),
        cex = 1.5)
 legend("bottomright", c("setosa", "versicolor", "virginica"),
-       col = c("purple", "blue", "red"), 
-       pch = rep(16,3), 
-       cex = rep(1.0,3), 
-       bty = "n")
+       col = c("purple", "blue", "red"),  #  order reflects the points
+       pch = rep(16,3),  # corresponding point type. The same point type in this case
+       cex = rep(1.5,3), # corresponding point size. The same font size in this case
+       bty = "n")        # exclude the box of the legend 
 ```
 
 
 ## Simple multi-panel Plots
 
-`layout()` or `par(mfrow = c())`
+A simple **multi-panel plot** (also known as a **faceted plot** or **small multiples**) is a plot with  multi sub-plots with equal dimension. We use base R plot functions `layout()` or `par(mfrow = c())` to achieve this task. We can add graphical parameters to create multi-panels with different dimensions. 
 
-**Example 2** 
+From effective visual design perspective, a multi-panel plot should be used when
+
+*  **Compare Subgroups or Categories** - When you want to visualize how different subsets of data (e.g., groups, conditions, time periods) behave relative to each other.
+
+* **Avoid Overcrowding in a Single Plot** - If too many lines, bars, or points in a single graph make it unreadable, splitting them into panels improves clarity.
+
+
+* **Highlight Interactions or Conditional Relationships** - When the relationship between variables changes based on another factor (e.g., a categorical variable).
+
+
+* **Display Multi-Dimensional Data** - When you have more than 3 variables and need a structured way to show interactions.
+
+* **Standardize Comparisons** - Ensures all subplots share the same scale, making comparisons easier than with overlayed data.
+
+
+* **Show Temporal or Spatial Patterns** - Useful for time series (e.g., each panel represents a year) or geospatial data (e.g., maps split by region).
+
+
+<font color = "red">**\color{red}However, if the subgroups are too numerous (e.g., 50+ panels), consider aggregation or sampling first and then make a single panel plot or multi-panel with no more than 6 sub-plots.**</font>
+
+In multi-panel plots, titles play a crucial role in guiding interpretation.
+
+* **Main Title** - The overarching title for the entire figure. It is placed outer margin.
+
+* **Panel Titles (Subtitles)** - Labels for individual panels (often placed at the top or within each panel)
+
+* **Row/Column Titles** - They are used when panels are rganized in a grid.
+
+* **Axis Labels** - If axes represent the same information, we should use shared labels to increase the clarity of the visual representation.
+
+
+\
+
+The next example shows how to create a simple multi-panel plots.
+
+
+**Example 2**: This is a representative of simple multi-panel plots using the above design ideas. 
 
 ```{r fig.align='center', fig.height=5, fig.width=8}
 url = "https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-iris.txt"
@@ -212,12 +255,19 @@ setosa = which(iris$Classification == "Iris-setosa")
 versicolor = which(iris$Classification == "Iris-versicolor")
 virginica = which(iris$Classification == "Iris-virginica")
 ###
-par(mfrow = c(1,2), oma=c(2, 2, 2, 2), mar=c(2, 2, 2, 2))
+## par() ==> parameters of the graphic
+par(mfrow = c(1,2),       # create a graphical layout with on row and two columns
+                          # mfrow() stands for "multi-frame row-wise"
+    oma=c(2, 2, 2, 2),    # specify outer margin: oma = c(bottom, left, top, right)
+                          # the unit is number of lines. default c(0,0,0,0), no outer margin
+    mar=c(2, 2, 2, 2))
+
+# first graphic panel
 plot(iris$SepalLength, iris$PetalLength, pch = 16, cex = 1.5,
             xlab = "Sepal Width",
             ylab = "Petal Width")
 title(main="Sepal Length vs Petal Length", 
-         outer = FALSE,
+         outer = FALSE,    # subtitle of the panel on top of the panel
       col.main = "blue",
       cex.main = 0.8)
 ## adding points
@@ -241,7 +291,7 @@ plot(iris$SepalWidth, iris$PetalWidth, pch = 16, cex = 1.5,
             xlab = "Sepal Width",
             ylab = "Petal Width")
 title(main="Sepal Length vs Petal Length", 
-      outer=FALSE,
+      outer=FALSE,   # subtitle of the panel on top of the panel
       col.main = "blue",
       cex.main = 0.8)
 ## adding points
@@ -262,7 +312,7 @@ legend("right", c("setosa", "versicolor", "virginica"),
        pch = rep(16,3), cex=0.8, bty="n")
 ## Overall Title
 title( main = "Comaring Sepal and Petal Sizes", 
-      outer = TRUE,
+      outer = TRUE,    # place the main title in the outer margin
       col.main = "darkred",
       cex.main = 1.2)
 ```
