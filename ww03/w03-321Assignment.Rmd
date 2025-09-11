@@ -3,18 +3,6 @@ title: 'STA321 Week #3 Assignment'
 author: 'Due: 11:30 PM, Sunday'
 date: " "
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -27,6 +15,18 @@ output:
     code_download: yes
     smooth_scroll: yes
     theme: lumen
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 ---
@@ -130,7 +130,7 @@ knitr::opts_chunk$set(echo = TRUE,      # include code chunk in the output file
 
 This week's assignment has two components. 
 
-* Finding a data set for **project #1** that is due on <font color = "red"><b> Sunday, 10/1/2023.</b> </font> The detailed requirements of the data will be described in the next section.
+* Finding a data set for **project #1**. The detailed requirements of the data will be described in the next section.
 
 * Fitting a simple linear regression (SLR) by selecting a numerical explanatory variable from the data set using the least square approach and then constructing 95% bootstrap confidence intervals for the regression coefficients. 
 
@@ -170,7 +170,6 @@ Before you start searching your data set, check the D2L discussion board and mak
     
 # This Week's Data Analysis 
 
-<center><font color = "blue"><b> Due: Sunday, 9/17/2023</b></font></center>
 
 Please prepare an RMarkdown document to include the following two parts. Please start your work earlier to
 
