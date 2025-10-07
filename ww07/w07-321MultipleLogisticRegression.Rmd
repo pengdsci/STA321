@@ -3,18 +3,6 @@ title: '7 - Multiple Logistic Regression Model'
 author: 'Cheng Peng'
 date: "West Chester University "
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -27,42 +15,56 @@ output:
     code_download: yes
     smooth_scroll: yes
     theme: lumen
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 ---
 
-```{=html}
-
-<style type="text/css">
-
+```{css, echo = FALSE}
 /* Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML. it is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents. */
 
 h1.title {  /* Title - font specifications of the report title */
   font-size: 24px;
   color: DarkRed;
   text-align: center;
+  font-weight: bold;
   font-family: "Gill Sans", sans-serif;
 }
 h4.author { /* Header 4 - font specifications for authors  */
   font-size: 20px;
   font-family: system-ui;
+  font-weight: bold;
   color: DarkRed;
   text-align: center;
 }
 h4.date { /* Header 4 - font specifications for the date  */
   font-size: 18px;
   font-family: system-ui;
+  font-weight: bold;
   color: DarkBlue;
   text-align: center;
 }
 h1 { /* Header 1 - font specifications for level 1 section title  */
     font-size: 22px;
     font-family: system-ui;
+  font-weight: bold;
     color: navy;
     text-align: left;
 }
 h2 { /* Header 2 - font specifications for level 2 section title */
     font-size: 20px;
+  font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
@@ -70,6 +72,7 @@ h2 { /* Header 2 - font specifications for level 2 section title */
 
 h3 { /* Header 3 - font specifications of level 3 section title  */
     font-size: 18px;
+  font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: navy;
     text-align: left;
@@ -77,6 +80,7 @@ h3 { /* Header 3 - font specifications of level 3 section title  */
 
 h4 { /* Header 4 - font specifications of level 4 section title  */
     font-size: 18px;
+  font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
@@ -88,8 +92,9 @@ body { background-color:white; }
 
 p { background-color:white; }
 
-</style>
 ```
+
+
 ```{r setup, include=FALSE}
 # Detect, install and load packages if needed.
 if (!require("knitr")) {
@@ -104,12 +109,26 @@ if (!require("mlbench")) {
    install.packages("mlbench")
    library(mlbench)
 }
-#
+if (!require("psych")) {
+   install.packages("psych")
+   library(psych)
+}
+if (!require("MASS")) {
+   install.packages("MASS")
+   library(MASS)
+}
+if (!require("car")) {
+   install.packages("car")
+   library(car)
+}
+
+#  library(car)
 # specifications of outputs of code in code chunks
 knitr::opts_chunk$set(echo = TRUE,      
-                      warnings = FALSE,   
-                      messages = FALSE,  
-                      results = TRUE     
+                      warning = FALSE,   
+                      message = FALSE,  
+                      results = TRUE,
+                      comment = NA
                       )   
 ```
 
@@ -242,6 +261,7 @@ Let $\{(y_1, x_{11}, x_{21}, \cdots, x_{k1}), (y_2, x_{12}, x_{22}, \cdots, x_{k
 $$
 p(x) = \frac{e^{\beta_0 + \beta_1 x_1 +\cdots + \beta_kx_k}}{1 + e^{\beta_0 + \beta_1 x_1 + \cdots + \beta_kx_k}}.
 $$
+
 The likelihood function of $(\beta_0, \beta_1, \cdots, \cdots, \beta_k)$ is given by
 
 $$
@@ -256,11 +276,13 @@ The coefficients are interpreted similarly as used in the simple logistic regres
 $$
 \log\left(\frac{P[Y=1|\cdots,x_j,\cdots]}{1-P[Y=1|\cdots,x_j,\cdots]}\right) = \beta_0 + \beta_1x_1 + \cdots + \beta_{j-1}x_{j-1}+ \beta_jx_j + \beta_{j+1} + \cdots+\beta_kx_k
 $$
+
 If we **fix the values of all $X_i$ except for increasing $x_j$ by one unit**, then 
 
 $$
 \log\left(\frac{P[Y=1|\cdots,(x_j+1),\cdots]}{1-P[Y=1|\cdots,(x_j+1),\cdots]}\right) = \beta_0 + \beta_1x_1 + \cdots + \beta_{j-1}x_{j-1}+ \beta_j(x_j+1) + \beta_{j+1}x_{j+1} + \cdots+\beta_kx_k
 $$
+
 Then
 
 $$
@@ -385,11 +407,11 @@ There are 9 variables in the data set.
 9. **diabetes**:	Class variable (test for diabetes)
 
 
-I load the data from R **library{mlbench}** in the following code. For convenience, I delete all records with missing values and keep only the records with complete records in this case study. The final analytic data set has 392 records. This
+The data is sourced from the mlbench library in R. After removing all records with missing values, the final analytic dataset consists of 392 complete cases.
 
 
 ```{r}
-library(mlbench)
+#library(mlbench)
 data(PimaIndiansDiabetes2)           # load the data to R work-space
 diabetes.0 = PimaIndiansDiabetes2    # make a copy of the data for data cleansing 
 diabetes = na.omit(diabetes.0)       # Delete all records with missing components
@@ -398,15 +420,16 @@ diabetes = na.omit(diabetes.0)       # Delete all records with missing component
 
 ## Research Question
 
-The objective of this case study is to identify the risk factors for diabetes. 
+This case study seeks to identify the risk factors for diabetes. The response variable is the status of diabetes (`diabetes`: `pos = diabetes` and `neg = diabetes free`).
 
+The response variable is a binary variable, we attempt to use the logistic regression model to address the research question.
 
 ## Exploratory Analysis
 
-We first make the following pairwise scatter plots to inspect the potential issues with predictor variables.
+To begin, we generate pairwise scatter plots for all numerical features to identify highly correlated predictors and to assess their distributional characteristics.
 
 ```{r fig.align='center', fig.width=7, fig.height=7}
-library(psych)
+#library(psych)
 pairs.panels(diabetes[,-9], 
              method = "pearson", # correlation method
              hist.col = "#00AFBB",
@@ -425,7 +448,7 @@ hist(diabetes$pregnant, xlab="pregnant", main = "")
 hist(diabetes$age, xlab = "age", main = "")
 ```
 
-Based on the above histogram, we discretize **pregnant** and **age** in the following.
+Based on the above histogram and the best clinical practices, we discretize **pregnant** and **age** in the following.
 
 ```{r}
 preg = diabetes$pregnant
@@ -452,44 +475,66 @@ diabetes$grp.preg = grp.preg
 
 * Since our goal is association analysis, we will not perform variable transformations for the time being.
 
-* It is very common in real-world applications that some of the practically important variables are always included in the final model regardless of their statistical significance. In the diabetes study, three insulin, MBI, and pedigree are considered significant risk factors. We will include these three variables in the final model. This means the smallest model must have these three variables. 
-
 
 ## Building the Multiple Logistic Regression Model
 
-Based on the above exploratory analysis, we first build the full model and the smallest model.
+Based on the exploratory analysis above, the two engineered variables will be used in the following model building. We adopt the convention of defining a scope for the logistic model and then using automatic model selection to identify the optimal model within that scope.
+
+### The Biggest Model
+
+We begin by constructing a full model that includes all predictor variables potentially associated with the development of diabetes.
 
 ```{r}
 
 full.model = glm(diabetes ~grp.preg+glucose+pressure+triceps+insulin+mass+pedigree+grp.age, 
           family = binomial(link = "logit"),  #  logit(p) = log(p/(1-p))!
           data = diabetes)  
-kable(summary(full.model)$coef, 
+pander(summary(full.model)$coef, 
       caption="Summary of inferential statistics of the full model")
 ```
 
+Before creating the reduced model, we explore potential multicollinearity among the predictor variables. The following table shows the VIF for each individual variable.
 
+
+```{r}
+vif(full.model)
+```
+
+All GVIF values are less than 5. There are no significant multicollinearity issues in this data set.
+
+
+### Reduced Model
+
+In applied settings, it is often necessary to include variables of practical importance in a final model, even if they lack statistical significance. Based on prior clinical knowledge, the variables `insulin`, `BMI`, and `pedigree` are considered essential risk factors in this diabetes study. Consequently, these three variables will be forced into the final model, defining the minimal adequate model. 
 
 ```{r}
 reduced.model = glm(diabetes ~ insulin + mass + pedigree, 
           family = binomial(link = "logit"),  # logit(p) = log(p/(1-p))!
           data = diabetes) 
-kable(summary(reduced.model)$coef, 
+pander(summary(reduced.model)$coef, 
       caption="Summary of inferential statistics of the reduced model")
 ```
+### Automatical Model Selection
+
+The reduced model may use insufficient information, resulting in underfitting (missing important effects), while the full model can lead to overfitting (modeling noise and failing to generalize). To address this, we use automatic variable selection to find a simpler, more interpretable, and better-performing model by intelligently choosing a subset of predictors that includes the important variables from the reduced model while avoiding the noise of the full model.
 
 
 ```{r}
 ## automatic variable selection
-library(MASS)
+#library(MASS)
 final.model.forward = stepAIC(reduced.model, 
                       scope = list(lower=formula(reduced.model),upper=formula(full.model)),
                       direction = "forward",   # forward selection
                       trace = 0   # do not show the details
                       )
-kable(summary(final.model.forward)$coef, 
+pander(summary(final.model.forward)$coef, 
       caption="Summary of inferential statistics of the final model")
 ```
+
+### Performance Comparison
+
+We next use deviance and AIC as measures to assess the performance of the above three models. The model with the lowest AIC value is generally preferred, as it indicates a superior balance between goodness-of-fit and model complexity, penalizing unnecessary parameters. Similarly, an analysis of deviance, which measures the discrepancy between the model and the observed data, allows us to perform likelihood-ratio tests to formally compare nested models. By examining these two criteria together, we can identify the most parsimonious model that best explains the underlying structure of the data without overfitting.
+
 
 ```{r}
 ## Other global goodness-of-fit
@@ -504,9 +549,38 @@ goodness
 goodness=rbind(full.model = global.measure(full.model),
       reduced.model=global.measure(reduced.model),
       final.model=global.measure(final.model.forward))
-row.names(goodness) = c("full.model", "reduced.model", "final.model")
-kable(goodness, caption ="Comparison of global goodness-of-fit statistics")
+row.names(goodness) = c("full.model", "reduced.model", "auto.selected.model")
+pander(goodness, caption ="Comparison of global goodness-of-fit statistics")
 ```
+
+The above results shows that
+
+* The **reduced model** has the smallest AIC, but it could be underfitted.
+* The **full.model** and the **auto.selected.model** are have similar **residual deviance**.
+
+We next use the likelihood ratio chi-squared test to see whether the the **full.model** and the **auto.selected.model** are significantly different.
+
+The chi-square test statistic is defined to be
+
+$$
+\text{Residual.Deviance}_{\text{auto.selected.model}} - \text{Residual.Deviance}_{\text{full.model}} = 334.2-324.9 = 9.3.
+$$
+
+The degrees of freedom is 
+
+$$
+DF = \text{Num of variables in the full.model} - \text{Num of variables in the auto.selected.model} = 17-9 = 8
+$$
+
+The p-value of the above likelihood ratio test is given by 
+
+$$
+\text{p-value} = P(\chi^2_8 > 9.3) = 0.3176239
+$$
+
+Since the p-value indicates that the two models are not statistically different, we select the **auto.selected.model** as our final model in accordance with the principle of parsimony.
+
+
 
 
 ## Final Model
@@ -522,6 +596,7 @@ kable(out.stats,caption = "Summary Stats with Odds Ratios")
 ```
 
 The interpretation of the odds ratios is similar to the case of simple logistic regression. The group-age variable **grp.age** has five categories. The baseline category is aged 21-24. We can see from the above table inferential table that the odds of getting diabetes increase as age increases.  For example, the odds ratio associated with the age group 31-39 is 3.927 meaning that, given the same level of insulin, BMI, pedigree, and glucose, the odds of being diabetic in the age group of 31-40 is almost 4 times of that in the baseline group aged 21-24. But the same ratio becomes nine times when comparing the age group 41-50 with the baseline group of age 21-24. 
+
 
 ## Summary and Conclusion
 
