@@ -3,13 +3,6 @@ title: "Week #10 - Dispersed Poisson Regression Model "
 author: "Cheng Peng"
 date: "West Chester University"
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 5
-    fig_height: 4
   html_document: 
     toc: yes
     toc_float: yes
@@ -23,6 +16,13 @@ output:
     code_download: yes
     smooth_scroll: yes
     theme: lumen
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 5
+    fig_height: 4
   word_document: 
     toc: yes
     toc_depth: 4
@@ -351,8 +351,11 @@ $$
 \mathbf{X}^T(\mathbf{Y} - \mathbf{\mu}) = \mathbf{0}
 $$
 where
+
 * $\mathbf{X}$ is the $n\times (p+1)$ design matrix.
+
 * $\mathbf{Y}$ is the $n\times 1$ vector of the observed responses.
+
 * $\mathbf{\mu}$ is the vector pf means, with $\mu_i = \exp(\mathbf{x}_i^T\beta)$
 
 However, the variance-covariance matrix of the estimator changes because the model-based variance 
@@ -368,6 +371,7 @@ The weight matrix $\mathbf{W}$ is a crucial component. It is an $n\times n$ diag
 For a Poisson model with a canonical log link function, $\eta_i = \log(\mu_i)$, we have:
 
 * $\frac{d \mu_i}{d\eta_i} = \mu_i$.
+
 * The variance function is $V(Y_i) = \mu_i$
 
 Therefore, the diagonal elements of the working weight matrix $\mathbf{W}$ are given by:
