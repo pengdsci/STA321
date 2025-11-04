@@ -30,8 +30,29 @@ output:
     keep_md: yes
 ---
 
-```{=html}
-<style type="text/css">
+```{css echo = FALSE}
+
+#TOC::before {
+  content: "Table of Contents";
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: center;
+  display: block;
+  color: navy;
+  margin-bottom: 10px;
+}
+
+
+div#TOC li {
+    list-style:none;
+    background-color:lightgray;
+    background-image:none;
+    background-repeat:none;
+    background-position:0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #780c0c;
+}
+
 h1.title {
   font-size: 24px;
   font-weight: bold;
@@ -324,16 +345,52 @@ $$
 \end{array}
 \right.
 $$
+The above system can be written in the following matric form
 
-Note that the above **score equations** are **not** derived from the loglikelihood function of the regular Poisson regression model. Unlike the likelihood-based goodness of fit measures such as *deviance*, *AIC*, and *SBC* measures should not be used in inference. 
+$$
+\mathbf{X}^T(\mathbf{Y} - \mathbf{\mu}) = \mathbf{0}
+$$
+where
+* $\mathbf{X}$ is the $n\times (p+1)$ design matrix.
+* $\mathbf{Y}$ is the $n\times 1$ vector of the observed responses.
+* $\mathbf{\mu}$ is the vector pf means, with $\mu_i = \exp(\mathbf{x}_i^T\beta)$
+
+However, the variance-covariance matrix of the estimator changes because the model-based variance 
+$Var(Y_i) = \mu_i$ is replaced by the quasi-variance $Var(Y_i) = \phi\mu_i$ .
 
 
-Apparently, the estimated regression coefficients are identical since the scale parameter $\phi$ will not impact the solution to the linear system. However, the variance $\text{V}(\mathbf{Y}) = \phi \text{V}(\hat{\mu})$. Thus, we now have a parameter that allows the variance to be larger or smaller than the mean by a multiplicative factor $\phi$. Hence, it will affect the inference of QMLE of the regression coefficients
+
+**The Weight Matrix $\mathbf{W}$**
+
+The weight matrix $\mathbf{W}$ is a crucial component. It is an $n\times n$ diagonal matrix where each diagonal element $w_i$ is the inverse of the variance of $\mathbf{Y}$, scaled by the square of the derivative of the link function.
+
+
+For a Poisson model with a canonical log link function, $\eta_i = \log(\mu_i)$, we have:
+
+* $\frac{d \mu_i}{d\eta_i} = \mu_i$.
+* The variance function is $V(Y_i) = \mu_i$
+
+Therefore, the diagonal elements of the working weight matrix $\mathbf{W}$ are given by:
+
+$$
+w_i = \frac{1}{Var{Y_i}\left(\frac{d \mu_i}{d\eta_i}\right)^2} = \frac{1}{Var(Y_i)}\cdot \left(\frac{d \mu_i}{d\eta_i} \right)^2 = \frac{\mu_i}{\phi}
+$$
+
+Thus, the weight matrix $\mathbf{W}$ for the Quasi-Poisson model is:
+
+$$
+\mathbf{W} = \frac{1}{\phi}\text{diag}(\mu_1, \mu_2, \cdots, \mu_n).
+$$
+
+
+Thus, we now have a parameter that allows the variance to be larger or smaller than the mean by a multiplicative factor $\phi$. Hence, it will affect the inference of QMLE of the regression coefficients
 
 $$
 \hat{\mathbf{\beta}} \to \mathbf{N}[\mathbf{\beta},~ \phi(\mathbf{X}^T\mathbf{WX})^{-1}]
 $$
 That means the standard errors of $\hat{\beta}_i$ ($i = 0,1, 2, \cdots, k$) are different from the MLE in the regular Poisson regression. Because of this, the reported p-values are also different from those of the output of the regular Poisson regression model.
+
+
 
 
 \
