@@ -3,12 +3,6 @@ title: 'Week #11: Concepts of Time Series'
 author: "Cheng Peng"
 date: "Wes Chester University"
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    number_sections: yes
-    fig_width: 5
-    fig_height: 4
   html_document: 
     toc: yes
     toc_float: yes
@@ -23,6 +17,12 @@ output:
     smooth_scroll: yes
     theme: lumen
     df_print: kable
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    number_sections: yes
+    fig_width: 5
+    fig_height: 4
   word_document: 
     toc: yes
     toc_depth: 4
@@ -259,19 +259,25 @@ The seasonal series result from events that are periodic and recurrent (e.g., mo
 
 A stationary time series is one whose properties do not depend on the time at which the series is observed. 
 
-More formally, a strictly stationary stochastic process is one where given $t_1, \cdots, t_{\mathcal{l}}$ the joint statistical distribution of $X_{t_1} , \cdots ,X_{t_\mathcal{l}}$ is the **same** as the joint statistical distribution of $X_{t_1 + \tau} , . . . ,X_{t_\mathcal{l}+\tau}$ for all $\mathcal{l}$ and $\tau$.
+More formally, a **strictly stationary stochastic process** is one where given $t_1, \cdots, t_{\mathcal{l}}$ the joint statistical distribution of $X_{t_1} , \cdots ,X_{t_\mathcal{l}}$ is the **same** as the joint statistical distribution of $X_{t_1 + \tau} , . . . ,X_{t_\mathcal{l}+\tau}$ for all $\mathcal{l}$ and $\tau$.
 
-Thus, time series with trends, or with seasonality, are not stationary — the trend and seasonality will affect the value of the time series at different times.
+Thus, <font color = "red">**time series with trends, or with seasonality, are not stationary**</font> — the trend and seasonality will affect the value of the time series at different times.
 
 ```{r echo = FALSE, fig.align='center', fig.width=5, fig.height=5}
 include_graphics("w11-Figure06.jpg")
 ```
 
+
 ```{r echo = FALSE, fig.align='center', fig.width=5, fig.height=5}
 include_graphics("w11-Figure07.jpg")
 ```
 
-However, a time series with cyclic behavior (but with no trend or seasonality) is stationary. 
+The following figure shows the comparison between cyclic and seasonality series.
+
+```{r echo = FALSE, fig.align='center', out.width="50%"}
+include_graphics("w11-cyclic-seasonality.jpg")
+```
+
 
 
 ## Atypical Event (Outliers)
@@ -388,6 +394,15 @@ For naïve forecasts, we simply set all forecasts to be the value of the last ob
  
 The naive forecast method works really well on the time series data generated from a process in which the next value in the sequence is a modification of the previous value in the sequence.
 
+
+
+```{r echo = FALSE, fig.align='center', fig.width=5, fig.height=5}
+include_graphics("w11-naive.jpg")
+```
+
+
+
+
 **Example 2**. We will use the naive forecast method on the Nile River data.
 
 The forecasted values for the three future periods and the forecasted intervals are plotted in the following figure. 
@@ -414,6 +429,15 @@ $$
 $$
 
 where $m =$ the seasonal period and $k$ is the integer part of $(h-1)/m$ (i.e., the number of complete years in the forecast period before time $T + h$). The forecasting formula looks complex, but it essentially says that, for example, with monthly data, the seasonal naive method forecasts for all future February values are equal to the last observed February value.
+
+
+
+```{r echo = FALSE, fig.align='center', fig.width=5, fig.height=5}
+include_graphics("w11-NaiveSeasonality.jpg")
+```
+
+
+
 
 **Example 3** Nottingham monthly average temperature - the following data set is a collection of average monthly temperatures in Nottingham from 1920-1939. Since this is monthly data, when we define the time series object with **ts()**, the option **frequency** should be set to 12.
 
@@ -450,11 +474,14 @@ kable(seasonal.naive, caption="Forecasted monthly average temperatures of Nottin
 
 ## Drift Method
 
-The seasonal naive method allows non-constant predictive values by taking the same values from the time period in the previous season. The drift method is another variation of the naive method that allows the forecasts to increase or decrease over time. To be more specific, the next one-step forecast value is set to be the average change seen in the historical data. Thus the forecast for time $T + h$ is given by $$\hat{y}_{T+h|T} = y_T +h(y_T-y_1)/(T-1)$$
+The seasonal naive method allows non-constant predictive values by taking the same values from the time period in the previous season. The drift method is another variation of the naive method that allows the forecasts to increase or decrease over time. To be more specific, we choose the line connecting the first and last observations.  Thus the forecast for time $T + h$ is given by $$\hat{y}_{T+h|T} = y_T +h(y_T-y_1)/(T-1)$$
 
 where the amount of change over time $y_T-y_1$ is called the drift. This is where the name of the method comes from.  
 
 
+```{r echo = FALSE, fig.align='center', fig.width=5, fig.height=5}
+include_graphics("w11-drift.jpg")
+```
 
 **Example 4** New York City Monthly Birth Counts - the dataset contains the number of births per month in New York City, from January 1946 to December 1958. The data set can be downloaded from  <https://raw.githubusercontent.com/pengdsci/sta321/main/datasets/w11-nycbirths.txt>.  We will use the seasonal naive method to forecast future values using function **naive()** in library{forecast}. 
 
