@@ -3,18 +3,6 @@ title: "2. Bootstrap Simple Linear Regression Model"
 author: 'Cheng Peng'
 date: "Lecture Note: STA321 Topics of Advanced Statistics"
 output:
-  pdf_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    number_sections: yes
-    fig_width: 3
-    fig_height: 3
-  word_document: 
-    toc: yes
-    toc_depth: 4
-    fig_caption: yes
-    keep_md: yes
   html_document: 
     toc: yes
     toc_depth: 4
@@ -27,54 +15,74 @@ output:
     code_download: yes
     smooth_scroll: yes
     theme: lumen
+  word_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    keep_md: yes
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+    fig_caption: yes
+    number_sections: yes
+    fig_width: 3
+    fig_height: 3
 editor_options: 
   chunk_output_type: inline
 always_allow_html: true
 ---
 
-```{=html}
+```{css, echo = FALSE}
+#TOC::before {
+  content: "Table of Contents";
+  font-weight: bold;
+  font-size: 1.2em;
+  display: block;
+  color: navy;
+  margin-bottom: 10px;
+}
 
-<style type="text/css">
 
-/* Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML. it is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents. */
+div#TOC li {     /* table of content  */
+    list-style:upper-roman;
+    background-image:none;
+    background-repeat:none;
+    background-position:0;
+}
 
-h1.title {  /* Title - font specifications of the report title */
-  font-size: 24px;
+h1.title {    /* level 1 header of title  */
+  font-size: 22px;
   font-weight: bold;
   color: DarkRed;
   text-align: center;
   font-family: "Gill Sans", sans-serif;
 }
-h4.author { /* Header 4 - font specifications for authors  */
-  font-size: 20px;
+
+h4.author { /* Header 4 - and the author and data headers use this too  */
+  font-size: 15px;
   font-weight: bold;
   font-family: system-ui;
-  color: DarkRed;
+  color: navy;
   text-align: center;
 }
-h4.date { /* Header 4 - font specifications for the date  */
+
+h4.date { /* Header 4 - and the author and data headers use this too  */
   font-size: 18px;
   font-weight: bold;
-  font-family: system-ui;
+  font-family: "Gill Sans", sans-serif;
   color: DarkBlue;
   text-align: center;
 }
-h1 { /* Header 1 - font specifications for level 1 section title  */
-    font-size: 22px;
-    font-weight: bold;
-    font-family: system-ui;
-    color: navy;
-    text-align: left;
-}
-h2 { /* Header 2 - font specifications for level 2 section title */
+
+h1 { /* Header 1 - and the author and data headers use this too  */
     font-size: 20px;
     font-weight: bold;
     font-family: "Times New Roman", Times, serif;
-    color: navy;
-    text-align: left;
+    color: darkred;
+    text-align: center;
 }
 
-h3 { /* Header 3 - font specifications of level 3 section title  */
+h2 { /* Header 2 - and the author and data headers use this too  */
     font-size: 18px;
     font-weight: bold;
     font-family: "Times New Roman", Times, serif;
@@ -82,13 +90,25 @@ h3 { /* Header 3 - font specifications of level 3 section title  */
     text-align: left;
 }
 
-h4 { /* Header 4 - font specifications of level 4 section title  */
-    font-size: 18px;
+h3 { /* Header 3 - and the author and data headers use this too  */
+    font-size: 16px;
     font-weight: bold;
+    font-family: "Times New Roman", Times, serif;
+    color: navy;
+    text-align: left;
+}
+
+h4 { /* Header 4 - and the author and data headers use this too  */
+    font-size: 14px;
+  font-weight: bold;
     font-family: "Times New Roman", Times, serif;
     color: darkred;
     text-align: left;
 }
+
+/* Add dots after numbered headers */
+.header-section-number::after {
+  content: ".";
 
 body { background-color:white; }
 
@@ -96,8 +116,9 @@ body { background-color:white; }
 
 p { background-color:white; }
 
-</style>
+}
 ```
+
 ```{r setup, include=FALSE}
 # Detect, install and load packages if needed.
 if (!require("knitr")) {
@@ -129,11 +150,11 @@ if (!require("MASS")) {
 
 
 # specifications of outputs of code in code chunks
-knitr::opts_chunk$set(echo = TRUE,      # include code chunk in the output file
-                      warnings = FALSE,  # sometimes, you code may produce warning messages,
+knitr::opts_chunk$set(echo = TRUE,       # include code chunk in the output file
+                      warning = FALSE,   # sometimes, you code may produce warning messages,
                                          # you can choose to include the warning messages in
                                          # the output file. 
-                      messages = FALSE,  #
+                      message = FALSE,   #
                       results = TRUE     # you can also decide whether to include the output
                                          # in the output file.
                       )   
@@ -185,13 +206,13 @@ Next, we make a scatter plot of longitude and latitude to see the potential to c
 plot(lon, lat, main = "Sites of houses sold in 2012-2013")
 ```
 
-```{r echo = FALSE, fig.align='center', fig.width=8, fig.height=5, fig.cap="Property locations"}
+```{r echo = TRUE, fig.align='center', fig.width=8, fig.height=5, fig.cap="Property locations"}
 library(leaflet)
 m <- leaflet() %>%
   addTiles() %>%  # Add default OpenStreetMap map tiles
   addCircleMarkers(data = realestate, lng=lon, lat=lat, popup=realestate$PriceUnitArea,
                    color = "navy", radius = ~sqrt((1/46)*realestate$PriceUnitArea))
-m  # Print the map
+m     # Print the map
 ```
 
 
@@ -320,8 +341,8 @@ Many statistical procedures such linear regression models are built on the norma
 
 Next, we perform the Box-cox transformation to the response variable.
 
-```{r fig.align='center', fig.width=5, fig.height=5}
-boxcox(lm(price ~ distance), lambda = seq(-1, 1, 1/10))
+```{r fig.align='center', fig.width=5, fig.height=5, fig.cap="Bos-cox transformation"}
+boxcox(lm(price ~ distance), lambda = seq(-.2, .5, 1/10))
 ```
 
 The above plot indicates that transformation of the response is worthwhile. The convenient value of $\lambda = 1/4$. 
@@ -388,8 +409,8 @@ The following steps construct bootstrap confidence intervals of regression coeff
 ```{r}
 B <- 1000    # number of bootstrap replicates
 # define empty vectors to store bootstrap regression coefficients
-boot.beta0 <- NULL 
-boot.beta1 <- NULL
+boot.beta0 <- NULL    # rep(0,1000)
+boot.beta1 <- NULL    
 ## bootstrap regression models using for-loop
 vec.id <- 1:length(price)   # vector of observation ID
 for(i in 1:B){
